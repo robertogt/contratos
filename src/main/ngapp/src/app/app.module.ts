@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule} from '@angular/http';
 import { AppRoutingModule }         from './app-routing.module';
 import { AppConfigModule } from './app-config.module';
-import { AutoCompleteModule, DataListModule } from 'primeng/primeng';
+import { AutoCompleteModule, DataListModule, InputMaskModule, GrowlModule,TooltipModule } from 'primeng/primeng';
 import { CreaContratoComponent } from './crea-contrato/crea-contrato.component';
 import { AddendumComponent } from './addendum/addendum.component'; 
 import { RueService }         from './services/rue.service';
@@ -25,7 +25,10 @@ import { RueService }         from './services/rue.service';
     AppRoutingModule,
     AppConfigModule,
     AutoCompleteModule,
+    InputMaskModule,
     DataListModule,
+    GrowlModule,
+    TooltipModule,
     NgbModule.forRoot()
   ],
   providers: [RueService],

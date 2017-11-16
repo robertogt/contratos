@@ -14,15 +14,19 @@ export class RueService {
 	public urlTitulos:string;
 	public urlPerfiles:string;
 	public urlActividades:string;
+  public urlFuncionario:string;
+  public urlCreaContrato:string;
 
 	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
-  		this.urlBuscaEmpleados = config.ENDPOINT+'/WebServiceFuncionarios/rest/funcionarios';
+  		this.urlBuscaEmpleados = config.ENDPOINT+'/bknRRHHContratos/rest/funcionarios';
   		this.urlRenglones 	= config.ENDPOINT+'/BackEndPresupuesto/restresources/presupuesto/renglon';
   		this.urlUbicacionesFuncionales 	= config.ENDPOINT+'/bknRRHHActividades/rest/ubicacionfuncional';
   		this.urlTitulos 	= config.ENDPOINT+'/bknRRHHContratos/rest/titulos';
   		this.urlColegios 	= config.ENDPOINT+'/bknRRHHContratos/rest/colegios';
   		this.urlPerfiles 	= config.ENDPOINT+'/bknRRHHContratos/rest/actividades/perfiles/ubicacion';
   		this.urlActividades 	= config.ENDPOINT+'/bknRRHHContratos/rest/actividades';
+      this.urlFuncionario  = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/funcionario';
+      this.urlCreaContrato   = config.ENDPOINT+'/bknRRHHContratos/rest/contrato';
 	}
 
 	getPersonas(texto:string){
@@ -66,11 +70,26 @@ export class RueService {
 	getActividadesPorPerfil(perfil:number, rue:number){
   		let params = new URLSearchParams();
     	params.set('perfil', ""+perfil);
-    	params.set('rue', ""+rue); 
+
+      if(rue != undefined)
+    	  params.set('rue', ""+rue);
+
     	return this.http.get(this.urlActividades, {search: params})
           .map(res => res.json());
 	}
 
+  getFuncionario(dpi:string){
+      let params = new URLSearchParams();
+      params.set('dpi', dpi); 
+      return this.http.get(this.urlFuncionario, {search: params})
+          .map(res => res.json());
+  }
+
+  setContrato(data:any){      
+      let headers = new Headers();
+      return this.http.post(this.urlCreaContrato,data,{headers:headers})
+                      .map(res => res.json());
+  }
 
 
 }

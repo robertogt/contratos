@@ -1,4 +1,4 @@
-export { Rue } from "./rue"
+//export { Rue } from "./rue"
 
 export class Contrato {
 
@@ -6,6 +6,6 @@ export class Contrato {
 	identificadorContrato: string;
 	numeroContrato: number;
 	anio: number;
-	idRue: Rue;
+	//idRue: Rue;
 	
 }
