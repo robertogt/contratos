@@ -113,12 +113,8 @@ export class CreaContratoComponent implements OnInit {
     this.ubicacion.idUbicacionFuncional = data.ubicacionFuncional;
     (<HTMLInputElement>document.getElementById("ubica")).value = data.nombreUbicacion;
 
-    if(this.ubicacion.idUbicacionFuncional !=undefined){
-      /**borrar**/
-      this.ubicacion.idUbicacionFuncional = 27;
-      /**---------*/
+    if(this.ubicacion.idUbicacionFuncional !=undefined)
       this.getPerfiles();
-    }
 
     if (this.tipoServicios == 'T') {
       this.numeroColegiado = null;
@@ -158,7 +154,7 @@ export class CreaContratoComponent implements OnInit {
 
       this.rueService
       .getActividadesPorPerfil(perfil,this.data.idRue)
-      .subscribe(  actividades => {this.actividades = actividades;},
+      .subscribe(  actividades => {this.actividades = actividades; console.log(this.actividades)},
                 error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 

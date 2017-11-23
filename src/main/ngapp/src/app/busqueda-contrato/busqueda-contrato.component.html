@@ -1,0 +1,68 @@
+<div class="container-fluid">
+	<div style="text-align:center">
+		<h1 class="display-6">Búsqueda General</h1>
+		<legend></legend>
+		<hr>
+	</div>
+	<div>
+		<p-dataTable #dt [value]="contratos" selectionMode="single" 
+			(onRowSelect)="onRowSelect($event)" 
+			[rows]="5" 
+			[emptyMessage]="'No se encontraron registros.'" 
+			[paginator]="true" 
+			[globalFilter]="gb" 
+			[pageLinks]="3" 
+			[rowsPerPageOptions]="[5,10,20]"
+			exportFilename="Contratos">
+			<p-header>
+				<div>
+					<form class="form-inline">
+						<label class="mr-sm-4">Seleccionar Año:</label>
+						<select [(ngModel)]="anioActual" name="anio" class="form-control" (change)="cambioAnio()">
+							<option *ngFor="let anio of anios" [value]="anio.value">{{anio.text}}</option>
+						</select>
+						<label class="mr-sm-4" style="padding-left:3%">Seleccionar Renglon:</label>
+						<select [(ngModel)]="renglon" name="renglonPresupuesto" class="form-control" (change)="cambioRenglon()">
+							<option *ngFor="let renglon of renglones" [value]="renglon">{{renglon.nombre}}</option>
+						</select>
+					</form>
+				</div>
+				<br>
+				<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+					<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+					<input #gb type="text" pInputText size="50" placeholder="Global Filter">
+				</div>
+			</p-header>
+			
+			<p-column field="identificador" header="Identificador"></p-column>
+			<p-column field="renglon" header="Renglon" [filter]="true"></p-column>
+			<p-column field="honorarios" header="Honorarios"></p-column>
+			<p-column field="estado" header="Estado" [filter]="true">
+				<ng-template let-col let-contrato="rowData" pTemplate="body">
+            		<span [ngClass]="getClass(contrato.estado)">{{contrato.estado}}</span>
+        		</ng-template>
+			</p-column>
+			<p-column styleClass="col-button" header="Descargar">
+				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+					<div class="row align-items-center justify-content-center">
+						<a><span class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar" (click)="openModalModificar(contrato)" ></span></a>
+					</div>
+				</ng-template>
+			</p-column>
+			<p-column styleClass="col-button" header="Addendum">
+				<ng-template let-addendum="rowData" let-index="rowIndex" pTemplate="body">
+					<div class="row align-items-center justify-content-center">
+						<a><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(content,contrato)" ></span></a>
+					</div>
+				</ng-template>
+			</p-column>
+			<p-column styleClass="col-button" header="Detalles">
+				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+					<div class="row align-items-center justify-content-center">
+						<a><span class="fa fa-search" aria-hidden="true"  placement="top" ngbTooltip="Editar" (click)="openModalDetalle(content,contrato)" ></span></a>
+					</div>
+				</ng-template>
+			</p-column>
+		</p-dataTable>
+	</div>
+</div>

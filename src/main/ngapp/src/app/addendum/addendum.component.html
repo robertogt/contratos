@@ -1,41 +1,28 @@
-<form #contratoForm="ngForm" (ngSubmit)="onSubmit(contratoForm)">
-<div class="">
-	<h1  class="display-4">Addendum</h1>
-	<div class="row">						
-        <div class="offset-2 col-md-8">
-        	<p-autoComplete class="col-md-12" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" 
-        			[minLength]="3"
-			      	[(ngModel)]="contratista" 
-			      	[suggestions]="personas" 
-			      	name="contratista"
-			      	(completeMethod)="search($event)" 
-			      	(onSelect)="seleccionaContratista()" 		      
-			      	placeholder="DPI del Contratista"
-			      	field ="nombreCompleto"
-			      	required
-			      	#contrat>	
-			</p-autoComplete>
-        </div>        
+<form #addendumForm="ngForm" (ngSubmit)="onSubmit(contratoForm)">
+	<div style="text-align:center">
+		<h1 class="display-4">Addendum</h1>
+		<legend></legend>
+		<hr>
 	</div>
-	<p-growl [(value)]="msgs" life="3000" [immutable]="false"></p-growl>
+	<div>
+		<p-growl [(value)]="msgs" life="3000" [immutable]="false"></p-growl>
+	</div>
 	<br>
-	<div class="card">
-		
-		<h6 class="card-header">Datos del contrato</h6>
-		<div class="card-block">
 			<div class="form-group row">
 			  	<label class="col-md-3 col-form-label text-right" for="fechaDel"><strong>Periodo del contrato</strong></label>
-				<div class="col-2">
+				<div class="col-3">
 					<input class="form-control" placeholder="dd/mm/yyyy" 
 							id ="fechaDel" name="fechaDel" 
-							[(ngModel)]="fechaDel"
+							[(ngModel)]="data.fechaDel"
+							disabled
 					>
 				</div>
 				<label class="col-sm-1 col-form-label text-center" for="fechaAl"><strong>al</strong></label>
-				<div class="col-2">
+				<div class="col-3">
 					<input class="form-control" placeholder="dd/mm/yyyy" 
 							id ="fechaAl" name="fechaAl" 
-							[(ngModel)]="fechaAl"
+							[(ngModel)]="data.fechaAl"
+							disabled
 					>
 				</div>
 
@@ -43,45 +30,37 @@
 
 		    <div class="form-group row">
 			  	
-				<label class="col-md-3 col-form-label text-right" for="fechaContrato"><strong>Fecha de Contrato</strong></label>
-				<div class="col-2">
+				<label class="col-md-3 col-form-label text-right" for="fechaContrato"><strong>Fecha del Addendum</strong></label>
+				<div class="col-3">
 					<input class="form-control" placeholder="dd/mm/yyyy" 
 							id ="fechaContrato" name="fechaContrato" 
-							[(ngModel)]="fechaContrato"
+							[(ngModel)]="data.fechaContrato"
 							#fechaC="ngModel"
 							ngbDatepicker 
 							#dc="ngbDatepicker"
 							(click)="dc.toggle()"						        			 
 							required
-					>
+							[minDate]="fechaMinima"
+							[maxDate]="fechaMaxima"
+					>				
 				</div>
 				<div>
 					<button class="input-group-addon" (click)="dc.toggle()" type="button">
 			        	<i class="fa fa-calendar"></i>
 			      	</button>
-			    </div>
+			    </div>							  
 		    </div>
 
 		    <div class="form-group row">
-			  	<label class="col-md-3 col-form-label text-right" for="renglon"><strong>Renglon</strong></label>
-			  	<div class="col-2">
-			  		<select class="form-control" [(ngModel)]="renglon" name="renglon">
-				       <option *ngFor="let renglon of renglones" [ngValue]="renglon.renglon" disabled>{{renglon.nombre}}</option>
-				    </select>
+		    	<label class="col-md-3 col-form-label text-right" for="honorario"><strong>Honorarios</strong></label>
+				<div class="col-3">
+			  		<input class="form-control" type="number" id="honorario" name="honorario" #h required [(ngModel)]="data.honorario" min="1000">
 			  	</div>
-				<label class="col-md-2 col-form-label text-right" for="tipoServicio"><strong>Tipo Servicio</strong></label>
-				<div class="col-2">
-			  		<select  class="form-control" name="tipoServicios" [(ngModel)]="tipoServicios">
-			  			<option *ngFor="let tipoServicios of tiposServicios" [ngValue]="tipoServicios.value" disabled>{{tipoServicios.label}}</option>
-			  		</select>
-			  	</div>
-				
 		    </div>
-
 		    <div class="form-group row">
 			  	
 				<label class="col-md-3 col-form-label text-right" for="ubicacion"><strong>Ubicacion Funcional</strong></label>
-				<div class="col-6">
+				<div class="col-9">
 			  		<p-autoComplete  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" 
 	        			[minLength]="3"
 				      	[(ngModel)]="ubicacion" 
@@ -102,7 +81,7 @@
 		    <div class="form-group row">
 			  	
 				<label class="col-md-3 col-form-label text-right" for="perfiles"><strong>Actividades</strong></label>
-				<div class="col-2">
+				<div class="col-4">
 
 			  		<p-dataList [value]="perfiles" emptyMessage="">
 			  			<p-header>
@@ -114,42 +93,27 @@
 					    </ng-template>
 					</p-dataList>
 
-			  	</div>
-			  	<div class="col-2">		  		
-			  		<p-dataList [value]="actividades" emptyMessage="">
+			  	</div>			  	
+			  	<div class="col-4">		  		
+			  		<p-dataList [value]="data.actividades" emptyMessage="">
 			  			<p-header>
 	        				Actividades
 	    				</p-header>
-					    <ng-template let-actividad let-i="index" pTemplate="item">
+					    <ng-template let-actividad let-i="index" pTemplate="item">						    
 					    	<input 	type="checkbox"					    			
-					    			name="cb{{actividad.id}}"
-					    			id="cb{{actividad.id}}"
+					    			name="cb{{actividad.idActividad}}"
+					    			id="cb{{actividad.idActividad}}"
 					    			[(ngModel)]="actividad.seleccionado"
-					    			pTooltip="actividad.descripcion"
+					    			pTooltip={{actividad.descripcion}}
 					    			> {{actividad.nombre}}<br>
 					    </ng-template>
 					</p-dataList>
 			  	</div>
-				
-		    </div>
-		</div>
-	</div>	
+			</div>
 	<br>
-	<div class="form-group row">
-
-			    <label class="col-md-3 col-form-label text-right" for="observacion"><strong>Observaciones</strong></label>
-				<div class="col-6">
-			  		<textarea class="form-control" id="observacion" name="observacion" [(ngModel)]="data.observacion" rows="3"></textarea>
-			  	</div>
-
-	</div>
 	    <div class="form-group row">
 	    	<div class="offset-3 col-2">
-	  			<button type="submit" class="btn btn-primary" [disabled]="!contratoForm.form.valid">Addendar</button>
-	  		</div>
-	  		<div class="col-2">
-	  			<button type="button" class="btn btn-success" [disabled]="!contratoGuardado" (click)="descargarPDF()">Descargar PDF</button>
+	  			<button type="submit" class="btn btn-primary" [disabled]="!addendumForm.form.valid">Crear Addendum</button>
 	  		</div>
 	  	</div>
-</div>
 </form>
