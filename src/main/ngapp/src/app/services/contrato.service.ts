@@ -7,10 +7,12 @@ import { APP_CONFIG, AppConfig } from '../app-config.module';
 @Injectable()
 export class ContratoService {
 
+  public urlContratos:string;
 	public urlContratosPendientes:string;
 
   	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
 
+      this.urlContratos   = config.ENDPOINT+'/RRHHContratos/rest/addendum/contrato';
   		this.urlContratosPendientes   = config.ENDPOINT+'/RRHHContratos/rest/addendum/contrato';
   	}
 

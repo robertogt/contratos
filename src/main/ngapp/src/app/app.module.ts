@@ -13,6 +13,7 @@ import { AddendumComponent } from './addendum/addendum.component';
 import { RueService }         from './services/rue.service';
 import { UtilService }         from './services/util.service';
 import { BusquedaContratoComponent } from './busqueda-contrato/busqueda-contrato.component';
+import { DetalleContratoComponent } from './detalle-contrato/detalle-contrato.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { BusquedaContratoComponent } from './busqueda-contrato/busqueda-contrato
     AppComponent,    
     CreaContratoComponent,
     AddendumComponent,
-    BusquedaContratoComponent
+    BusquedaContratoComponent,
+    DetalleContratoComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -39,7 +41,7 @@ import { BusquedaContratoComponent } from './busqueda-contrato/busqueda-contrato
     NgbModule.forRoot()
 
   ],
-  entryComponents:[AddendumComponent],
+  entryComponents:[AddendumComponent, DetalleContratoComponent],
   providers: [RueService,UtilService],
   bootstrap: [AppComponent]  
 })

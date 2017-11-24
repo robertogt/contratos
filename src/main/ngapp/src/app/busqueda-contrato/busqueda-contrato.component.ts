@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ModalService } from '../services/modal.service';
 import { NgbModal, NgbActiveModal,NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { RueService } from '../services/rue.service';
 import { UtilService } from '../services/util.service';
 import { AddendumComponent } from '../addendum/addendum.component';
-
+import { DetalleContratoComponent } from '../detalle-contrato/detalle-contrato.component';
+import { APP_CONFIG, AppConfig } from '../app-config.module';
 
 @Component({
 	selector: 'busqueda-contrato',
 	templateUrl: './busqueda-contrato.component.html',
-	providers: [AddendumComponent]
+	providers: [AddendumComponent, DetalleContratoComponent]
 	})
 
 export class BusquedaContratoComponent implements OnInit {
@@ -21,7 +22,8 @@ export class BusquedaContratoComponent implements OnInit {
 	renglones: any;
 	
 
-	constructor(private rueService:RueService, private utilService: UtilService,private modalService: NgbModal) {
+	constructor(private rueService:RueService, private utilService: UtilService,private modalService: NgbModal,
+		@Inject(APP_CONFIG) private config: AppConfig) {
 		this.anios = new Array();
 		this.fecha_hoy = new Date();
 		this.anioActual =  this.fecha_hoy.getFullYear();
@@ -43,14 +45,14 @@ export class BusquedaContratoComponent implements OnInit {
 		    "renglon": "029",
 		    "honorarios": "12000.00",
 		    "estado":"Rechazado",
-		    "idContrato":11
+		    "idContrato":31
 		  },
 		    {
 		   "identificador": "RRHH-SP-002-2017",
 		    "renglon": "184",
 		    "honorarios": "12000.00",
 		    "estado":"Aprobado",
-		    "idContrato":11
+		    "idContrato":18
 		  }
 		];
 
@@ -65,6 +67,14 @@ export class BusquedaContratoComponent implements OnInit {
       											);
 	}
 
+	downloadContrato(contrato){
+		window.open(this.config.ENDPOINT+'/bknRRHHContratos/rest/contrato/generar/'+contrato.idContrato)
+	}
+
+	editar(contrato){
+		console.log(contrato);		
+	}
+
 	getClass(estado){
 		if(estado=='Aprobado')
 			return "bg-success text-white";
@@ -75,26 +85,36 @@ export class BusquedaContratoComponent implements OnInit {
 	onRowSelect(row){
 	}
 
-	openAddendumModal(content,data){
-		let options: NgbModalOptions = {	
-											size: 'lg'
-    									};
+	openAddendumModal(idContrato:number){
+		console.log(idContrato);
+		let options: NgbModalOptions = {	size: 'lg' };
 
     	const modalRef = this.modalService.open(AddendumComponent,options);
-    	modalRef.componentInstance.idContrato=11;
+    	modalRef.componentInstance.idContrato=idContrato;
     	modalRef.result.then((result) =>{
 								        console.log('resultad9',result);
-								        console.log('modalRef',modalRef);
 								        
 								    }, (reason) => {
 								       		console.log(reason);
+								    });
+	}
 
+	openDetalleModal(idContrato:number){
 
+		let options: NgbModalOptions = {	size: 'lg' };
+
+    	const modalRef = this.modalService.open(DetalleContratoComponent,options);
+    	modalRef.componentInstance.idContrato=idContrato;
+    	modalRef.result.then((result) =>{
+								        console.log('resultad9',result);
+								        
+								    }, (reason) => {
+								       		console.log(reason);
 								    });
 	}
 
 	inicializaAnios(){	
-    	this.anios = this.utilService.getAnios((this.anioActual-3),(this.anioActual+1));
+    	this.anios = this.utilService.getAnios((this.anioActual-3),(this.anioActual));
 	}
 
 	cambioAnio(){

@@ -42,24 +42,38 @@
             		<span [ngClass]="getClass(contrato.estado)">{{contrato.estado}}</span>
         		</ng-template>
 			</p-column>
+			<p-column styleClass="col-button" header="Editar">
+				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+					<div class="row align-items-center justify-content-center">
+						<a><span class="fa fa-edit" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar" (click)="editar(contrato)" ></span></a>
+					</div>
+				</ng-template>
+			</p-column>
 			<p-column styleClass="col-button" header="Descargar">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar" (click)="openModalModificar(contrato)" ></span></a>
+						<a><span class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar" (click)="downloadContrato(contrato)" ></span></a>
 					</div>
 				</ng-template>
 			</p-column>
 			<p-column styleClass="col-button" header="Addendum">
-				<ng-template let-addendum="rowData" let-index="rowIndex" pTemplate="body">
+				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(content,contrato)" ></span></a>
+						<a><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(contrato.idContrato)" ></span></a>
 					</div>
 				</ng-template>
 			</p-column>
 			<p-column styleClass="col-button" header="Detalles">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-search" aria-hidden="true"  placement="top" ngbTooltip="Editar" (click)="openModalDetalle(content,contrato)" ></span></a>
+						<a><span class="fa fa-search" aria-hidden="true"  placement="top" ngbTooltip="Detalles" (click)="openDetalleModal(contrato.idContrato)" ></span></a>
+					</div>
+				</ng-template>
+			</p-column>
+			<p-column styleClass="col-button" header="Resindir/Anular">
+				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+					<div class="row align-items-center justify-content-center">
+						<a><span class="fa fa-thumbs-down" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Resindir" (click)="resindir(contrato)" ></span></a>
 					</div>
 				</ng-template>
 			</p-column>

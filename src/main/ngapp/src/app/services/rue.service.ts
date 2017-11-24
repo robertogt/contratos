@@ -17,10 +17,10 @@ export class RueService {
   public urlFuncionario:string;
   public urlCreaContrato:string;
   public urlGetContrato:string;
+  public urlCrearAddendum:string;
 
 	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
   		this.urlActividades   = config.ENDPOINT+'/RRHHContratos/rest/actividades';
-      //this.urlActividades   = config.ENDPOINT+'/bknRRHHContratos/rest/actividades';
       this.urlBuscaEmpleados = config.ENDPOINT+'/bknRRHHContratos/rest/funcionarios';
   		this.urlColegios   = config.ENDPOINT+'/bknRRHHContratos/rest/colegios';
       this.urlCreaContrato   = config.ENDPOINT+'/bknRRHHContratos/rest/contrato';
@@ -29,7 +29,8 @@ export class RueService {
       this.urlPerfiles   = config.ENDPOINT+'/bknRRHHContratos/rest/actividades/perfiles/ubicacion';
       this.urlRenglones 	= config.ENDPOINT+'/BackEndPresupuesto/restresources/presupuesto/renglon';
   		this.urlUbicacionesFuncionales 	= config.ENDPOINT+'/bknRRHHActividades/rest/ubicacionfuncional';
-  		this.urlTitulos 	= config.ENDPOINT+'/bknRRHHContratos/rest/titulos';  		  		          
+  		this.urlTitulos 	= config.ENDPOINT+'/bknRRHHContratos/rest/titulos';
+      this.urlCrearAddendum = config.ENDPOINT+'/bknRRHHContratos/rest/addendum';
 	}
 
 	getPersonas(texto:string){
@@ -99,6 +100,12 @@ export class RueService {
       params.set('idContrato', ""+idContrato); 
       return this.http.get(this.urlGetContrato, {search: params})
           .map(res => res.json());
+  }
+
+  crearAddendum(data:any){      
+      let headers = new Headers();
+      return this.http.post(this.urlCrearAddendum,data,{headers:headers})
+                      .map(res => res.json());
   }
 
 

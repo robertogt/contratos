@@ -1,0 +1,136 @@
+<form>
+	<div>
+		<h1 class="display-6">Detalle del contrato: {{data.numeroContrato}}</h1>
+		<legend></legend>
+		<hr>
+	</div>
+	<br>
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="nombre"><strong>Contratista</strong>
+			<span class="fa fa-user-o" aria-hidden="true"></span>
+		</label>
+		
+		<div class="col-8">
+			<input class="form-control" id="nombre" name="nombre" [(ngModel)]="data.nombreEmpleado" disabled>
+		</div>
+		
+	</div>
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="fechaDel"><strong>Periodo del contrato</strong>
+			<span class="fa fa-calendar" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="fechaDel" name="fechaDel" [(ngModel)]="data.fechaDel" disabled>
+		</div>
+		<label class="col-sm-2 col-form-label text-center" for="fechaAl"><strong>al</strong></label>
+		<div class="col-3">
+			<input class="form-control" id="fechaAl" name="fechaAl" [(ngModel)]="data.fechaAl" disabled>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="renglon"><strong>Renglon</strong>
+			<span class="fa fa-briefcase" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="renglon" name="renglon" [(ngModel)]="data.renglon" disabled>
+		</div>
+		<label class="col-sm-2 col-form-label text-center" for="tipoServicio"><strong>Tipo servicio</strong>
+			<span class="fa fa-university" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="tipoServicio" name="tipoServicio" [(ngModel)]="data.tipoServicio" disabled>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="ubicacionFuncional"><strong>Ubicacion Funcional</strong>
+			<span class="fa fa-building" aria-hidden="true"></span>
+		</label>
+		<div class="col-8">
+			<input class="form-control" id="ubicacionFuncional" name="ubicacionFuncional" 
+			[(ngModel)]="data.ubicacionFuncional" disabled>
+		</div>		
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="perfiles"><strong>Actividades</strong>
+			<span class="fa fa-list-ol" aria-hidden="true"></span>
+		</label>
+		<div class="col-4">
+			<p-dataList [value]="perfiles" emptyMessage="">
+				<p-header>
+					Perfiles
+				</p-header>
+				<ng-template let-perfil let-i="index" pTemplate="item">
+					<div class="lista-elementos">{{perfil.nombre}}</div>
+				</ng-template>
+			</p-dataList>
+		</div>
+		<div class="col-4">
+			<p-dataList [value]="data.actividades" emptyMessage="">
+				<p-header>
+					Actividades
+				</p-header>
+				<ng-template let-actividad let-i="index" pTemplate="item">
+					<input pTooltip={{actividad.descripcion}}> {{actividad.nombre}}
+					<br>
+				</ng-template>
+			</p-dataList>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="fechaContrato"><strong>Fecha Contrato</strong>
+			<span class="fa fa-calendar" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="fechaContrato" name="fechaContrato" [(ngModel)]="data.fechaCambioTipoMovimiento" disabled>
+		</div>
+		<label class="col-sm-2 col-form-label text-center" for="honorario"><strong>Honorarios</strong>
+			<span class="fa fa-money" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="honorario" name="honorario" [(ngModel)]="data.honorario" disabled>
+		</div>
+	</div>
+	
+	<hr>
+	
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="usuarioInsert"><strong>Usuario ingreso</strong>
+			<span class="fa fa-user" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="usuarioInsert" name="usuarioInsert" [(ngModel)]="data.usuarioInsert" disabled>
+		</div>
+		<label class="col-sm-2 col-form-label text-center" for="fechaInsert"><strong>Fecha Ingreso</strong>
+			<span class="fa fa-calendar" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="fechaInsert" name="fechaInsert" [(ngModel)]="data.fechaInsert" disabled>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="usuarioUpdate"><strong>Usuario actualiza</strong>
+			<span class="fa fa-user" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="usuarioUpdate" name="usuarioUpdate" [(ngModel)]="data.usuarioUpdate" disabled>
+		</div>
+		<label class="col-sm-2 col-form-label text-center" for="fechaUpdate"><strong>Fecha Update</strong>
+			<span class="fa fa-calendar" aria-hidden="true"></span>
+		</label>
+		<div class="col-3">
+			<input class="form-control" id="fechaUpdate" name="fechaUpdate" [(ngModel)]="data.fechaUpdate" disabled>
+		</div>
+	</div>
+
+	<br>
+	<div class="form-group row">
+		<div class="offset-3 col-2">
+			<button type="button" class="btn btn-primary" (click)="activeModal.close()">Cerrar</button>
+		</div>
+	</div>
+</form>

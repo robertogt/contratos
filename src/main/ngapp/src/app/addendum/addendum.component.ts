@@ -1,5 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
-import {NgbModal, NgbActiveModal,NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { RueService } from '../services/rue.service';
 import { Laboral } from '../model/laboral';
 import { NgForm } from '@angular/forms';
@@ -13,8 +13,7 @@ import { UtilService } from '../services/util.service';
   providers: [NgbActiveModal]
 })
 export class AddendumComponent implements OnInit {
-
-	//actividades: any[];
+	
 	contratista: any;
 	data: any={};
   msgs: Message[] = [];
@@ -109,16 +108,16 @@ export class AddendumComponent implements OnInit {
     
     console.log('data',this.data);
 
-    this.activeModal.dismiss()
-    /*this.rueService.setContrato(this.data).subscribe( 
+    this.activeModal.dismiss();
+    this.rueService.crearAddendum(this.data).subscribe( 
                                                       response => {console.log(response),
                                                                    //this.limpiarForm(f);
-                                                                   this.muestraMensaje('success','Contrato creado');
-                                                                   this.contratoGuardado=true;
+                                                                   this.muestraMensaje('success','addendum creado');
+                                                                   console.log(response);
                                                                  },
                                                       error => {this.muestraMensaje('error',error);
-                                                                this.contratoGuardado=false;}
-                                                     );*/
+                                                                }
+                                                     );
   }
 
 	searchUbicacion(event) {
