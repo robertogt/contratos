@@ -56,18 +56,8 @@
 	<div class="form-group row">
 		<label class="col-md-3 col-form-label text-right" for="perfiles"><strong>Actividades</strong>
 			<span class="fa fa-list-ol" aria-hidden="true"></span>
-		</label>
-		<div class="col-4">
-			<p-dataList [value]="perfiles" emptyMessage="">
-				<p-header>
-					Perfiles
-				</p-header>
-				<ng-template let-perfil let-i="index" pTemplate="item">
-					<div class="lista-elementos">{{perfil.nombre}}</div>
-				</ng-template>
-			</p-dataList>
-		</div>
-		<div class="col-4">
+		</label>		
+		<div class="col-8">
 			<p-dataList [value]="data.actividades" emptyMessage="">
 				<p-header>
 					Actividades
@@ -86,6 +76,7 @@
 		</label>
 		<div class="col-3">
 			<input class="form-control" id="fechaContrato" name="fechaContrato" [(ngModel)]="data.fechaCambioTipoMovimiento" disabled>
+			{{data.fechaCambioTipoMovimiento | date:'dd/MM/yyyy 24hh:mi:ss'}}
 		</div>
 		<label class="col-sm-2 col-form-label text-center" for="honorario"><strong>Honorarios</strong>
 			<span class="fa fa-money" aria-hidden="true"></span>

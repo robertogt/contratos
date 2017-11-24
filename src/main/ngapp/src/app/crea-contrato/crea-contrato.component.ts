@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { RueService } from '../services/rue.service';
 import { Laboral } from '../model/laboral';
 import { NgForm } from '@angular/forms';
@@ -29,7 +30,10 @@ export class CreaContratoComponent implements OnInit {
   renglon: any;
   tipoServicios: any;
 	ubicacion: any={};
+  param: any;
+  idContrato:any;
   idPerfil: any = null;
+
   fechaContrato: any;
   honorarios: any;
   estadoCivil: any;
@@ -52,9 +56,14 @@ export class CreaContratoComponent implements OnInit {
 
   contratoGuardado:boolean=false;
 
-	constructor(private rueService:RueService) { }
+	constructor(private rueService:RueService, private route: ActivatedRoute) { }
 
 	ngOnInit() {
+    
+    this.param = this.route.params.subscribe(params => {
+       this.idContrato = params['idContrato'];   
+    });
+
     this.tiposServicios = [{value:'T',label:'Tecnicos'},{value:'P',label:'Profesionales'}]
 		this.rueService.getRenglones().subscribe(renglones => this.renglones = renglones);
 		this.rueService.getColegios().subscribe(colegios => this.colegios = colegios);
@@ -62,6 +71,11 @@ export class CreaContratoComponent implements OnInit {
     this.fechaMinima = { day: 1, month: 1, year: date.getUTCFullYear()};
     this.fechaMaxima = { day: 31, month: 12, year: date.getUTCFullYear()};
     
+    
+  }
+
+  ngOnDestroy() {
+    this.param.unsubscribe();
   }
   
   onSubmit(f: NgForm){

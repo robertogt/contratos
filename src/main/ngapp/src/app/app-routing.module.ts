@@ -7,7 +7,7 @@ import { BusquedaContratoComponent } from './busqueda-contrato/busqueda-contrato
 const routes: Routes = [
   { path: '', redirectTo: '/contrato', pathMatch: 'full' }
    ,{ path: 'contrato',  component: CreaContratoComponent }
-   ,{ path: 'addendum',  component: AddendumComponent }
+   ,{ path: 'contrato/:idContrato',  component: CreaContratoComponent }
    ,{ path: 'consulta',  component: BusquedaContratoComponent }
 ];
  

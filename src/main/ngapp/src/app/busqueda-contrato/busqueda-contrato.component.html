@@ -45,7 +45,7 @@
 			<p-column styleClass="col-button" header="Editar">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-edit" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar" (click)="editar(contrato)" ></span></a>
+						<a routerLink="/contrato/{{contrato.idContrato}}"><span class="fa fa-edit" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar"></span></a>
 					</div>
 				</ng-template>
 			</p-column>
@@ -77,6 +77,14 @@
 					</div>
 				</ng-template>
 			</p-column>
+			<p-column field="idContrato" header="Sale Date" [editable]="true" [style]=" {'overflow':'visible' }">
+		        <ng-template let-col let-contrato="rowData" pTemplate="body" >
+		             {{contrato[col.field] }}
+		        </ng-template>		        
+		        <!--ng-template let-col let-contrato="rowData" pTemplate="editor">
+		            <input type="text" name="editor" [(ngModel)]="contrato[col.field]" appendTo="body"></input>
+		        </ng-template-->
+		    </p-column>
 		</p-dataTable>
 	</div>
 </div>
