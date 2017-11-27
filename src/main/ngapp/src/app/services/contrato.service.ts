@@ -7,20 +7,53 @@ import { APP_CONFIG, AppConfig } from '../app-config.module';
 @Injectable()
 export class ContratoService {
 
-  public urlContratos:string;
-	public urlContratosPendientes:string;
+  public urlActividades:string;
+  public urlContratosPendientesActivos:string;
+  public urlRegistrarNumeroFianza:string;
+  public urlContrato:string;
+  public urlUpdateContrato:string;
 
   	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
 
-      this.urlContratos   = config.ENDPOINT+'/RRHHContratos/rest/addendum/contrato';
-  		this.urlContratosPendientes   = config.ENDPOINT+'/RRHHContratos/rest/addendum/contrato';
+      this.urlActividades = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/actividades';
+      this.urlContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/edit';
+      this.urlContratosPendientesActivos = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta';
+      this.urlRegistrarNumeroFianza = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/fianza';
+      this.urlUpdateContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/editar';
+      
   	}
+    
+    getActividadesContrato(idContrato: number){
+      let params = new URLSearchParams();
+      params.set('contrato', ""+idContrato); 
+      return this.http.get(this.urlActividades, {search: params})
+          .map(res => res.json());
+    }
 
-  	getContratosPendientes(){
-  	/*	let params = new URLSearchParams();
-    	params.set('idUbicacion', ""+idUbicacion); 
-    	return this.http.get(this.urlPerfiles, {search: params})
-          .map(res => res.json());*/
-	}
+    getContrato(contrato:number){
+      let params = new URLSearchParams();
+      params.set('contrato', ""+contrato); 
+      return this.http.get(this.urlContrato,{search:params})
+          .map(res => res.json());
+    }
 
+    getContratos(anio){
+      let params = new URLSearchParams();
+      params.set('anio', ""+anio); 
+      return this.http.get(this.urlContratosPendientesActivos,{search:params})
+          .map(res => res.json());
+    }
+
+    registrarNumeroFianza(data:any){      
+      let headers = new Headers();
+      return this.http.post(this.urlRegistrarNumeroFianza,data,{headers:headers})
+                      .map(res => res.json());
+    }
+
+    updateContrato(data:any){ 
+      let headers = new Headers();
+      return this.http.post(this.urlUpdateContrato,data,{headers:headers})
+                      .map(res => res.json());
+  }
+  	
 }

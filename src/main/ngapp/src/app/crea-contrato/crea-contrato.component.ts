@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RueService } from '../services/rue.service';
+import { UtilService } from '../services/util.service';
+import { ContratoService } from '../services/contrato.service';
 import { Laboral } from '../model/laboral';
 import { NgForm } from '@angular/forms';
-import {Message} from 'primeng/primeng';
+import { Message } from 'primeng/primeng';
 
 @Component({
   selector: 'app-root',
@@ -56,26 +58,37 @@ export class CreaContratoComponent implements OnInit {
 
   contratoGuardado:boolean=false;
 
-	constructor(private rueService:RueService, private route: ActivatedRoute) { }
+	constructor(private rueService:RueService, private route: ActivatedRoute, 
+              private contratoService:ContratoService, private utilService: UtilService) { }
 
 	ngOnInit() {
-    
-    this.param = this.route.params.subscribe(params => {
-       this.idContrato = params['idContrato'];   
-    });
 
-    this.tiposServicios = [{value:'T',label:'Tecnicos'},{value:'P',label:'Profesionales'}]
-		this.rueService.getRenglones().subscribe(renglones => this.renglones = renglones);
-		this.rueService.getColegios().subscribe(colegios => this.colegios = colegios);
     var date = new Date();
-    this.fechaMinima = { day: 1, month: 1, year: date.getUTCFullYear()};
+    this.tiposServicios = [{value:'T',label:'Tecnicos'},{value:'P',label:'Profesionales'}]
+		this.fechaMinima = { day: 1, month: 1, year: date.getUTCFullYear()};
     this.fechaMaxima = { day: 31, month: 12, year: date.getUTCFullYear()};
-    
-    
+		this.rueService.getColegios().subscribe(colegios => {this.colegios = colegios,this.inicializaRenglones()});
+     
   }
 
+  inicializaRenglones(){
+    this.rueService.getRenglones().subscribe(renglones => {this.renglones = renglones, this.inicializaContrato()});
+  }
+
+  inicializaContrato(){
+    this.param = this.route.params.subscribe(params => {
+       this.idContrato = params['idContrato'];   
+       if(this.idContrato!=undefined){
+          console.log(this.idContrato);
+          this.getContrato();
+          //this.contratoService().getContrato().subscribe()
+       }
+    });   
+  }
+
+
   ngOnDestroy() {
-    this.param.unsubscribe();
+    //this.param.unsubscribe();
   }
   
   onSubmit(f: NgForm){
@@ -102,7 +115,26 @@ export class CreaContratoComponent implements OnInit {
     
     console.log('data',this.data);
 
-    this.rueService.setContrato(this.data).subscribe( 
+    if(this.idContrato==undefined)
+      this.insertContrato(this.data);
+    else
+      this.updateContrato(this.data);
+  }
+
+  insertContrato(data){
+    this.rueService.setContrato(data).subscribe( 
+                                                      response => {console.log(response),
+                                                                   //this.limpiarForm(f);
+                                                                   this.muestraMensaje('success','Contrato creado');
+                                                                   this.contratoGuardado=true;
+                                                                 },
+                                                      error => {this.muestraMensaje('error',error);
+                                                                this.contratoGuardado=false;}
+                                                     );
+  }
+
+  updateContrato(data){
+    this.contratoService.updateContrato(data).subscribe( 
                                                       response => {console.log(response),
                                                                    //this.limpiarForm(f);
                                                                    this.muestraMensaje('success','Contrato creado');
@@ -114,7 +146,7 @@ export class CreaContratoComponent implements OnInit {
   }
 
   cargaDatos(data){
-
+    console.log('data',data);
     this.estadoCivil = data.estadoCivilLetras;
     this.nacionalidad = data.nacionalidad;
     this.dpi = data.dpi;
@@ -135,13 +167,12 @@ export class CreaContratoComponent implements OnInit {
       this.colegio =null;
     }
 
-    if(data.infoAcademica !=undefined){
-      
-      this.academico = data.infoAcademica.academico;
-      this.colegio = data.infoAcademica.colegioProfesional;
-      this.titulo.titulo = data.infoAcademica.titulo;
-      (<HTMLInputElement>document.getElementById("titu")).value = data.infoAcademica.nombreTitulo;
-      this.numeroColegiado = data.infoAcademica.numeroColegiado;
+    if(data.infoAcademica !=undefined || data.academico !=undefined){
+      let academico = (data.academico!=undefined?data.academico:data.infoAcademica);      
+      this.colegio = academico.colegioProfesional;
+      this.titulo.titulo = academico.titulo;
+      (<HTMLInputElement>document.getElementById("titu")).value =academico.nombreTitulo;
+      this.numeroColegiado = academico.numeroColegiado;
     }else
     {
       this.titulo=null;
@@ -160,15 +191,32 @@ export class CreaContratoComponent implements OnInit {
 
   }
 
+  cargaDatosEdicion(data){
+    this.fechaDel = this.utilService.getDateObject(data.fechaDel);
+    this.fechaAl = this.utilService.getDateObject(data.fechaAl);
+    this.fechaContrato = this.utilService.getDateObject(data.fechaCambioTipoMovimiento);
+  }
+
   descargarPDF(){
     console.log('descargar');
   }
 
   getActividades(perfil){
-
       this.rueService
       .getActividadesPorPerfil(perfil,this.data.idRue)
       .subscribe(  actividades => {this.actividades = actividades; console.log(this.actividades)},
+                error => { var errorMessage = <any>error; console.log(errorMessage);});
+  }
+
+  getContrato(){
+    this.contratoService
+      .getContrato(this.idContrato)
+      .subscribe( data => { this.data = data.data;                                                              
+                            this.actividades = this.data.actividades;
+                            this.cargaDatosEdicion(this.data);
+                            this.cargaDatos(this.data);
+                                
+                          },
                 error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
@@ -185,6 +233,10 @@ export class CreaContratoComponent implements OnInit {
                                 }
                               },
             		error => { var errorMessage = <any>error; console.log(errorMessage);});
+  }
+
+  inicializaFormulario(){
+
   }
 
   inicializaLaboral(data){

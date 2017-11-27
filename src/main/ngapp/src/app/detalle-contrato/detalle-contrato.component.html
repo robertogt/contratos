@@ -1,6 +1,7 @@
 <form>
 	<div>
-		<h1 class="display-6">Detalle del contrato: {{data.numeroContrato}}</h1>
+		<h1 class="display-6">Detalle del contrato:</h1>
+		<h3>{{data.numeroContrato}}</h3>
 		<legend></legend>
 		<hr>
 	</div>
@@ -11,7 +12,7 @@
 		</label>
 		
 		<div class="col-8">
-			<input class="form-control" id="nombre" name="nombre" [(ngModel)]="data.nombreEmpleado" disabled>
+			<input class="form-control" id="nombre" name="nombre" [(ngModel)]="data.nombreCompleto" disabled>
 		</div>
 		
 	</div>
@@ -33,13 +34,13 @@
 			<span class="fa fa-briefcase" aria-hidden="true"></span>
 		</label>
 		<div class="col-3">
-			<input class="form-control" id="renglon" name="renglon" [(ngModel)]="data.renglon" disabled>
+			<input class="form-control" id="renglon" name="renglon" [(ngModel)]="data.nombreRenglon" disabled>
 		</div>
 		<label class="col-sm-2 col-form-label text-center" for="tipoServicio"><strong>Tipo servicio</strong>
 			<span class="fa fa-university" aria-hidden="true"></span>
 		</label>
 		<div class="col-3">
-			<input class="form-control" id="tipoServicio" name="tipoServicio" [(ngModel)]="data.tipoServicio" disabled>
+			<input class="form-control" id="tipoServicio" name="tipoServicio" [(ngModel)]="data.nombreServicio" value="ddd" disabled>
 		</div>
 	</div>
 
@@ -49,7 +50,7 @@
 		</label>
 		<div class="col-8">
 			<input class="form-control" id="ubicacionFuncional" name="ubicacionFuncional" 
-			[(ngModel)]="data.ubicacionFuncional" disabled>
+			[(ngModel)]="data.nombreUbicacion" disabled>
 		</div>		
 	</div>
 
@@ -63,8 +64,7 @@
 					Actividades
 				</p-header>
 				<ng-template let-actividad let-i="index" pTemplate="item">
-					<input pTooltip={{actividad.descripcion}}> {{actividad.nombre}}
-					<br>
+					<label pTooltip="{{actividad.nombre}}">{{actividad.descripcion}}</label>					
 				</ng-template>
 			</p-dataList>
 		</div>
@@ -75,8 +75,7 @@
 			<span class="fa fa-calendar" aria-hidden="true"></span>
 		</label>
 		<div class="col-3">
-			<input class="form-control" id="fechaContrato" name="fechaContrato" [(ngModel)]="data.fechaCambioTipoMovimiento" disabled>
-			{{data.fechaCambioTipoMovimiento | date:'dd/MM/yyyy 24hh:mi:ss'}}
+			<input class="form-control" id="fechaContrato" name="fechaContrato" [(ngModel)]="data.fechaCambioTipoMovimiento" disabled>			
 		</div>
 		<label class="col-sm-2 col-form-label text-center" for="honorario"><strong>Honorarios</strong>
 			<span class="fa fa-money" aria-hidden="true"></span>
@@ -99,7 +98,7 @@
 			<span class="fa fa-calendar" aria-hidden="true"></span>
 		</label>
 		<div class="col-3">
-			<input class="form-control" id="fechaInsert" name="fechaInsert" [(ngModel)]="data.fechaInsert" disabled>
+			{{data.fechaInsert | date:'dd/MM/yyyy hh:mm:ss a'}}						
 		</div>
 	</div>
 
@@ -114,7 +113,7 @@
 			<span class="fa fa-calendar" aria-hidden="true"></span>
 		</label>
 		<div class="col-3">
-			<input class="form-control" id="fechaUpdate" name="fechaUpdate" [(ngModel)]="data.fechaUpdate" disabled>
+			{{data.fechaUpdate | date:'dd/MM/yyyy hh:mm:ss a'}}
 		</div>
 	</div>
 

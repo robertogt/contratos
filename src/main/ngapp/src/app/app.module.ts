@@ -7,9 +7,10 @@ import { HttpModule} from '@angular/http';
 import { AppRoutingModule }         from './app-routing.module';
 import { AppConfigModule } from './app-config.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AutoCompleteModule, DataListModule, InputMaskModule, GrowlModule,TooltipModule, DataTableModule, SharedModule } from 'primeng/primeng';
+import { AutoCompleteModule, DataListModule, DialogModule, InputMaskModule, GrowlModule,TooltipModule, DataTableModule, SharedModule } from 'primeng/primeng';
 import { CreaContratoComponent } from './crea-contrato/crea-contrato.component';
 import { AddendumComponent } from './addendum/addendum.component'; 
+import { ContratoService }         from './services/contrato.service';
 import { RueService }         from './services/rue.service';
 import { UtilService }         from './services/util.service';
 import { BusquedaContratoComponent } from './busqueda-contrato/busqueda-contrato.component';
@@ -37,12 +38,13 @@ import { DetalleContratoComponent } from './detalle-contrato/detalle-contrato.co
     GrowlModule,
     TooltipModule,
     DataTableModule,
+    DialogModule,
     SharedModule,
     NgbModule.forRoot()
 
   ],
   entryComponents:[AddendumComponent, DetalleContratoComponent],
-  providers: [RueService,UtilService],
+  providers: [ContratoService,RueService,UtilService],
   bootstrap: [AppComponent]  
 })
 export class AppModule { }

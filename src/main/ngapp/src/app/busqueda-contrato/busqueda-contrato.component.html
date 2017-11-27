@@ -34,17 +34,30 @@
 				</div>
 			</p-header>
 			
-			<p-column field="identificador" header="Identificador"></p-column>
-			<p-column field="renglon" header="Renglon" [filter]="true"></p-column>
-			<p-column field="honorarios" header="Honorarios"></p-column>
-			<p-column field="estado" header="Estado" [filter]="true">
+			<p-column field="numeroContrato" header="Identificador" [style]="{'width':'15%'}"></p-column>
+			<p-column field="nombreRenglon" header="Renglon" [filter]="true" [style]="{'text-align':'center'}"></p-column>
+			<p-column field="honorario" header="Honorarios" [style]="{'text-align':'right'}">
 				<ng-template let-col let-contrato="rowData" pTemplate="body">
-            		<span [ngClass]="getClass(contrato.estado)">{{contrato.estado}}</span>
+            		<span >{{contrato.honorario | currency:'GTQ'}}</span>
         		</ng-template>
+			</p-column>
+			<p-column field="estado" header="Estado" [filter]="true" [style]="{'text-align':'center'}">
+				<ng-template let-col let-contrato="rowData" pTemplate="body">
+            		<span [ngClass]="getClass(contrato.idCatalogoEstado)">{{getNombreEstado(contrato.idCatalogoEstado)}}
+       				</span>
+        		</ng-template>
+			</p-column>
+			<p-column styleClass="col-button" header="Fianza">
+				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+					<div class="row align-items-center justify-content-center" (click)="showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza)">
+						{{contrato.numeroFianza}} 
+						<a><span [ngClass]="contrato.numeroFianza==null?'fa fa-handshake-o':''" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Fianza" ></span></a>						
+					</div>
+				</ng-template>
 			</p-column>
 			<p-column styleClass="col-button" header="Editar">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div class="row align-items-center justify-content-center">
+					<div *ngIf="puedeDescargar(contrato)" class="row align-items-center justify-content-center">
 						<a routerLink="/contrato/{{contrato.idContrato}}"><span class="fa fa-edit" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar"></span></a>
 					</div>
 				</ng-template>
@@ -59,14 +72,14 @@
 			<p-column styleClass="col-button" header="Addendum">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(contrato.idContrato)" ></span></a>
+						<a *ngIf="contrato.idCatalogoEstado==5"><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(contrato.idContrato)" ></span></a>
 					</div>
 				</ng-template>
 			</p-column>
 			<p-column styleClass="col-button" header="Detalles">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-search" aria-hidden="true"  placement="top" ngbTooltip="Detalles" (click)="openDetalleModal(contrato.idContrato)" ></span></a>
+						<a><span class="fa fa-search" aria-hidden="true"  placement="top" ngbTooltip="Detalles" (click)="openDetalleModal(contrato)" ></span></a>
 					</div>
 				</ng-template>
 			</p-column>
@@ -77,14 +90,14 @@
 					</div>
 				</ng-template>
 			</p-column>
-			<p-column field="idContrato" header="Sale Date" [editable]="true" [style]=" {'overflow':'visible' }">
-		        <ng-template let-col let-contrato="rowData" pTemplate="body" >
-		             {{contrato[col.field] }}
-		        </ng-template>		        
-		        <!--ng-template let-col let-contrato="rowData" pTemplate="editor">
-		            <input type="text" name="editor" [(ngModel)]="contrato[col.field]" appendTo="body"></input>
-		        </ng-template-->
-		    </p-column>
 		</p-dataTable>
 	</div>
 </div>
+
+<p-dialog header="Registro de fianza para el contrato: {{numeroContrato}}" [(visible)]="display" modal="modal" width="700" [responsive]="true">
+    <input class="form-control" type="text" name="numeroFianza" [(ngModel)]="numeroFianza" >
+    <p-footer>
+        <button type="button" class="btn btn-success" (click)="registrarFianza()">Registrar fianza</button>
+        <button type="button" class="btn btn-default" (click)="display=false">Cancelar</button>
+    </p-footer>
+</p-dialog>

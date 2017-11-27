@@ -20,12 +20,12 @@ export class RueService {
   public urlCrearAddendum:string;
 
 	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
-  		this.urlActividades   = config.ENDPOINT+'/RRHHContratos/rest/actividades';
+  		this.urlActividades   = config.ENDPOINT+'/bknRRHHContratos/rest/actividades';
       this.urlBuscaEmpleados = config.ENDPOINT+'/bknRRHHContratos/rest/funcionarios';
   		this.urlColegios   = config.ENDPOINT+'/bknRRHHContratos/rest/colegios';
       this.urlCreaContrato   = config.ENDPOINT+'/bknRRHHContratos/rest/contrato';
       this.urlFuncionario  = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/funcionario';      
-      this.urlGetContrato   = config.ENDPOINT+'/RRHHContratos/rest/addendum/contrato';
+      this.urlGetContrato   = config.ENDPOINT+'/bknRRHHContratos/rest/addendum';
       this.urlPerfiles   = config.ENDPOINT+'/bknRRHHContratos/rest/actividades/perfiles/ubicacion';
       this.urlRenglones 	= config.ENDPOINT+'/BackEndPresupuesto/restresources/presupuesto/renglon';
   		this.urlUbicacionesFuncionales 	= config.ENDPOINT+'/bknRRHHActividades/rest/ubicacionfuncional';
@@ -42,7 +42,7 @@ export class RueService {
 
 	getRenglones(){
 		return this.http.get(this.urlRenglones)
-          .map(res => res.json());	
+          .map(res => res.json());
 	}
 
 	getUbicacionesFuncionales(texto:string){
