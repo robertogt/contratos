@@ -75,7 +75,7 @@
 			  	</div>
 				<label class="col-md-2 col-form-label text-right" for="tipoServicio"><strong>Tipo Servicio</strong></label>
 				<div class="col-2">
-			  		<select  class="form-control" name="tipoServicios" [(ngModel)]="tipoServicios">
+			  		<select  class="form-control" name="tipoServicios" [(ngModel)]="tipoServicios" (change)="cambiaTipoServicios(tipoServicios)">
 			  			<option *ngFor="let tipoServicios of tiposServicios" [ngValue]="tipoServicios.value">{{tipoServicios.label}}</option>
 			  		</select>
 			  	</div>
@@ -278,7 +278,7 @@
 	  			<button type="submit" class="btn btn-primary" [disabled]="!contratoForm.form.valid">Crear contrato</button>
 	  		</div>
 	  		<div class="col-2">
-	  			<button type="button" class="btn btn-success" [disabled]="!contratoGuardado" (click)="descargarPDF()">Descargar PDF</button>
+	  			<button type="button" class="btn btn-success" [disabled]="!contratoGuardado&&!idContrato" (click)="descargarDocumento()">Descargar Contrato</button>
 	  		</div>
 	  	</div>
 </div>

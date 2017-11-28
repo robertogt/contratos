@@ -69,7 +69,7 @@ export class BusquedaContratoComponent implements OnInit {
 	}
 
 	downloadContrato(contrato){
-		window.open(this.config.ENDPOINT+'/bknRRHHContratos/rest/contrato/generar/'+contrato.idContrato)
+		window.open(this.config.ENDPOINT+'/bknRRHHContratos/rest/contrato/generar/'+contrato.idContrato);
 	}
 
 	editar(contrato){
@@ -79,7 +79,7 @@ export class BusquedaContratoComponent implements OnInit {
 	getClass(estado){
 
 		switch(estado){
-			case 1:return "bg-mutted text-white";
+			case 1:return "bg-default text-white";
 			case 2:return "bg-primary text-white";
 			case 3:return "bg-danger text-white";
 			case 4:return "bg-warning text-white";
@@ -145,10 +145,10 @@ export class BusquedaContratoComponent implements OnInit {
 
 	registrarFianza(){
 		console.log(this.numeroFianza);
-		this.contratoService.registrarNumeroFianza(this.data).subscribe( 
+		this.contratoService.registrarNumeroFianza(this.idContrato, this.numeroFianza).subscribe( 
                                                       response => {console.log(response),
                                                                    this.limpiarFianza();
-                                                                   this.muestraMensaje('success','Contrato creado');
+                                                                   this.muestraMensaje('success','Fianza registrada');
                                                                  },
                                                       error => {this.muestraMensaje('error',error);
                                                                 }
@@ -166,11 +166,14 @@ export class BusquedaContratoComponent implements OnInit {
       this.msgs.push({severity:tipoMensaje, summary:'', detail:message});
   	}
 
-	showIngresoFianza(idContrato:number, numeroContrato:string, numeroFianza:string) {
-		this.numeroContrato = numeroContrato;
-		this.idContrato = idContrato;
-		this.numeroFianza = numeroFianza;
-        this.display = true;
+	showIngresoFianza(idContrato:number, numeroContrato:string, numeroFianza:string, idCatalogoEstado:number) {
+		
+		if(idCatalogoEstado==1 || idCatalogoEstado==2||idCatalogoEstado==3){
+			this.numeroContrato = numeroContrato;
+			this.idContrato = idContrato;
+			this.numeroFianza = numeroFianza;
+        	this.display = true;
+    	}
     }
 
 }

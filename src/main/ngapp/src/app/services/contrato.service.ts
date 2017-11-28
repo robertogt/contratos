@@ -7,10 +7,11 @@ import { APP_CONFIG, AppConfig } from '../app-config.module';
 @Injectable()
 export class ContratoService {
 
-  public urlActividades:string;
-  public urlContratosPendientesActivos:string;
-  public urlRegistrarNumeroFianza:string;
+  public urlActividades:string;  
   public urlContrato:string;
+  public urlContratosPendientesActivos:string;
+  public urlDescargarDocumento:string;
+  public urlRegistrarNumeroFianza:string;  
   public urlUpdateContrato:string;
 
   	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
@@ -18,10 +19,15 @@ export class ContratoService {
       this.urlActividades = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/actividades';
       this.urlContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/edit';
       this.urlContratosPendientesActivos = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta';
+      this.urlDescargarDocumento = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/generar/';
       this.urlRegistrarNumeroFianza = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/fianza';
       this.urlUpdateContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/editar';
       
   	}
+
+    descargarDocumento(idContrato:number){      
+      window.open(this.urlDescargarDocumento+idContrato);
+    }
     
     getActividadesContrato(idContrato: number){
       let params = new URLSearchParams();
@@ -44,9 +50,13 @@ export class ContratoService {
           .map(res => res.json());
     }
 
-    registrarNumeroFianza(data:any){      
+    registrarNumeroFianza(idContrato:number, numeroFianza:string){      
+      let params = new URLSearchParams();
+      params.set('contrato', ""+idContrato);
+      params.set('fianza', numeroFianza);
       let headers = new Headers();
-      return this.http.post(this.urlRegistrarNumeroFianza,data,{headers:headers})
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      return this.http.post(this.urlRegistrarNumeroFianza,params,{headers:headers})
                       .map(res => res.json());
     }
 
@@ -54,6 +64,6 @@ export class ContratoService {
       let headers = new Headers();
       return this.http.post(this.urlUpdateContrato,data,{headers:headers})
                       .map(res => res.json());
-  }
+    }
   	
 }

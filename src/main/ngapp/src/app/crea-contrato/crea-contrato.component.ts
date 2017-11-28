@@ -6,6 +6,7 @@ import { ContratoService } from '../services/contrato.service';
 import { Laboral } from '../model/laboral';
 import { NgForm } from '@angular/forms';
 import { Message } from 'primeng/primeng';
+import { APP_CONFIG, AppConfig } from '../app-config.module';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +15,19 @@ import { Message } from 'primeng/primeng';
 })
 export class CreaContratoComponent implements OnInit {
 
-	personas: any[];
-	renglones: any[];
-	ubicaciones: any[];
-	colegios: any[];
-	titulos: any[];
-	perfiles: any[];
 	actividades: any[];
+  colegios: any[];
+  perfiles: any[];
+  personas: any[];	
+  renglones: any[];
+	ubicaciones: any[];	
+	titulos: any[];
+
   tiposServicios: any={};
 
   data: any={};
   infoAcademica: any={};
-
+  idContrato:any=null;
 	contratista: any;
   fechaDel: any;
   fechaAl: any;
@@ -33,7 +35,7 @@ export class CreaContratoComponent implements OnInit {
   tipoServicios: any;
 	ubicacion: any={};
   param: any;
-  idContrato:any;
+  
   idPerfil: any = null;
 
   fechaContrato: any;
@@ -59,7 +61,8 @@ export class CreaContratoComponent implements OnInit {
   contratoGuardado:boolean=false;
 
 	constructor(private rueService:RueService, private route: ActivatedRoute, 
-              private contratoService:ContratoService, private utilService: UtilService) { }
+              private contratoService:ContratoService, private utilService: UtilService) 
+            { }
 
 	ngOnInit() {
 
@@ -78,10 +81,8 @@ export class CreaContratoComponent implements OnInit {
   inicializaContrato(){
     this.param = this.route.params.subscribe(params => {
        this.idContrato = params['idContrato'];   
-       if(this.idContrato!=undefined){
-          console.log(this.idContrato);
-          this.getContrato();
-          //this.contratoService().getContrato().subscribe()
+       if(this.idContrato!=undefined){          
+          this.getContrato();          
        }
     });   
   }
@@ -105,13 +106,12 @@ export class CreaContratoComponent implements OnInit {
     this.data.fechaCambioTipoMovimiento = this.fechaContrato.day+'/'+this.fechaContrato.month+'/'+this.fechaContrato.year;
     this.data.actividades = this.actividades;
 
-
     this.infoAcademica.academico = this.academico;
     this.infoAcademica.colegioProfesional = this.colegio;
     this.infoAcademica.titulo = this.titulo.titulo;
     this.infoAcademica.numeroColegiado = this.numeroColegiado;
     
-    this.data.infoAcademica = this.infoAcademica;
+    this.data.academico = this.infoAcademica;
     
     console.log('data',this.data);
 
@@ -145,6 +145,14 @@ export class CreaContratoComponent implements OnInit {
                                                      );
   }
 
+  cambiaTipoServicios(tipoServicios){
+
+    if(tipoServicios=='T'){
+      this.numeroColegiado=null;    
+      this.colegio=null;
+    }
+  }
+
   cargaDatos(data){
     console.log('data',data);
     this.estadoCivil = data.estadoCivilLetras;
@@ -155,7 +163,7 @@ export class CreaContratoComponent implements OnInit {
     this.edad = data.edad;
     this.renglon = data.renglon;
     this.tipoServicios = data.tipoServicios;
-    this.idPerfil = data.iPerfil;
+    this.idPerfil = data.idPerfil;
     this.ubicacion.idUbicacionFuncional = data.ubicacionFuncional;
     (<HTMLInputElement>document.getElementById("ubica")).value = data.nombreUbicacion;
 
@@ -167,17 +175,15 @@ export class CreaContratoComponent implements OnInit {
       this.colegio =null;
     }
 
-    if(data.infoAcademica !=undefined || data.academico !=undefined){
-      let academico = (data.academico!=undefined?data.academico:data.infoAcademica);      
-      this.colegio = academico.colegioProfesional;
-      this.titulo.titulo = academico.titulo;
-      (<HTMLInputElement>document.getElementById("titu")).value =academico.nombreTitulo;
-      this.numeroColegiado = academico.numeroColegiado;
+    if(data.academico !=undefined){      
+      this.colegio = data.academico.colegioProfesional;
+      this.titulo.titulo = data.academico.titulo;
+      (<HTMLInputElement>document.getElementById("titu")).value =data.academico.nombreTitulo;
+      this.numeroColegiado = data.academico.numeroColegiado;
     }else
     {
       this.titulo=null;
     }
-
   }
 
   cargaDatosDelFuncionario(data){
@@ -197,14 +203,15 @@ export class CreaContratoComponent implements OnInit {
     this.fechaContrato = this.utilService.getDateObject(data.fechaCambioTipoMovimiento);
   }
 
-  descargarPDF(){
-    console.log('descargar');
+  descargarDocumento(){
+    this.contratoService.descargarDocumento(this.idContrato);
+    //window.open(this.config.ENDPOINT+'/bknRRHHContratos/rest/contrato/generar/'+contrato.idContrato)
   }
 
   getActividades(perfil){
       this.rueService
       .getActividadesPorPerfil(perfil,this.data.idRue)
-      .subscribe(  actividades => {this.actividades = actividades; console.log(this.actividades)},
+      .subscribe(  actividades => {this.actividades = actividades;},
                 error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
@@ -289,7 +296,7 @@ export class CreaContratoComponent implements OnInit {
 	seleccionaContratista(){
       this.rueService
       .getFuncionario(this.contratista.dpi)
-      .subscribe(  data => {console.log('data',data); this.inicializaLaboral(data);},
+      .subscribe(  data => { this.inicializaLaboral(data);},
                 error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
