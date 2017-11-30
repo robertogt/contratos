@@ -1,0 +1,37 @@
+<div class="row">
+
+	<div  class="col-md-12">
+	<table class="table  table-striped">
+		<thead>
+			<th>Estado</th>
+			<th>Fecha Registro</th>
+			<th>Observaciones departe de sobcontraloria</th>
+			<th>Descargar Archivo</th>
+		</thead>
+		<tbody>
+			<tr *ngFor="let estado of estados" >					
+				<td>
+					<div class="{{estado.idCatalogoEstado==3?'bg-danger':'bg-success'}}  text-white">
+						<label class="col-form-label">{{getNombreEstado(estado.idCatalogoEstado)}}</label>
+					</div>
+				</td>
+				<td>
+					<div>							
+						<label class="col-form-label text-right">{{estado.fechaInsert | date:'dd/MM/yyyy hh:mm:ss'}}</label>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label class="col-form-label text-left">{{estado.observaciones}}</label>
+					</div>
+				</td>				
+				<td>
+					<div class="row align-items-center justify-content-center">
+						<a><span *ngIf="estado.documento" class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar" (click) = "downloadContratoRechazado()"></span></a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>

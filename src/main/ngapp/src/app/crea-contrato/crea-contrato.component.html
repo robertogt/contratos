@@ -19,6 +19,55 @@
 	</div>
 	<p-growl [(value)]="msgs" life="3000" [immutable]="false"></p-growl>
 	<br>
+
+	<div class="card">
+		
+		<h6 class="card-header">Datos del contratista</h6>
+		<div class="card-block">
+
+		    <div class="form-group row">
+
+			    <label class="col-md-3 col-form-label text-right" for="edad"><strong>Edad</strong></label>
+				<div class="col-1">
+			  		<input class="form-control" type="number" id="edad" name="edad" disabled [(ngModel)]="edad" >
+			  	</div>
+
+			  	<label class="col-md-1 col-form-label text-right" for="estadoCivil"><strong>Estado Civil</strong></label>
+				<div class="col-2">
+			  		<input class="form-control" type="text" id="estadoCivil" name="estadoCivil" disabled [(ngModel)]="estadoCivil" >
+			  	</div>		  
+				
+		    </div>
+		    <div class="form-group row">
+		    	<label class="col-md-3 col-form-label text-right" for="edad"><strong>Nacionalidad</strong></label>
+				<div class="col-3">
+			  		<input class="form-control" type="text" id="nacionalidad" name="nacionalidad" disabled [(ngModel)]="nacionalidad" >
+			  	</div>
+			</div>
+
+		    <div class="form-group row">
+
+			    <label class="col-md-3 col-form-label text-right" for="dpi"><strong>DPI</strong></label>
+				<div class="col-3">
+			  		<input class="form-control" type="number" id="dpi" name="dpi" disabled [(ngModel)]="dpi" >
+			  	</div>
+
+			    <label class="col-md-1 col-form-label text-right" for="nit"><strong>NIT</strong></label>
+				<div class="col-2">
+			  		<input class="form-control" type="text" id="nit" name="nit" disabled [(ngModel)]="nit" >
+			  	</div>
+
+		    </div>
+
+		    <div class="form-group row">
+			    <label class="col-md-3 col-form-label text-right" for="direccion"><strong>Dirección de residencia</strong></label>
+				<div class="col-6">
+			  		<input class="form-control" type="text" id="direccion" name="direccion" disabled [(ngModel)]="direccion" >
+			  	</div>
+		    </div>
+		</div>
+	</div>
+	<br>
 	<div class="card">
 		
 		<h6 class="card-header">Datos del contrato</h6>
@@ -126,10 +175,10 @@
 	    				</p-header>
 					    <ng-template let-actividad let-i="index" pTemplate="item">
 					    	<input 	type="checkbox"					    			
-					    			name="cb{{actividad.id}}"
-					    			id="cb{{actividad.id}}"
+					    			name="cb{{actividad.idActividad}}"
+					    			id="cb{{actividad.idActividad}}"
 					    			[(ngModel)]="actividad.seleccionado"
-					    			pTooltip="actividad.descripcion"
+					    			pTooltip="{{actividad.descripcion}}"
 					    			> {{actividad.nombre}}<br>
 					    </ng-template>
 					</p-dataList>
@@ -161,54 +210,6 @@
 			  		<input class="form-control" type="number" id="honorario" name="honorario" #h required [(ngModel)]="data.honorario" min="1000">
 			  	</div>
 
-		    </div>
-		</div>
-	</div>
-	<br>
-	<div class="card">
-		
-		<h6 class="card-header">Datos del contratista</h6>
-		<div class="card-block">
-
-		    <div class="form-group row">
-
-			    <label class="col-md-3 col-form-label text-right" for="edad"><strong>Edad</strong></label>
-				<div class="col-1">
-			  		<input class="form-control" type="number" id="edad" name="edad" disabled [(ngModel)]="edad" >
-			  	</div>
-
-			  	<label class="col-md-1 col-form-label text-right" for="estadoCivil"><strong>Estado Civil</strong></label>
-				<div class="col-2">
-			  		<input class="form-control" type="text" id="estadoCivil" name="estadoCivil" disabled [(ngModel)]="estadoCivil" >
-			  	</div>		  
-				
-		    </div>
-		    <div class="form-group row">
-		    	<label class="col-md-3 col-form-label text-right" for="edad"><strong>Nacionalidad</strong></label>
-				<div class="col-3">
-			  		<input class="form-control" type="text" id="nacionalidad" name="nacionalidad" disabled [(ngModel)]="nacionalidad" >
-			  	</div>
-			</div>
-
-		    <div class="form-group row">
-
-			    <label class="col-md-3 col-form-label text-right" for="dpi"><strong>DPI</strong></label>
-				<div class="col-3">
-			  		<input class="form-control" type="number" id="dpi" name="dpi" disabled [(ngModel)]="dpi" >
-			  	</div>
-
-			    <label class="col-md-1 col-form-label text-right" for="nit"><strong>NIT</strong></label>
-				<div class="col-2">
-			  		<input class="form-control" type="text" id="nit" name="nit" disabled [(ngModel)]="nit" >
-			  	</div>
-
-		    </div>
-
-		    <div class="form-group row">
-			    <label class="col-md-3 col-form-label text-right" for="direccion"><strong>Dirección de residencia</strong></label>
-				<div class="col-6">
-			  		<input class="form-control" type="text" id="direccion" name="direccion" disabled [(ngModel)]="direccion" >
-			  	</div>
 		    </div>
 		</div>
 	</div>

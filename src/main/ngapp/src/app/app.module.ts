@@ -15,6 +15,7 @@ import { RueService }         from './services/rue.service';
 import { UtilService }         from './services/util.service';
 import { BusquedaContratoComponent } from './busqueda-contrato/busqueda-contrato.component';
 import { DetalleContratoComponent } from './detalle-contrato/detalle-contrato.component';
+import { HistorialEstadosComponent } from './historial-estados/historial-estados.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { DetalleContratoComponent } from './detalle-contrato/detalle-contrato.co
     CreaContratoComponent,
     AddendumComponent,
     BusquedaContratoComponent,
-    DetalleContratoComponent
+    DetalleContratoComponent,
+    HistorialEstadosComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -43,7 +45,7 @@ import { DetalleContratoComponent } from './detalle-contrato/detalle-contrato.co
     NgbModule.forRoot()
 
   ],
-  entryComponents:[AddendumComponent, DetalleContratoComponent],
+  entryComponents:[AddendumComponent, DetalleContratoComponent,HistorialEstadosComponent],
   providers: [ContratoService,RueService,UtilService],
   bootstrap: [AppComponent]  
 })

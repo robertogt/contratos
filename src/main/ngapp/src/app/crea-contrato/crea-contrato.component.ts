@@ -116,15 +116,15 @@ export class CreaContratoComponent implements OnInit {
     console.log('data',this.data);
 
     if(this.idContrato==undefined)
-      this.insertContrato(this.data);
+      this.insertContrato(this.data,f);
     else
-      this.updateContrato(this.data);
+      this.updateContrato(this.data,f);
   }
 
-  insertContrato(data){
+  insertContrato(data, f: NgForm){
     this.rueService.setContrato(data).subscribe( 
                                                       response => {console.log(response),
-                                                                   //this.limpiarForm(f);
+                                                                   this.limpiarForm(f);
                                                                    this.muestraMensaje('success','Contrato creado');
                                                                    this.contratoGuardado=true;
                                                                  },
@@ -133,10 +133,10 @@ export class CreaContratoComponent implements OnInit {
                                                      );
   }
 
-  updateContrato(data){
+  updateContrato(data, f: NgForm){
     this.contratoService.updateContrato(data).subscribe( 
                                                       response => {console.log(response),
-                                                                   //this.limpiarForm(f);
+                                                                   this.limpiarForm(f);
                                                                    this.muestraMensaje('success','Contrato creado');
                                                                    this.contratoGuardado=true;
                                                                  },
@@ -144,6 +144,12 @@ export class CreaContratoComponent implements OnInit {
                                                                 this.contratoGuardado=false;}
                                                      );
   }
+
+    limpiarForm(f:NgForm){
+      f.reset();
+      this.perfiles = [];
+      this.actividades = [];
+    }
 
   cambiaTipoServicios(tipoServicios){
 
@@ -205,7 +211,6 @@ export class CreaContratoComponent implements OnInit {
 
   descargarDocumento(){
     this.contratoService.descargarDocumento(this.idContrato);
-    //window.open(this.config.ENDPOINT+'/bknRRHHContratos/rest/contrato/generar/'+contrato.idContrato)
   }
 
   getActividades(perfil){
@@ -248,12 +253,6 @@ export class CreaContratoComponent implements OnInit {
 
   inicializaLaboral(data){
     this.cargaDatosDelFuncionario(data);    
-  }
-
-  limpiarForm(f:NgForm){
-    f.reset();
-    this.perfiles = [];
-    this.actividades = [];
   }
 
   muestraMensaje(tipoMensaje, message){

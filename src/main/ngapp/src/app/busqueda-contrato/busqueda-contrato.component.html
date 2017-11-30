@@ -5,6 +5,7 @@
 		<hr>
 	</div>
 	<div>
+		<p-growl [(value)]="msgs" life="3000" [immutable]="false"></p-growl>
 		<p-dataTable #dt [value]="contratos" selectionMode="single" 
 			(onRowSelect)="onRowSelect($event)" 
 			[rows]="20" 
@@ -83,10 +84,17 @@
 					</div>
 				</ng-template>
 			</p-column>
-			<p-column styleClass="col-button" header="Resindir/Anular">
+			<p-column styleClass="col-button" header="Resindir">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-thumbs-down" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Resindir" (click)="resindir(contrato)" ></span></a>
+					<div *ngIf="contrato.estado=='A'" class="row align-items-center justify-content-center">
+						<a><span class="fa fa-thumbs-down" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Resindir" (click)="showRescindir(contrato)" ></span></a>
+					</div>
+				</ng-template>
+			</p-column>
+			<p-column styleClass="col-button" header="Anular">
+				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+					<div *ngIf="contrato.estado=='I'" class="row align-items-center justify-content-center">
+						<a><span class="fa fa-trash" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Anular" (click)="showAnular(contrato)" ></span></a>
 					</div>
 				</ng-template>
 			</p-column>
@@ -94,10 +102,43 @@
 	</div>
 </div>
 
+<!--Modal Fianza  -->
 <p-dialog header="Registro de fianza para el contrato: {{numeroContrato}}" [(visible)]="display" modal="modal" width="700" [responsive]="true">
     <input class="form-control" type="text" name="numeroFianza" [(ngModel)]="numeroFianza" >
     <p-footer>
         <button type="button" class="btn btn-success" (click)="registrarFianza()">Registrar fianza</button>
         <button type="button" class="btn btn-default" (click)="display=false">Cancelar</button>
+    </p-footer>
+</p-dialog>
+
+<!--Modal Rescindir contrato -->
+<p-dialog [contentStyle]="{'overflow':'visible'}" header="Rescindir el contrato: {{numeroContrato}}" [(visible)]="displayRescindir" modal="modal" width="700" [responsive]="true">    
+    <div class="form-group row">
+    	<label class="col-md-3 col-form-label text-right" for="fechaFin"><strong>Fecha Finalización:</strong></label>
+				<div>
+					<input class="form-control" placeholder="dd/mm/yyyy" 
+							id ="fechaFin" name="fechaFin" 
+							[(ngModel)]="fechaFin"
+							#fFin="ngModel"
+							ngbDatepicker 
+							#df="ngbDatepicker"
+							(click)="df.toggle()"						        			 
+							required							
+					>
+				</div>
+	</div>
+	<textarea class="form-control" [(ngModel)]="observacion" ></textarea>
+    <p-footer>
+        <button type="button" class="btn btn-danger" (click)="rescindir(fechaFin,observacion)">Rescindir Contrato</button>
+        <button type="button" class="btn btn-default" (click)="displayRescindir=false">Cancelar</button>
+    </p-footer>
+</p-dialog>
+
+<!--Modal Anular contrato -->
+<p-dialog [contentStyle]="{'overflow':'visible'}" header="Anular el contrato: {{numeroContrato}}" [(visible)]="displayAnular" modal="modal" width="700" [responsive]="true">        
+	<textarea class="form-control" [(ngModel)]="observacion" ></textarea>
+    <p-footer>
+        <button type="button" class="btn btn-danger" (click)="anular(observacion)">Anular Contrato</button>
+        <button type="button" class="btn btn-default" (click)="displayAnular=false">Cancelar</button>
     </p-footer>
 </p-dialog>
