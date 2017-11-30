@@ -29,7 +29,7 @@ export class BusquedaContratoComponent implements OnInit {
 	displayRescindir:boolean = false;
 	idContrato: number;
 	fecha_hoy:Date;
-	renglon:any;
+	renglon:any;	
 	numeroContrato:string;
 	numeroFianza:string;
 	msgs: Message[] = [];
@@ -234,12 +234,15 @@ export class BusquedaContratoComponent implements OnInit {
     	this.displayAnular=true;
     }
 
-	showIngresoFianza(idContrato:number, numeroContrato:string, numeroFianza:string, idCatalogoEstado:number) {
+	showIngresoFianza(idContrato:number, numeroContrato:string, numeroFianza:string, 
+						idCatalogoEstado:number) {
 		
-		this.numeroContrato = numeroContrato;
-		this.idContrato = idContrato;
-		this.numeroFianza = numeroFianza;
-        this.display = true;
+		if(idCatalogoEstado==1||idCatalogoEstado==2||idCatalogoEstado==3){
+			this.numeroContrato = numeroContrato;
+			this.idContrato = idContrato;
+			this.numeroFianza = numeroFianza;
+	        this.display = true;
+	    }
     }
 
     showRescindir(contrato){

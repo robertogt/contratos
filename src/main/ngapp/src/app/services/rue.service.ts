@@ -27,7 +27,7 @@ export class RueService {
       this.urlFuncionario  = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/funcionario';      
       this.urlGetContrato   = config.ENDPOINT+'/bknRRHHContratos/rest/addendum';
       this.urlPerfiles   = config.ENDPOINT+'/bknRRHHContratos/rest/actividades/perfiles/ubicacion';
-      this.urlRenglones 	= config.ENDPOINT+'/BackEndPresupuesto/restresources/presupuesto/renglon';
+      this.urlRenglones 	= config.ENDPOINT+'/bknRRHHGeneral/restresources/general/renglon';
   		this.urlUbicacionesFuncionales 	= config.ENDPOINT+'/bknRRHHActividades/rest/ubicacionfuncional';
   		this.urlTitulos 	= config.ENDPOINT+'/bknRRHHContratos/rest/titulos';
       this.urlCrearAddendum = config.ENDPOINT+'/bknRRHHContratos/rest/addendum';

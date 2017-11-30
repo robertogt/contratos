@@ -42,6 +42,7 @@ export class CreaContratoComponent implements OnInit {
   honorarios: any;
   estadoCivil: any;
   nacionalidad: any;
+  nombreCompleto:string;
   dpi: any;
   nit: any;
   direccion: any;
@@ -161,15 +162,17 @@ export class CreaContratoComponent implements OnInit {
 
   cargaDatos(data){
     console.log('data',data);
-    this.estadoCivil = data.estadoCivilLetras;
-    this.nacionalidad = data.nacionalidad;
-    this.dpi = data.dpi;
-    this.nit = data.nit;
     this.direccion = data.direccion;
+    this.dpi = data.dpi;
     this.edad = data.edad;
+    this.estadoCivil = data.estadoCivilLetras;
+    this.idPerfil = data.idPerfil;
+    this.nacionalidad = data.nacionalidad;
+    this.nombreCompleto = data.nombreCompleto;
+    this.nit = data.nit;
     this.renglon = data.renglon;
     this.tipoServicios = data.tipoServicios;
-    this.idPerfil = data.idPerfil;
+    
     this.ubicacion.idUbicacionFuncional = data.ubicacionFuncional;
     (<HTMLInputElement>document.getElementById("ubica")).value = data.nombreUbicacion;
 

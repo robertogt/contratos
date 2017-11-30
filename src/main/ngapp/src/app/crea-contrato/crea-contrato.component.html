@@ -1,6 +1,7 @@
 <form #contratoForm="ngForm" (ngSubmit)="onSubmit(contratoForm)">
 <div class="">
 	<h1  class="display-4">Creación de contrato</h1>
+	<h3  class="display-12 text-center">{{nombreCompleto}}</h3>
 	<div *ngIf="!idContrato" class="row">						
         <div class="offset-2 col-md-8">
         	<p-autoComplete class="col-md-12" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" 
@@ -22,7 +23,7 @@
 
 	<div class="card">
 		
-		<h6 class="card-header">Datos del contratista</h6>
+		<h6 class="card-header">Datos del contratista <span class="fa fa-user"></span></h6>
 		<div class="card-block">
 
 		    <div class="form-group row">
@@ -70,7 +71,7 @@
 	<br>
 	<div class="card">
 		
-		<h6 class="card-header">Datos del contrato</h6>
+		<h6 class="card-header">Datos del contrato  <span class="fa fa-file-text"></span></h6>
 		<div class="card-block">
 			<div class="form-group row">
 			  	<label class="col-md-3 col-form-label text-right" for="fechaDel"><strong>Periodo del contrato</strong></label>
@@ -85,7 +86,7 @@
 							required
 							(ngModelChange)="seleccionaFechaDel()"
 							[minDate]="fechaMinima"
-							[maxDate]="fechaAl"
+							[maxDate]="fechaMaxima"
 					>
 				</div>
 				<div>
@@ -216,7 +217,7 @@
 	<br>
 	<div class="card">
 		
-		<h6 class="card-header">Información profesional</h6>
+		<h6 class="card-header">Información profesional   <span class="fa fa-suitcase"></span></h6>
 		<div class="card-block">
 	   	    <div class="form-group row">
 			    <label class="col-md-3 col-form-label text-right" for="colegio"><strong>Colegio profesional</strong></label>

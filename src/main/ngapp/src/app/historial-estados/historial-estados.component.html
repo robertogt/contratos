@@ -17,7 +17,8 @@
 				</td>
 				<td>
 					<div>							
-						<label class="col-form-label text-right">{{estado.fechaInsert | date:'dd/MM/yyyy hh:mm:ss'}}</label>
+						<label class="col-form-label text-right">{{estado.fechaInsert | date:'dd/MM/yyyy'}}</label>
+						<label class="col-form-label text-right">{{estado.fechaInsert | date:'hh:mm:ss a'}}</label>
 					</div>
 				</td>
 				<td>
@@ -26,7 +27,7 @@
 					</div>
 				</td>				
 				<td>
-					<div class="row align-items-center justify-content-center">
+					<div class="align-items-center justify-content-center">
 						<a><span *ngIf="estado.documento" class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar" (click) = "downloadContratoRechazado()"></span></a>
 					</div>
 				</td>

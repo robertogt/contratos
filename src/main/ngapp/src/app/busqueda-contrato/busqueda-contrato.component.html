@@ -50,7 +50,7 @@
 			</p-column>
 			<p-column styleClass="col-button" header="Fianza">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div class="row align-items-center justify-content-center" (click)="showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado)">
+					<div class="align-items-center justify-content-center" (click)="showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado)">
 						{{contrato.numeroFianza}} 
 						<a><span [ngClass]="contrato.numeroFianza==null?'fa fa-handshake-o':''" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Fianza" ></span></a>						
 					</div>
@@ -84,10 +84,10 @@
 					</div>
 				</ng-template>
 			</p-column>
-			<p-column styleClass="col-button" header="Resindir">
+			<p-column styleClass="col-button" header="Rescindir">
 				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 					<div *ngIf="contrato.estado=='A'" class="row align-items-center justify-content-center">
-						<a><span class="fa fa-thumbs-down" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Resindir" (click)="showRescindir(contrato)" ></span></a>
+						<a><span class="fa fa-thumbs-down" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Rescindir" (click)="showRescindir(contrato)" ></span></a>
 					</div>
 				</ng-template>
 			</p-column>
