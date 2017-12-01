@@ -2,7 +2,7 @@
 <div class="">
 	<h1  class="display-4">Creación de contrato</h1>
 	<h3  class="display-12 text-center">{{nombreCompleto}}</h3>
-	<div *ngIf="!idContrato" class="row">						
+	<div *ngIf="!idContrato||contratoGuardado" class="row">						
         <div class="offset-2 col-md-8">
         	<p-autoComplete class="col-md-12" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" 
         			[minLength]="3"

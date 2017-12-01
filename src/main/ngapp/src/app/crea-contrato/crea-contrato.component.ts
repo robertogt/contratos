@@ -123,15 +123,17 @@ export class CreaContratoComponent implements OnInit {
   }
 
   insertContrato(data, f: NgForm){
-    this.rueService.setContrato(data).subscribe( 
-                                                      response => {console.log(response),
-                                                                   this.limpiarForm(f);
-                                                                   this.muestraMensaje('success','Contrato creado');
-                                                                   this.contratoGuardado=true;
-                                                                 },
-                                                      error => {this.muestraMensaje('error',error);
-                                                                this.contratoGuardado=false;}
-                                                     );
+    this.rueService.setContrato(data)
+                    .subscribe( 
+                                response => {console.log(response),
+                                              this.limpiarForm(f);
+                                              this.muestraMensaje('success','Contrato creado');
+                                              this.contratoGuardado=true;
+                                              this.idContrato = response.data.idContrato;
+                                },
+                                error => {this.muestraMensaje('error',error);
+                                  this.contratoGuardado=false;}
+                                );
   }
 
   updateContrato(data, f: NgForm){
@@ -248,10 +250,6 @@ export class CreaContratoComponent implements OnInit {
                                 }
                               },
             		error => { var errorMessage = <any>error; console.log(errorMessage);});
-  }
-
-  inicializaFormulario(){
-
   }
 
   inicializaLaboral(data){

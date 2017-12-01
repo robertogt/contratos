@@ -8,6 +8,8 @@ import { AddendumComponent } from '../addendum/addendum.component';
 import { DetalleContratoComponent } from '../detalle-contrato/detalle-contrato.component';
 import { HistorialEstadosComponent } from '../historial-estados/historial-estados.component';
 import { APP_CONFIG, AppConfig } from '../app-config.module';
+import { TimerObservable } from "rxjs/observable/TimerObservable";
+import 'rxjs/add/operator/takeWhile';
 
 @Component({
 	selector: 'busqueda-contrato',
@@ -35,13 +37,18 @@ export class BusquedaContratoComponent implements OnInit {
 	msgs: Message[] = [];
 	observacion:string;
 	renglones: any;
-	
+
+
+	private alive: boolean;
+	private interval: number;
 
 	constructor(private rueService:RueService, private utilService: UtilService,private modalService: NgbModal,
 		@Inject(APP_CONFIG) private config: AppConfig, private contratoService: ContratoService ) {
 		this.anios = new Array();
 		this.fecha_hoy = new Date();
 		this.anioActual =  this.fecha_hoy.getFullYear();
+		this.alive = true;
+		this.interval = 60000;
 	}
 
 	ngOnInit() {
@@ -49,7 +56,20 @@ export class BusquedaContratoComponent implements OnInit {
 		this.cargaContratos();
   		this.cargarRenglones();
 		this.inicializaAnios();
-		
+		this.refrescarTablaContratos();				
+	}
+
+	ngOnDestroy(){
+		this.alive = false; // switches your TimerObservable off
+    }
+
+
+	refrescarTablaContratos(){
+		TimerObservable.create(0, this.interval)
+                                .takeWhile(() => this.alive)
+                                .subscribe(() => {
+                                        this.cargaContratos();
+                                });
 	}
 
 	cambioAnio(){
@@ -59,7 +79,7 @@ export class BusquedaContratoComponent implements OnInit {
 	cargaContratos(){
 
 		this.contratoService.getContratos(this.anioActual)
-							.subscribe(result => {this.contratos = result},
+							.subscribe(result => {this.contratos = result; console.log('ref');},
             								   error => { var errorMessage = <any>error;
               											   console.log(errorMessage);
             											}
