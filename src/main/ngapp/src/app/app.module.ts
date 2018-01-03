@@ -7,7 +7,7 @@ import { HttpModule} from '@angular/http';
 import { AppRoutingModule }         from './app-routing.module';
 import { AppConfigModule } from './app-config.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AutoCompleteModule, DataListModule, DialogModule, InputMaskModule, GrowlModule,TooltipModule, DataTableModule, SharedModule } from 'primeng/primeng';
+import { AutoCompleteModule, DataListModule, DialogModule, InputMaskModule, DropdownModule,GrowlModule,TooltipModule, DataTableModule, SharedModule ,ListboxModule} from 'primeng/primeng';
 import { CreaContratoComponent } from './crea-contrato/crea-contrato.component';
 import { AddendumComponent } from './addendum/addendum.component'; 
 import { ContratoService }         from './services/contrato.service';
@@ -16,8 +16,8 @@ import { UtilService }         from './services/util.service';
 import { BusquedaContratoComponent } from './busqueda-contrato/busqueda-contrato.component';
 import { DetalleContratoComponent } from './detalle-contrato/detalle-contrato.component';
 import { HistorialEstadosComponent } from './historial-estados/historial-estados.component';
-
-
+import { DetalleMotivoComponent } from './detalle-motivo/detalle-motivo.component';
+import { SpinnerComponentModule } from 'ng2-component-spinner';
 @NgModule({
   declarations: [
     AppComponent,    
@@ -25,7 +25,8 @@ import { HistorialEstadosComponent } from './historial-estados/historial-estados
     AddendumComponent,
     BusquedaContratoComponent,
     DetalleContratoComponent,
-    HistorialEstadosComponent
+    HistorialEstadosComponent,
+    DetalleMotivoComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -42,10 +43,13 @@ import { HistorialEstadosComponent } from './historial-estados/historial-estados
     DataTableModule,
     DialogModule,
     SharedModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ListboxModule,
+    DropdownModule,
+    SpinnerComponentModule
 
   ],
-  entryComponents:[AddendumComponent, DetalleContratoComponent,HistorialEstadosComponent],
+  entryComponents:[AddendumComponent, DetalleMotivoComponent,DetalleContratoComponent,HistorialEstadosComponent],
   providers: [ContratoService,RueService,UtilService],
   bootstrap: [AppComponent]  
 })

@@ -16,24 +16,25 @@ import { APP_CONFIG, AppConfig } from '../app-config.module';
 export class CreaContratoComponent implements OnInit {
 
 	actividades: any[];
+
   colegios: any[];
   perfiles: any[];
   personas: any[];	
   renglones: any[];
-	ubicaciones: any[];	
-	titulos: any[];
+  ubicaciones: any[];	
+  titulos: any[];
 
   tiposServicios: any={};
 
   data: any={};
   infoAcademica: any={};
   idContrato:any=null;
-	contratista: any;
+  contratista: any;
   fechaDel: any;
   fechaAl: any;
   renglon: any;
   tipoServicios: any;
-	ubicacion: any={};
+  ubicacion: any={};
   param: any;
   
   idPerfil: any = null;
@@ -49,7 +50,7 @@ export class CreaContratoComponent implements OnInit {
   edad:any;
   academico: any;
   colegio: any;
-	titulo: any={};
+  titulo: any={};
   numeroColegiado: any;  
 
   msgs: Message[] = [];
@@ -60,19 +61,20 @@ export class CreaContratoComponent implements OnInit {
   fechaMaxima: any;
 
   contratoGuardado:boolean=false;
+  showLoader:boolean = false;
 
-	constructor(private rueService:RueService, private route: ActivatedRoute, 
-              private contratoService:ContratoService, private utilService: UtilService) 
-            { }
+  constructor(private rueService:RueService, private route: ActivatedRoute, 
+    private contratoService:ContratoService, private utilService: UtilService) 
+  { }
 
-	ngOnInit() {
+  ngOnInit() {
 
     var date = new Date();
     this.tiposServicios = [{value:'T',label:'Tecnicos'},{value:'P',label:'Profesionales'}]
-		this.fechaMinima = { day: 1, month: 1, year: date.getUTCFullYear()};
+    this.fechaMinima = { day: 1, month: 1, year: date.getUTCFullYear()};
     this.fechaMaxima = { day: 31, month: 12, year: date.getUTCFullYear()};
-		this.rueService.getColegios().subscribe(colegios => {this.colegios = colegios,this.inicializaRenglones()});
-     
+    this.rueService.getColegios().subscribe(colegios => {this.colegios = colegios,this.inicializaRenglones()});
+
   }
 
   inicializaRenglones(){
@@ -81,10 +83,10 @@ export class CreaContratoComponent implements OnInit {
 
   inicializaContrato(){
     this.param = this.route.params.subscribe(params => {
-       this.idContrato = params['idContrato'];   
-       if(this.idContrato!=undefined){          
-          this.getContrato();          
-       }
+      this.idContrato = params['idContrato'];   
+      if(this.idContrato!=undefined){          
+        this.getContrato();          
+      }
     });   
   }
 
@@ -94,7 +96,7 @@ export class CreaContratoComponent implements OnInit {
   }
   
   onSubmit(f: NgForm){
-
+    this.showLoader = true;
     if(!this.validaDatos())
       return;
 
@@ -124,35 +126,45 @@ export class CreaContratoComponent implements OnInit {
 
   insertContrato(data, f: NgForm){
     this.rueService.setContrato(data)
-                    .subscribe( 
-                                response => {console.log(response),
-                                              this.limpiarForm(f);
-                                              this.muestraMensaje('success','Contrato creado');
-                                              this.contratoGuardado=true;
-                                              this.idContrato = response.data.idContrato;
-                                },
-                                error => {this.muestraMensaje('error',error);
-                                  this.contratoGuardado=false;}
-                                );
+    .subscribe( 
+      response => {console.log(response);
+
+        if(response.code == 200){
+          this.limpiarForm(f);
+          this.muestraMensaje('success',response.message);
+          this.contratoGuardado=true;
+          this.idContrato = response.data.idContrato;
+
+        }else{
+          this.muestraMensaje('error',response.message);
+        }
+        this.showLoader = false;
+      },
+      error => {this.muestraMensaje('error',error);
+      this.contratoGuardado=false;
+      this.showLoader = false;
+       }
+
+      );
   }
 
   updateContrato(data, f: NgForm){
     this.contratoService.updateContrato(data).subscribe( 
-                                                      response => {console.log(response),
-                                                                   this.limpiarForm(f);
-                                                                   this.muestraMensaje('success','Contrato creado');
-                                                                   this.contratoGuardado=true;
-                                                                 },
-                                                      error => {this.muestraMensaje('error',error);
-                                                                this.contratoGuardado=false;}
-                                                     );
+      response => {console.log(response),
+        this.limpiarForm(f);
+        this.muestraMensaje('success','Contrato creado');
+        this.contratoGuardado=true;
+      },
+      error => {this.muestraMensaje('error',error);
+      this.contratoGuardado=false;}
+      );
   }
 
-    limpiarForm(f:NgForm){
-      f.reset();
-      this.perfiles = [];
-      this.actividades = [];
-    }
+  limpiarForm(f:NgForm){
+    f.reset();
+    this.perfiles = [];
+    this.actividades = [];
+  }
 
   cambiaTipoServicios(tipoServicios){
 
@@ -176,7 +188,10 @@ export class CreaContratoComponent implements OnInit {
     this.tipoServicios = data.tipoServicios;
     
     this.ubicacion.idUbicacionFuncional = data.ubicacionFuncional;
-    (<HTMLInputElement>document.getElementById("ubica")).value = data.nombreUbicacion;
+    console.log(data);
+    if(data.nombreUbicacion != undefined){
+      (<HTMLInputElement>document.getElementById("ubica")).value = data.nombreUbicacion;
+    }
 
     if(this.ubicacion.idUbicacionFuncional !=undefined)
       this.getPerfiles();
@@ -198,13 +213,14 @@ export class CreaContratoComponent implements OnInit {
   }
 
   cargaDatosDelFuncionario(data){
-    
+
     if (data.code!=200)
       this.muestraMensaje('error',data.message);    
     else{
       this.data = data.data;
       this.cargaDatos(this.data);
     }
+
 
   }
 
@@ -219,45 +235,46 @@ export class CreaContratoComponent implements OnInit {
   }
 
   getActividades(perfil){
-      this.rueService
-      .getActividadesPorPerfil(perfil,this.data.idRue)
-      .subscribe(  actividades => {this.actividades = actividades;},
-                error => { var errorMessage = <any>error; console.log(errorMessage);});
+    this.rueService
+    .getActividadesPorPerfil(perfil,this.data.idRue)
+    .subscribe(  actividades => {this.actividades = actividades;},
+      error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
   getContrato(){
     this.contratoService
-      .getContrato(this.idContrato)
-      .subscribe( data => { this.data = data.data;                                                              
-                            this.actividades = this.data.actividades;
-                            this.cargaDatosEdicion(this.data);
-                            this.cargaDatos(this.data);
-                                
-                          },
-                error => { var errorMessage = <any>error; console.log(errorMessage);});
+    .getContrato(this.idContrato)
+    .subscribe( data => { this.data = data.data;                                                              
+      this.actividades = this.data.actividades;
+      this.cargaDatosEdicion(this.data);
+      this.cargaDatos(this.data);
+
+    },
+    error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
-	getPerfiles(){
-    
-  		this.rueService
-  		.getPerfilesPorUbicacion(this.ubicacion.idUbicacionFuncional)
-  		.subscribe(	perfiles => { this.perfiles = perfiles;
-                                this.actividades = [];
-                                
-                                if(this.data.actividades != undefined)
-                                {
-                                  this.actividades = this.data.actividades;
-                                }
-                              },
-            		error => { var errorMessage = <any>error; console.log(errorMessage);});
+  getPerfiles(){
+
+    this.rueService
+    .getPerfilesPorUbicacion(this.ubicacion.idUbicacionFuncional)
+    .subscribe(	perfiles => { this.perfiles = perfiles;
+      this.actividades = [];
+
+      if(this.data.actividades != undefined)
+      {
+        this.actividades = this.data.actividades;
+      }
+    },
+    error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
   inicializaLaboral(data){
+
     this.cargaDatosDelFuncionario(data);    
   }
 
   muestraMensaje(tipoMensaje, message){
-      this.msgs.push({severity:tipoMensaje, summary:'', detail:message});
+    this.msgs.push({severity:tipoMensaje, summary:'', detail:message});
   }
 
   onChangeColegio(){
@@ -273,44 +290,51 @@ export class CreaContratoComponent implements OnInit {
   }
 
   search(event) {
-        this.rueService
-        .getPersonas(event.query)
-        .subscribe(	result => { this.personas = result;}, 
-        			error => {var errorMessage = <any>error;console.log(errorMessage);});
+    this.rueService
+    .getPersonas(event.query)
+    .subscribe(	result =>{ 
+      this.personas = result;
+    }, 
+    error => {var errorMessage = <any>error;console.log(errorMessage);});
   }
 
   searchUbicacion(event) {
-        this.rueService
-        .getUbicacionesFuncionales(event.query)
-        .subscribe(	ubicaciones => {this.ubicaciones = ubicaciones;},
-            		error => { var errorMessage = <any>error; console.log(errorMessage);});
+    this.rueService
+    .getUbicacionesFuncionales(event.query)
+    .subscribe(	ubicaciones => {this.ubicaciones = ubicaciones;},
+      error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
   searchTitulo(event) {
-        this.rueService
-        .getTitulos(event.query)
-        .subscribe(	titulos => {this.titulos = titulos;},
-            		error => { var errorMessage = <any>error; console.log(errorMessage);});
+    this.rueService
+    .getTitulos(event.query)
+    .subscribe(	titulos => {this.titulos = titulos;},
+      error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
-	seleccionaContratista(){
-      this.rueService
-      .getFuncionario(this.contratista.dpi)
-      .subscribe(  data => { this.inicializaLaboral(data);},
-                error => { var errorMessage = <any>error; console.log(errorMessage);});
+  seleccionaContratista(){
+
+    this.rueService
+    .getFuncionario(this.contratista.dpi)
+    .subscribe(  data => { 
+      this.inicializaLaboral(data);
+
+    },
+    error => { var errorMessage = <any>error; console.log(errorMessage);});
+
   }
 
   seleccionaFechaDel(){
-      this.fechaContrato = this.fechaDel;
+    this.fechaContrato = this.fechaDel;
   }
 
   seleccionaUbicacion(){
-  		this.getPerfiles();
+    this.getPerfiles();
   }
 
   selectPerfil(perfil){
-      this.idPerfil = perfil.idPerfil;
-  		this.getActividades(this.idPerfil);
+    this.idPerfil = perfil.idPerfil;
+    this.getActividades(this.idPerfil);
   }
 
   validaDatos(){
@@ -342,5 +366,5 @@ export class CreaContratoComponent implements OnInit {
 
     return true;
   }
- 
+
 }

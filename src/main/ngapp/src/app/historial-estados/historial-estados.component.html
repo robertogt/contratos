@@ -1,38 +1,55 @@
 <div class="row">
 
 	<div  class="col-md-12">
-	<table class="table  table-striped">
-		<thead>
-			<th>Estado</th>
-			<th>Fecha Registro</th>
-			<th>Observaciones departe de sobcontraloria</th>
-			<th>Descargar Archivo</th>
-		</thead>
-		<tbody>
-			<tr *ngFor="let estado of estados" >					
-				<td>
-					<div class="{{estado.idCatalogoEstado==3?'bg-danger':'bg-success'}}  text-white">
-						<label class="col-form-label">{{getNombreEstado(estado.idCatalogoEstado)}}</label>
-					</div>
-				</td>
-				<td>
-					<div>							
-						<label class="col-form-label text-right">{{estado.fechaInsert | date:'dd/MM/yyyy'}}</label>
-						<label class="col-form-label text-right">{{estado.fechaInsert | date:'hh:mm:ss a'}}</label>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label class="col-form-label text-left">{{estado.observaciones}}</label>
-					</div>
-				</td>				
-				<td>
-					<div class="align-items-center justify-content-center">
-						<a><span *ngIf="estado.documento" class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar" (click) = "downloadContratoRechazado()"></span></a>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+		<table class="table  table-striped">
+			<thead>
+				<th>Estado</th>
+				<th>Fecha Registro</th>
+				<th>Observaciones de parte de subcontraloria</th>
+				<th>Descargar Archivo</th>
+				<th>Motivos</th>
+			</thead>
+			<tbody>
+				<tr *ngFor="let estado of estados" >					
+					<td>
+						<div class="{{estado.idCatalogoEstado==3?'bg-danger':'bg-success'}}  text-white">
+							<label class="col-form-label">{{getNombreEstado(estado.idCatalogoEstado)}}</label>
+						</div>
+					</td>
+					<td>
+						<div>							
+							<label class="col-form-label text-right">{{estado.fechaInsert | date:'dd/MM/yyyy'}}</label>
+							<label class="col-form-label text-right">{{estado.fechaInsert | date:'hh:mm:ss a'}}</label>
+						</div>
+					</td>
+					<td>
+						<div>
+							<label class="col-form-label text-left">{{estado.observaciones}}</label>
+						</div>
+					</td>				
+					<td>
+						<div class="align-items-center justify-content-center">
+							<a><span *ngIf="estado.documento" class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar1" (click) = "downloadContratoRechazado()"></span></a>
+						</div>
+					</td>
+					<td>
+
+						<div class="align-items-center justify-content-center">
+							<a><span *ngIf="estado.nombreEstado == 'Rechazado'" class="fa fa-search" aria-hidden="true" aria-hidden="true"  placement="top" (click)="showDialog(estado.idContratoEstado)"></span></a>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
+
+
+<p-dialog header="Motivos" positionLeft="500"  positionTop="149" [(visible)]="display" modal="modal" width="300" [responsive]="true">
+	<ul class="list-group">
+		<li class="list-group-item" *ngFor="let motivo of motivos">{{motivo.nombre}}</li>
+		
+	</ul>
+</p-dialog>
+
+

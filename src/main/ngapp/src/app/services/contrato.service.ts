@@ -17,6 +17,9 @@ export class ContratoService {
   public urlRegistrarNumeroFianza:string;
   public urlRescindirContrato:string;
   public urlUpdateContrato:string;
+  public urlMotivosRechazo:string;
+  public urlEstados:string;
+  
 
   	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
 
@@ -30,6 +33,8 @@ export class ContratoService {
       this.urlRegistrarNumeroFianza = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/fianza';
       this.urlRescindirContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/resindir';
       this.urlUpdateContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/editar';
+      this.urlMotivosRechazo = config.ENDPOINT+'/bknRRHHContratos/rest/asesor/historial/motivos';
+      this.urlEstados = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/estados';
   	}
 
     anularContrato(idContrato:number, observacion:string){
@@ -59,6 +64,13 @@ export class ContratoService {
           .map(res => res.json());
     }
 
+    getMotivosRechazo(idEstadoContrato: string){
+      let params = new URLSearchParams();
+      params.set('contratoEstado',idEstadoContrato); 
+      return this.http.get(this.urlMotivosRechazo, {search: params})
+          .map(res => res.json());
+    }
+
     getContrato(contrato:number){
       let params = new URLSearchParams();
       params.set('contrato', ""+contrato); 
@@ -66,9 +78,20 @@ export class ContratoService {
           .map(res => res.json());
     }
 
-    getContratos(anio){
+    getEstados(){
       let params = new URLSearchParams();
-      params.set('anio', ""+anio); 
+      return this.http.get(this.urlEstados,{search:params})
+          .map(res => res.json());
+    }
+
+    getContratos(anio,renglon,estado){
+      console.log(renglon);
+      console.log(estado);
+      let params = new URLSearchParams();
+      params.set('anio', ""+anio);
+      if(renglon != 'null'){params.set('renglon', renglon);console.log('if renglon')}
+      if(estado != 'null'){params.set('estado',estado);}
+      console.log(params); 
       return this.http.get(this.urlContratosPendientesActivos,{search:params})
           .map(res => res.json());
     }

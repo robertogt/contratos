@@ -7,138 +7,148 @@
 	<div>
 		<p-growl [(value)]="msgs" life="3000" [immutable]="false"></p-growl>
 		<p-dataTable #dt [value]="contratos" selectionMode="single" 
-			(onRowSelect)="onRowSelect($event)" 
-			[rows]="20" 
-			[emptyMessage]="'No se encontraron registros.'" 
-			[paginator]="true" 
-			[globalFilter]="gb" 
-			[pageLinks]="3" 
-			[rowsPerPageOptions]="[5,10,20]"
-			exportFilename="Contratos">
-			<p-header>
-				<div>
-					<form class="form-inline">
-						<label class="mr-sm-4">Seleccionar Año:</label>
-						<select [(ngModel)]="anioActual" name="anio" class="form-control" (change)="cambioAnio()">
-							<option *ngFor="let anio of anios" [value]="anio.value">{{anio.text}}</option>
-						</select>
-						<label class="mr-sm-4" style="padding-left:3%">Seleccionar Renglon:</label>
-						<select [(ngModel)]="renglon" name="renglonPresupuesto" class="form-control" (change)="cambioRenglon()">
-							<option *ngFor="let renglon of renglones" [value]="renglon">{{renglon.nombre}}</option>
-						</select>
-					</form>
+		(onRowSelect)="onRowSelect($event)" 
+		[rows]="20" 
+		[emptyMessage]="'No se encontraron registros.'" 
+		[paginator]="true" 
+		[globalFilter]="gb" 
+		[pageLinks]="3" 
+		[rowsPerPageOptions]="[5,10,20]"
+		exportFilename="Contratos">
+		<p-header>
+			<div>
+				<form class="form-inline">
+					<label class="mr-sm-4">Año:</label>
+					<select [(ngModel)]="anioActual" name="anio" class="form-control" (change)="cambioAnio()">
+						<option *ngFor="let anio of anios" [value]="anio.value">{{anio.text}}</option>
+					</select>
+					<label class="mr-sm-4" style="padding-left:3%">Renglon:</label>
+					<select [(ngModel)]="renglon" name="renglonPresupuesto" class="form-control"  (change)="cambioRenglon()">
+						<option  [value]="null">Seleccionar</option>
+						<option *ngFor="let renglon of renglones" [value]="renglon.renglon">{{renglon.nombre}}</option>
+					</select>
+					<label class="mr-sm-4" style="padding-left:3%">Estado:</label>
+					<select [(ngModel)]="estado" name="renglonPresupuesto" class="form-control" (change)="cambioEstado()">
+						<option  [value]="null">Seleccionar</option>
+						<option *ngFor="let estado of estados" [value]="estado.idCatalogoEstado">{{estado.nombre}}</option>
+					</select>
+				</form>
+			</div>
+			<br>
+			<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+				<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+				<input #gb type="text" pInputText size="50" placeholder="Global Filter">
+			</div>
+		</p-header>
+		
+		<p-column field="numeroContrato" header="Identificador" [style]="{'width':'15%'}"></p-column>
+		<p-column field="nombreRenglon" header="Renglon" [filter]="true" [style]="{'text-align':'center'}"></p-column>
+		<p-column field="honorario" header="Honorarios" [style]="{'text-align':'right'}">
+			<ng-template let-col let-contrato="rowData" pTemplate="body">
+				<span >{{contrato.honorario | currency:'GTQ'}}</span>
+			</ng-template>
+		</p-column>
+
+		<p-column field="idCatalogoEstado" header="Estado" filterMatchMode="equals" [style]="{'text-align':'center'}">
+			<ng-template let-col let-contrato="rowData" pTemplate="body">
+				<span [ngClass]="getClass(contrato.idCatalogoEstado)">{{getNombreEstado(contrato.idCatalogoEstado)}}
+				</span>
+			</ng-template>
+		</p-column>
+ 
+		<p-column styleClass="col-button" header="Fianza">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+				<div class="align-items-center justify-content-center" (click)="showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado)">
+					{{contrato.numeroFianza}} 
+					<a><span [ngClass]="contrato.numeroFianza==null?'fa fa-handshake-o':''" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Fianza" ></span></a>						
 				</div>
-				<br>
-				<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
-					<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-					<input #gb type="text" pInputText size="50" placeholder="Global Filter">
+			</ng-template>
+		</p-column>
+		<p-column styleClass="col-button" header="Editar">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+				<div *ngIf="puedeDescargar(contrato)" class="row align-items-center justify-content-center">
+					<a routerLink="/contrato/{{contrato.idContrato}}"><span class="fa fa-edit" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar"></span></a>
 				</div>
-			</p-header>
-			
-			<p-column field="numeroContrato" header="Identificador" [style]="{'width':'15%'}"></p-column>
-			<p-column field="nombreRenglon" header="Renglon" [filter]="true" [style]="{'text-align':'center'}"></p-column>
-			<p-column field="honorario" header="Honorarios" [style]="{'text-align':'right'}">
-				<ng-template let-col let-contrato="rowData" pTemplate="body">
-            		<span >{{contrato.honorario | currency:'GTQ'}}</span>
-        		</ng-template>
-			</p-column>
-			<p-column field="estado" header="Estado" [filter]="true" [style]="{'text-align':'center'}">
-				<ng-template let-col let-contrato="rowData" pTemplate="body">
-            		<span [ngClass]="getClass(contrato.idCatalogoEstado)">{{getNombreEstado(contrato.idCatalogoEstado)}}
-       				</span>
-        		</ng-template>
-			</p-column>
-			<p-column styleClass="col-button" header="Fianza">
-				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div class="align-items-center justify-content-center" (click)="showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado)">
-						{{contrato.numeroFianza}} 
-						<a><span [ngClass]="contrato.numeroFianza==null?'fa fa-handshake-o':''" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Fianza" ></span></a>						
-					</div>
-				</ng-template>
-			</p-column>
-			<p-column styleClass="col-button" header="Editar">
-				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div *ngIf="puedeDescargar(contrato)" class="row align-items-center justify-content-center">
-						<a routerLink="/contrato/{{contrato.idContrato}}"><span class="fa fa-edit" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar"></span></a>
-					</div>
-				</ng-template>
-			</p-column>
-			<p-column styleClass="col-button" header="Descargar">
-				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar" (click)="downloadContrato(contrato)" ></span></a>
-					</div>
-				</ng-template>
-			</p-column>
-			<p-column styleClass="col-button" header="Addendum">
-				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div class="row align-items-center justify-content-center">
-						<a *ngIf="contrato.idCatalogoEstado==5"><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(contrato.idContrato)" ></span></a>
-					</div>
-				</ng-template>
-			</p-column>
-			<p-column styleClass="col-button" header="Detalles">
-				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div class="row align-items-center justify-content-center">
-						<a><span class="fa fa-search" aria-hidden="true"  placement="top" ngbTooltip="Detalles" (click)="openDetalleModal(contrato)" ></span></a>
-					</div>
-				</ng-template>
-			</p-column>
-			<p-column styleClass="col-button" header="Rescindir">
-				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div *ngIf="contrato.estado=='A'" class="row align-items-center justify-content-center">
-						<a><span class="fa fa-thumbs-down" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Rescindir" (click)="showRescindir(contrato)" ></span></a>
-					</div>
-				</ng-template>
-			</p-column>
-			<p-column styleClass="col-button" header="Anular">
-				<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-					<div *ngIf="contrato.estado=='I'" class="row align-items-center justify-content-center">
-						<a><span class="fa fa-trash" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Anular" (click)="showAnular(contrato)" ></span></a>
-					</div>
-				</ng-template>
-			</p-column>
-		</p-dataTable>
-	</div>
+			</ng-template>
+		</p-column>
+		<p-column styleClass="col-button" header="Descargar">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+				<div class="row align-items-center justify-content-center">
+					<a><span class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar" (click)="downloadContrato(contrato)" ></span></a>
+				</div>
+			</ng-template>
+		</p-column>
+		<p-column styleClass="col-button" header="Addendum">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+				<div class="row align-items-center justify-content-center">
+					<a *ngIf="contrato.idCatalogoEstado==5"><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(contrato.idContrato)" ></span></a>
+				</div>
+			</ng-template>
+		</p-column>
+		<p-column styleClass="col-button" header="Detalles">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+				<div class="row align-items-center justify-content-center">
+					<a><span class="fa fa-search" aria-hidden="true"  placement="top" ngbTooltip="Detalles" (click)="openDetalleModal(contrato)" ></span></a>
+				</div>
+			</ng-template>
+		</p-column>
+		<p-column styleClass="col-button" header="Rescindir">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+				<div *ngIf="contrato.estado=='A'" class="row align-items-center justify-content-center">
+					<a><span class="fa fa-thumbs-down" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Rescindir" (click)="showRescindir(contrato)" ></span></a>
+				</div>
+			</ng-template>
+		</p-column>
+		<p-column styleClass="col-button" header="Anular">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+				<div *ngIf="contrato.estado=='I'" class="row align-items-center justify-content-center">
+					<a><span class="fa fa-trash" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Anular" (click)="showAnular(contrato)" ></span></a>
+				</div>
+			</ng-template>
+		</p-column>
+	</p-dataTable>
+</div>
 </div>
 
 <!--Modal Fianza  -->
 <p-dialog header="Registro de fianza para el contrato: {{numeroContrato}}" [(visible)]="display" modal="modal" width="700" [responsive]="true">
-    <input class="form-control" type="text" name="numeroFianza" [(ngModel)]="numeroFianza" >
-    <p-footer>
-        <button type="button" class="btn btn-success" (click)="registrarFianza()">Registrar fianza</button>
-        <button type="button" class="btn btn-default" (click)="display=false">Cancelar</button>
-    </p-footer>
+	<input class="form-control" type="text" name="numeroFianza" [(ngModel)]="numeroFianza" >
+	<p-footer>
+		<button type="button" class="btn btn-success" (click)="registrarFianza()">Registrar fianza</button>
+		<button type="button" class="btn btn-default" (click)="display=false">Cancelar</button>
+	</p-footer>
 </p-dialog>
 
 <!--Modal Rescindir contrato -->
 <p-dialog [contentStyle]="{'overflow':'visible'}" header="Rescindir el contrato: {{numeroContrato}}" [(visible)]="displayRescindir" modal="modal" width="700" [responsive]="true">    
-    <div class="form-group row">
-    	<label class="col-md-3 col-form-label text-right" for="fechaFin"><strong>Fecha Finalización:</strong></label>
-				<div>
-					<input class="form-control" placeholder="dd/mm/yyyy" 
-							id ="fechaFin" name="fechaFin" 
-							[(ngModel)]="fechaFin"
-							#fFin="ngModel"
-							ngbDatepicker 
-							#df="ngbDatepicker"
-							(click)="df.toggle()"						        			 
-							required							
-					>
-				</div>
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="fechaFin"><strong>Fecha Finalización:</strong></label>
+		<div>
+			<input class="form-control" placeholder="dd/mm/yyyy" 
+			id ="fechaFin" name="fechaFin" 
+			[(ngModel)]="fechaFin"
+			#fFin="ngModel"
+			ngbDatepicker 
+			#df="ngbDatepicker"
+			(click)="df.toggle()"						        			 
+			required							
+			>
+		</div>
 	</div>
 	<textarea class="form-control" [(ngModel)]="observacion" ></textarea>
-    <p-footer>
-        <button type="button" class="btn btn-danger" (click)="rescindir(fechaFin,observacion)">Rescindir Contrato</button>
-        <button type="button" class="btn btn-default" (click)="displayRescindir=false">Cancelar</button>
-    </p-footer>
+	<p-footer>
+		<button type="button" class="btn btn-danger" (click)="rescindir(fechaFin,observacion)">Rescindir Contrato</button>
+		<button type="button" class="btn btn-default" (click)="displayRescindir=false">Cancelar</button>
+	</p-footer>
 </p-dialog>
 
 <!--Modal Anular contrato -->
 <p-dialog [contentStyle]="{'overflow':'visible'}" header="Anular el contrato: {{numeroContrato}}" [(visible)]="displayAnular" modal="modal" width="700" [responsive]="true">        
 	<textarea class="form-control" [(ngModel)]="observacion" ></textarea>
-    <p-footer>
-        <button type="button" class="btn btn-danger" (click)="anular(observacion)">Anular Contrato</button>
-        <button type="button" class="btn btn-default" (click)="displayAnular=false">Cancelar</button>
-    </p-footer>
+	<p-footer>
+		<button type="button" class="btn btn-danger" (click)="anular(observacion)">Anular Contrato</button>
+		<button type="button" class="btn btn-default" (click)="displayAnular=false">Cancelar</button>
+	</p-footer>
 </p-dialog>
+
+<spinner-component [spinnerShow]="showLoader"> <div class="sk-circle"> <div class="sk-circle1 sk-child"></div> <div class="sk-circle2 sk-child"></div> <div class="sk-circle3 sk-child"></div> <div class="sk-circle4 sk-child"></div> <div class="sk-circle5 sk-child"></div> <div class="sk-circle6 sk-child"></div> <div class="sk-circle7 sk-child"></div> <div class="sk-circle8 sk-child"></div> <div class="sk-circle9 sk-child"></div> <div class="sk-circle10 sk-child"></div> <div class="sk-circle11 sk-child"></div> <div class="sk-circle12 sk-child"></div> </div> </spinner-component> 

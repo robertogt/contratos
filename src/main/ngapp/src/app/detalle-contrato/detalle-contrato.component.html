@@ -63,9 +63,15 @@
 				<p-header>
 					Actividades
 				</p-header>
+				
+                
 				<ng-template let-actividad let-i="index" pTemplate="item">
-					<label pTooltip="{{actividad.nombre}}">{{actividad.descripcion}}</label>					
+					
+                        
+					<label pTooltip="{{actividad.nombre}}"><i class="fa fa-circle" aria-hidden="true" style="margin-right:5px; margin-left:5px"></i>{{actividad.descripcion}}</label>
+					
 				</ng-template>
+				
 			</p-dataList>
 		</div>
 	</div>

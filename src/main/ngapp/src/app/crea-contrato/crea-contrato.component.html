@@ -1,4 +1,5 @@
 <form #contratoForm="ngForm" (ngSubmit)="onSubmit(contratoForm)">
+	
 <div class="">
 	<h1  class="display-4">Creación de contrato</h1>
 	<h3  class="display-12 text-center">{{nombreCompleto}}</h3>
@@ -143,7 +144,7 @@
 				      	name="ubicacion"
 				      	(completeMethod)="searchUbicacion($event)" 
 				      	(onSelect)="seleccionaUbicacion()" 		      
-				      	placeholder="Escriba el nombre de la ubicacion funcional"
+				      	 placeholder="Escriba el nombre de la ubicacion funcional"
 				      	field ="nombre"
 				      	inputId="ubica"
 				      	required
@@ -285,3 +286,4 @@
 	  	</div>
 </div>
 </form>
+
