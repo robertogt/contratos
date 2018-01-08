@@ -20,6 +20,7 @@ export class CreaContratoComponent implements OnInit {
 	actividades: any[];
 
   colegios: any[];
+  contratista: any;
   perfiles: any[];
   personas: any[];	
   renglones: any[];
@@ -31,7 +32,7 @@ export class CreaContratoComponent implements OnInit {
   data: any={};
   infoAcademica: any={};
   idContrato:any=null;
-  contratista: any;
+  
   fechaDel: any;
   fechaAl: any;
   renglon: any;
@@ -217,7 +218,7 @@ export class CreaContratoComponent implements OnInit {
 
   cargaDatosDelFuncionario(data){
 
-    if (data.code!=200)
+    if (data.code!=200 )
       this.muestraMensaje('error',data.message);    
     else{
       this.data = data.data;
@@ -305,8 +306,15 @@ export class CreaContratoComponent implements OnInit {
 
     }, (reason) => {
                     console.log('reason',reason);
-                    console.log(this.contratista.dpi);
-                    this.seleccionaContratista();
+                    console.log(this.data.dpi);
+                    
+                    //this.contratista={dpi:this.data.dpi};
+                    //this.seleccionaContratista();
+                    
+                    if(this.contratista == null)
+                      this.inicializaContrato();
+                    else
+                      this.seleccionaContratista();  
 
                     /*this.rueService.getFuncionario(this.contratista.dpi)
                         .subscribe(  data => { 

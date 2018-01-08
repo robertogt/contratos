@@ -100,10 +100,8 @@ export class BusquedaContratoComponent implements OnInit {
 	}
 
 	cargaContratos(){
-		console.log(this.renglon);
-		console.log(this.estado);
 		this.contratoService.getContratos(this.anioActual,this.renglon,this.estado)
-		.subscribe(result => {this.contratos = result; console.log(result);},
+		.subscribe(result => {this.contratos = result; },
 			error => { var errorMessage = <any>error;
 				console.log(errorMessage);
 			}
@@ -112,11 +110,8 @@ export class BusquedaContratoComponent implements OnInit {
 
 	cargarRenglones(){
 
-		this.rueService.getRenglones().subscribe(result =>{
-			
+		this.rueService.getRenglones().subscribe(result =>{			
 				this.renglones = result;
-				console.log(result);
-
 			},
 			error => { var errorMessage = <any>error;
 				console.log(errorMessage);
@@ -126,10 +121,8 @@ export class BusquedaContratoComponent implements OnInit {
 
 	cargarEstados(){
 
-
 		this.contratoService.getEstados().subscribe(result => {
 			this.estados = result;
-			console.log(result);
 		},
 			error => { var errorMessage = <any>error;
 				console.log(errorMessage);

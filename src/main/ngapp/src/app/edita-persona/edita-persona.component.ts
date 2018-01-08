@@ -66,16 +66,17 @@ export class EditaPersonaComponent implements OnInit {
 
     editar(){
     	let datos = {
-    					idRue: this.data.idRue,
-    					genero: this.data.genero,
-		               	direccion: this.data.direccion,
-		               	municipioVivienda: this.municipio,
-		               	departamentoVivienda: this.departamento,
-		               	zonaVivienda: this.data.zonaVivienda,
-		               	estadoCivil: this.data.estadoCivil,
-		               	fechaNacimiento: new Date(this.fechaNacimiento.year,
+    					cui: this.data.cui,
+    					departamentoVivienda: this.departamento,
+    					direccion: this.data.direccion,
+    					estadoCivil: this.data.estadoCivil,			
+    					fechaNacimiento: new Date(this.fechaNacimiento.year,
 		               								(this.fechaNacimiento.month-1),
-		               								this.fechaNacimiento.day)
+		               								this.fechaNacimiento.day),
+    					genero: this.data.genero,
+    					idRue: this.data.idRue,    					    					
+		               	municipioVivienda: this.municipio,		               	
+		               	zonaVivienda: this.data.zonaVivienda		               		               	
     				}
     	console.log(datos);
 

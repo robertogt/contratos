@@ -85,13 +85,10 @@ export class ContratoService {
     }
 
     getContratos(anio,renglon,estado){
-      console.log(renglon);
-      console.log(estado);
       let params = new URLSearchParams();
       params.set('anio', ""+anio);
-      if(renglon != 'null'){params.set('renglon', renglon);console.log('if renglon')}
+      if(renglon != 'null'){params.set('renglon', renglon);}
       if(estado != 'null'){params.set('estado',estado);}
-      console.log(params); 
       return this.http.get(this.urlContratosPendientesActivos,{search:params})
           .map(res => res.json());
     }
