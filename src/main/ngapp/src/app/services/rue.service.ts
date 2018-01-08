@@ -7,16 +7,21 @@ import { APP_CONFIG, AppConfig } from '../app-config.module';
 @Injectable()
 export class RueService {
 
-	public urlBuscaEmpleados:string;
-	public urlRenglones:string;
-	public urlUbicacionesFuncionales:string;
-	public urlColegios:string;
-	public urlTitulos:string;
-	public urlPerfiles:string;
 	public urlActividades:string;
+  public urlBuscaEmpleados:string;
+	public urlColegios:string;
+  public urlEditaRue:string;
   public urlFuncionario:string;
+  public urlGetDepartamentos:string;
+  public urlGetMunicipios:string;
+  public urlPerfiles:string;
+  public urlRenglones:string;
+  public urlTitulos:string;
+  public urlUbicacionesFuncionales:string;
+  
   public urlCreaContrato:string;
   public urlGetContrato:string;
+  public urlGetEmpleado:string;
   public urlCrearAddendum:string;
 
 	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
@@ -24,14 +29,44 @@ export class RueService {
       this.urlBuscaEmpleados = config.ENDPOINT+'/bknRRHHContratos/rest/funcionarios';
   		this.urlColegios   = config.ENDPOINT+'/bknRRHHContratos/rest/colegios';
       this.urlCreaContrato   = config.ENDPOINT+'/bknRRHHContratos/rest/contrato';
-      this.urlFuncionario  = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/funcionario';      
+      this.urlFuncionario  = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/funcionario';
+      this.urlEditaRue      = config.ENDPOINT+'/bknRRHHContratos/rest/rue';
       this.urlGetContrato   = config.ENDPOINT+'/bknRRHHContratos/rest/addendum';
+      this.urlGetDepartamentos = config.ENDPOINT+'/bknRRHHContratos/rest/rue/departamentos';
+      this.urlGetEmpleado =  config.ENDPOINT+'/bknRRHHContratos/rest/rue';
+      this.urlGetMunicipios = config.ENDPOINT+'/bknRRHHContratos/rest/rue/municipios';
       this.urlPerfiles   = config.ENDPOINT+'/bknRRHHContratos/rest/actividades/perfiles/ubicacion';
       this.urlRenglones 	= config.ENDPOINT+'/bknRRHHGeneral/restresources/general/renglon';
   		this.urlUbicacionesFuncionales 	= config.ENDPOINT+'/bknRRHHActividades/rest/ubicacionfuncional';
   		this.urlTitulos 	= config.ENDPOINT+'/bknRRHHContratos/rest/titulos';
       this.urlCrearAddendum = config.ENDPOINT+'/bknRRHHContratos/rest/addendum';
 	}
+
+  editarRue(data:any){      
+      let headers = new Headers();
+      return this.http.post(this.urlEditaRue,data,{headers:headers})
+                      .map(res => res.json());
+  }
+
+  getEmpleado(rue:string){
+      let params = new URLSearchParams();
+      params.set('rue', rue); 
+      return this.http.get(this.urlGetEmpleado, {search: params})
+          .map(res => res.json());
+  }
+
+  getDepartamentos(){
+      let params = new URLSearchParams();
+      return this.http.get(this.urlGetDepartamentos, {search: params})
+          .map(res => res.json());
+  }
+
+  getMunicipios(departamento:string){
+      let params = new URLSearchParams();
+      params.set('departamento', departamento); 
+      return this.http.get(this.urlGetMunicipios, {search: params})
+          .map(res => res.json());
+  }
 
 	getPersonas(texto:string){
   		let params = new URLSearchParams();

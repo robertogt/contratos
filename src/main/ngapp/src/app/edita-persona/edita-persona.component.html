@@ -1,0 +1,85 @@
+<form>
+	<div>
+		<h4 class="display-6">Edición de datos personales</h4>
+		<hr>
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="fechaNacimiento"><strong>Fecha Nacimiento</strong></label>
+		<div class="col-3">
+			<input class="form-control" placeholder="dd/mm/yyyy" 
+							id ="fechaNacimiento" name="fechaNacimiento" 
+							[(ngModel)]="fechaNacimiento"
+							#fechaN="ngModel"
+							ngbDatepicker 
+							#df="ngbDatepicker"
+							(click)="df.toggle()"						        			 
+							required
+			>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="departamento"><strong>Departamento</strong>
+		</label>
+		<div class="col-3">
+			<select class="form-control" [(ngModel)]="departamento" name="departamento"
+					(change)="onChangeDepartamento()">
+			    <option *ngFor="let departamento of departamentos" [ngValue]="departamento.departamento">{{departamento.nombre}}</option>
+			</select>
+		</div>		
+	
+		<label class="col-form-label text-right" for="municipio"><strong>Municipio</strong>
+		</label>
+		<div class="col-4">
+			<select class="form-control" [(ngModel)]="municipio" name="municipio">
+			    <option *ngFor="let municipio of municipios" [ngValue]="municipio.rrhhMunicipioPK.municipio">{{municipio.nombre}}</option>
+			</select>
+		</div>		
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="direccion"><strong>Dirección</strong>
+		</label>
+		<div class="col-7">
+			<input class="form-control" id="direccion" name="direccion" [(ngModel)]="data.direccion">
+		</div>		
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="zonaVivienda"><strong>Zona</strong>
+		</label>
+		<div class="col-2">
+			<input type="number" min="0" class="form-control" id="zonaVivienda" name="zonaVivienda" [(ngModel)]="data.zonaVivienda">
+		</div>		
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="estadoCivil"><strong>Estado Civil</strong></label>
+		<div class="col-5">
+			<select class="form-control" name="estadoCivil" [(ngModel)]="data.estadoCivil">
+				<option value="S">Soltero(a)</option>
+				<option value="C">Casado(a)</option>
+				<option value="D">Divorsiado(a)</option>
+				<option value="V">Viudo(a)</option>
+				<option value="U">Unido(a)</option>
+			</select>			
+		</div>		  				
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="genero"><strong>Sexo</strong></label>
+		<div class="col-5">
+			<select class="form-control" name="genero" [(ngModel)]="data.genero">				
+				<option value="F">Femenino</option>
+				<option value="M">Masculino</option>
+			</select>			
+		</div>		  				
+	</div>
+
+	<div class="form-group row">
+	    	<div class="offset-3 col-2">
+	  			<button type="button" class="btn btn-primary" (click)="editar()">Editar</button>
+	  		</div>
+
+	</div>
+</form>

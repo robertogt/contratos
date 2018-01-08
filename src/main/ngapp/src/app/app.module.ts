@@ -18,6 +18,7 @@ import { DetalleContratoComponent } from './detalle-contrato/detalle-contrato.co
 import { HistorialEstadosComponent } from './historial-estados/historial-estados.component';
 import { DetalleMotivoComponent } from './detalle-motivo/detalle-motivo.component';
 import { SpinnerComponentModule } from 'ng2-component-spinner';
+import { EditaPersonaComponent } from './edita-persona/edita-persona.component';
 @NgModule({
   declarations: [
     AppComponent,    
@@ -26,7 +27,8 @@ import { SpinnerComponentModule } from 'ng2-component-spinner';
     BusquedaContratoComponent,
     DetalleContratoComponent,
     HistorialEstadosComponent,
-    DetalleMotivoComponent
+    DetalleMotivoComponent,
+    EditaPersonaComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -49,7 +51,7 @@ import { SpinnerComponentModule } from 'ng2-component-spinner';
     SpinnerComponentModule
 
   ],
-  entryComponents:[AddendumComponent, DetalleMotivoComponent,DetalleContratoComponent,HistorialEstadosComponent],
+  entryComponents:[AddendumComponent, DetalleMotivoComponent,DetalleContratoComponent,HistorialEstadosComponent,EditaPersonaComponent],
   providers: [ContratoService,RueService,UtilService],
   bootstrap: [AppComponent]  
 })

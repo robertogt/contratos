@@ -24,7 +24,10 @@
 
 	<div class="card">
 		
-		<h6 class="card-header">Datos del contratista <span class="fa fa-user"></span></h6>
+		<h6 class="card-header">Datos del contratista <span class="fa fa-user"></span>
+			<span *ngIf="data.idRue"  class="fa fa-pencil" (click)="openEditaPersonaModal(data)"></span>			
+		</h6>
+
 		<div class="card-block">
 
 		    <div class="form-group row">
@@ -67,6 +70,7 @@
 			  		<input class="form-control" type="text" id="direccion" name="direccion" disabled [(ngModel)]="direccion" >
 			  	</div>
 		    </div>
+
 		</div>
 	</div>
 	<br>

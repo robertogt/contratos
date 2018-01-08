@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EditaPersonaComponent } from '../edita-persona/edita-persona.component'
 import { RueService } from '../services/rue.service';
 import { UtilService } from '../services/util.service';
 import { ContratoService } from '../services/contrato.service';
 import { Laboral } from '../model/laboral';
 import { NgForm } from '@angular/forms';
+import { NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Message } from 'primeng/primeng';
 import { APP_CONFIG, AppConfig } from '../app-config.module';
 
@@ -64,7 +66,8 @@ export class CreaContratoComponent implements OnInit {
   showLoader:boolean = false;
 
   constructor(private rueService:RueService, private route: ActivatedRoute, 
-    private contratoService:ContratoService, private utilService: UtilService) 
+    private contratoService:ContratoService, private utilService: UtilService,
+    private modalService: NgbModal) 
   { }
 
   ngOnInit() {
@@ -175,7 +178,7 @@ export class CreaContratoComponent implements OnInit {
   }
 
   cargaDatos(data){
-    console.log('data',data);
+    console.log(data);
     this.direccion = data.direccion;
     this.dpi = data.dpi;
     this.edad = data.edad;
@@ -188,7 +191,7 @@ export class CreaContratoComponent implements OnInit {
     this.tipoServicios = data.tipoServicios;
     
     this.ubicacion.idUbicacionFuncional = data.ubicacionFuncional;
-    console.log(data);
+    
     if(data.nombreUbicacion != undefined){
       (<HTMLInputElement>document.getElementById("ubica")).value = data.nombreUbicacion;
     }
@@ -289,6 +292,33 @@ export class CreaContratoComponent implements OnInit {
     this.academico=null;
   }
 
+  openEditaPersonaModal(data){    
+      this.showModalEdicion(data);
+  }
+
+  showModalEdicion(data){
+    let options: NgbModalOptions = {  size: 'lg' };
+
+    const modalRef = this.modalService.open(EditaPersonaComponent,options);
+    modalRef.componentInstance.idRue = data.idRue;
+    modalRef.result.then((result) =>{
+
+    }, (reason) => {
+                    console.log('reason',reason);
+                    console.log(this.contratista.dpi);
+                    this.seleccionaContratista();
+
+                    /*this.rueService.getFuncionario(this.contratista.dpi)
+                        .subscribe(  data => { 
+                                              this.inicializaLaboral(data);
+                                    },
+                                    error => { var errorMessage = <any>error; 
+                                      console.log(errorMessage);
+                                    }
+                                  );*/
+    });
+  }
+
   search(event) {
     this.rueService
     .getPersonas(event.query)
@@ -312,8 +342,7 @@ export class CreaContratoComponent implements OnInit {
       error => { var errorMessage = <any>error; console.log(errorMessage);});
   }
 
-  seleccionaContratista(){
-
+  seleccionaContratista(){    
     this.rueService
     .getFuncionario(this.contratista.dpi)
     .subscribe(  data => { 
