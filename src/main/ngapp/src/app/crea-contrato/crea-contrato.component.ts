@@ -225,7 +225,6 @@ export class CreaContratoComponent implements OnInit {
       this.cargaDatos(this.data);
     }
 
-
   }
 
   cargaDatosEdicion(data){
@@ -308,22 +307,11 @@ export class CreaContratoComponent implements OnInit {
                     console.log('reason',reason);
                     console.log(this.data.dpi);
                     
-                    //this.contratista={dpi:this.data.dpi};
-                    //this.seleccionaContratista();
-                    
                     if(this.contratista == null)
                       this.inicializaContrato();
                     else
                       this.seleccionaContratista();  
 
-                    /*this.rueService.getFuncionario(this.contratista.dpi)
-                        .subscribe(  data => { 
-                                              this.inicializaLaboral(data);
-                                    },
-                                    error => { var errorMessage = <any>error; 
-                                      console.log(errorMessage);
-                                    }
-                                  );*/
     });
   }
 

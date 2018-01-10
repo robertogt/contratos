@@ -41,7 +41,8 @@
 			</div>
 		</p-header>
 		
-		<p-column field="numeroContrato" header="Identificador" [style]="{'width':'15%'}"></p-column>
+		<p-column field="nombreCompleto" header="Nombre" [style]="{'width':'20%'}"></p-column>
+		<p-column field="numeroContrato" header="Identificador" [style]="{'width':'12%'}"></p-column>
 		<p-column field="nombreRenglon" header="Renglon" [filter]="true" [style]="{'text-align':'center'}"></p-column>
 		<p-column field="honorario" header="Honorarios" [style]="{'text-align':'right'}">
 			<ng-template let-col let-contrato="rowData" pTemplate="body">
