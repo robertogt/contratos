@@ -21,10 +21,11 @@ export class CreaContratoComponent implements OnInit {
 
   colegios: any[];
   contratista: any;
+  
   perfiles: any[];
   personas: any[];	
   renglones: any[];
-  ubicaciones: any[];	
+  ubicaciones: any[];	  
   titulos: any[];
 
   tiposServicios: any={};
@@ -66,6 +67,7 @@ export class CreaContratoComponent implements OnInit {
   contratoGuardado:boolean=false;
   showLoader:boolean = false;
 
+
   constructor(private rueService:RueService, private route: ActivatedRoute, 
     private contratoService:ContratoService, private utilService: UtilService,
     private modalService: NgbModal) 
@@ -100,10 +102,12 @@ export class CreaContratoComponent implements OnInit {
   }
   
   onSubmit(f: NgForm){
-    this.showLoader = true;
+    
+    
     if(!this.validaDatos())
       return;
 
+    this.showLoader = true;
     this.data.fechaDel = this.fechaDel.day+'/'+this.fechaDel.month+'/'+this.fechaDel.year;
     this.data.fechaAl = this.fechaAl.day+'/'+this.fechaAl.month+'/'+this.fechaAl.year;
     this.data.renglon = this.renglon;
@@ -121,14 +125,16 @@ export class CreaContratoComponent implements OnInit {
     this.data.academico = this.infoAcademica;
     
     console.log('data',this.data);
-
     if(this.idContrato==undefined)
       this.insertContrato(this.data,f);
     else
       this.updateContrato(this.data,f);
   }
 
+  
+
   insertContrato(data, f: NgForm){
+
     this.rueService.setContrato(data)
     .subscribe( 
       response => {console.log(response);

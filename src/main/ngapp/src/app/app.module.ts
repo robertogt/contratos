@@ -19,6 +19,7 @@ import { HistorialEstadosComponent } from './historial-estados/historial-estados
 import { DetalleMotivoComponent } from './detalle-motivo/detalle-motivo.component';
 import { SpinnerComponentModule } from 'ng2-component-spinner';
 import { EditaPersonaComponent } from './edita-persona/edita-persona.component';
+
 @NgModule({
   declarations: [
     AppComponent,    

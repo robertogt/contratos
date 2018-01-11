@@ -14,4 +14,28 @@
             /ng/index.html
         </welcome-file>
     </welcome-file-list>
+    <security-constraint>
+         <web-resource-collection>
+             <web-resource-name>Contratos</web-resource-name>
+             <url-pattern>/#/contrato</url-pattern>
+             <url-pattern>/#/consulta</url-pattern>             
+             <http-method>GET</http-method>
+             <http-method>POST</http-method>
+             <http-method>PUT</http-method>
+             <http-method>DELETE</http-method>
+         </web-resource-collection>
+         <auth-constraint>
+             <role-name>rrhh_contrato</role-name> 
+         </auth-constraint>
+         <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+       <login-config>
+        <auth-method>BASIC</auth-method>        
+       </login-config>
+    <security-role>
+        <role-name>rrhh_contrato</role-name>
+    </security-role>  
+
 </web-app>
