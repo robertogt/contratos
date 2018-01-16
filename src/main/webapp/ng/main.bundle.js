@@ -219,8 +219,8 @@ var AppConfig = (function () {
 }());
 
 var APP_DI_CONFIG = {
-    ENDPOINT: '' //http://10.10.97.31:7001'
-    //ENDPOINT: 'http://10.10.96.155:7001'  
+    ENDPOINT: ''
+    //ENDPOINT: 'http://10.10.97.31:7001'
 };
 var AppConfigModule = (function () {
     function AppConfigModule() {
@@ -898,14 +898,34 @@ var CreaContratoComponent = (function () {
                 _this.limpiarForm(f);
             _this.muestraMensaje('success', 'Contrato creado');
             _this.contratoGuardado = true;
+            _this.showLoader = false;
         }, function (error) {
             _this.muestraMensaje('error', error);
             _this.contratoGuardado = false;
+            _this.showLoader = false;
         });
     };
     CreaContratoComponent.prototype.limpiarForm = function (f) {
-        f.reset();
+        //f.reset();
+        this.colegio = null;
+        this.contratista = null;
+        this.edad = null;
+        this.estadoCivil = null;
+        this.nacionalidad = null;
+        this.dpi = null;
+        this.nit = null;
+        this.direccion = null;
+        this.fechaContrato = null;
+        this.data.honorario = null;
+        this.fechaDel = null;
+        this.fechaAl = null;
+        this.numeroColegiado = null;
+        this.ubicacion = {};
         this.perfiles = [];
+        this.renglon = null;
+        this.tipoServicios = null;
+        this.titulo.titulo = null;
+        document.getElementById("titu").value = null;
         this.actividades = [];
     };
     CreaContratoComponent.prototype.cambiaTipoServicios = function (tipoServicios) {
@@ -1049,6 +1069,8 @@ var CreaContratoComponent = (function () {
         this.rueService
             .getFuncionario(this.contratista.dpi)
             .subscribe(function (data) {
+            //data.data.idContrato = undefined;
+            _this.idContrato = undefined;
             _this.inicializaLaboral(data);
         }, function (error) { var errorMessage = error; console.log(errorMessage); });
     };

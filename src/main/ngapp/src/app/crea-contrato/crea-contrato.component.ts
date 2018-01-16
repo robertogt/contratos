@@ -164,15 +164,36 @@ export class CreaContratoComponent implements OnInit {
         this.limpiarForm(f);
         this.muestraMensaje('success','Contrato creado');
         this.contratoGuardado=true;
+        this.showLoader = false;
       },
       error => {this.muestraMensaje('error',error);
-      this.contratoGuardado=false;}
+                this.contratoGuardado=false;
+                this.showLoader = false;
+              }
       );
   }
 
   limpiarForm(f:NgForm){
-    f.reset();
+    //f.reset();
+    this.colegio = null;
+    this.contratista = null;
+    this.edad = null;
+    this.estadoCivil = null;
+    this.nacionalidad = null;
+    this.dpi = null;
+    this.nit = null;
+    this.direccion = null;
+    this.fechaContrato = null;
+    this.data.honorario = null;
+    this.fechaDel = null;
+    this.fechaAl = null;
+    this.numeroColegiado = null;
+    this.ubicacion = {};
     this.perfiles = [];
+    this.renglon = null;
+    this.tipoServicios = null;
+    this.titulo.titulo = null;
+    (<HTMLInputElement>document.getElementById("titu")).value = null;
     this.actividades = [];
   }
 
@@ -348,6 +369,8 @@ export class CreaContratoComponent implements OnInit {
     this.rueService
     .getFuncionario(this.contratista.dpi)
     .subscribe(  data => { 
+      //data.data.idContrato = undefined;
+      this.idContrato = undefined;
       this.inicializaLaboral(data);
 
     },
