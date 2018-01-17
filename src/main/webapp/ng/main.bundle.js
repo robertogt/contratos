@@ -1062,11 +1062,12 @@ var CreaContratoComponent = (function () {
         modalRef.componentInstance.data = data.academico;
         modalRef.result.then(function (result) {
         }, function (reason) {
-            console.log('reason', reason);
-            if (_this.contratista == null)
-                _this.inicializaContrato();
+            console.log('profesion', reason);
+            _this.profesion = reason.profesion;
+            /*if(this.contratista == null)
+              this.inicializaContrato();
             else
-                _this.seleccionaContratista();
+              this.seleccionaContratista();  /*/
         });
     };
     CreaContratoComponent.prototype.search = function (event) {
@@ -1501,7 +1502,7 @@ var EditaTituloComponent = (function () {
         this.rueService.editarProfesionTitulo(datos)
             .subscribe(function (response) {
             console.log(response);
-            _this.activeModal.dismiss(_this.data.cui);
+            _this.activeModal.dismiss(datos);
         }, function (error) {
             console.log('error', error);
         });

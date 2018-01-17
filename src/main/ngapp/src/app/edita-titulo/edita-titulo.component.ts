@@ -41,7 +41,7 @@ export class EditaTituloComponent implements OnInit {
     			.subscribe(
       						response => {
       							console.log(response);
-      							this.activeModal.dismiss(this.data.cui);
+      							this.activeModal.dismiss(datos);
 				      		},
 				      		error => {
 				      			console.log('error',error);				      					

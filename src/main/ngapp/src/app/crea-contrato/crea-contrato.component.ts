@@ -354,12 +354,11 @@ export class CreaContratoComponent implements OnInit {
     modalRef.result.then((result) =>{
 
     }, (reason) => {
-                    console.log('reason',reason);
-                    
-                    if(this.contratista == null)
+                    this.profesion = reason.profesion;
+                    /*if(this.contratista == null)
                       this.inicializaContrato();
                     else
-                      this.seleccionaContratista();  
+                      this.seleccionaContratista();  /*/
 
     });
   }
