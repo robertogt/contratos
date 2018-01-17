@@ -24,6 +24,7 @@ export class BusquedaContratoComponent implements OnInit {
 	anioActual:any;
 	anios:Array<any>;
 	contratos:Array<any>;
+	contratosSeleccionados: Array<any>;
 	data:{};
 	estados:Array<any>;
 	estado:any;
@@ -75,6 +76,16 @@ export class BusquedaContratoComponent implements OnInit {
 
 	}
 
+	descargaMasiva(){
+		console.log(this.contratosSeleccionados);
+
+		for(let c of this.contratosSeleccionados){
+			console.log(c.idContrato);
+			window.open(this.config.ENDPOINT+'/bknRRHHContratos/rest/contrato/generar/'+c.idContrato);	
+		}
+		
+	}
+
 
 	ngOnDestroy(){
 		this.alive = false; // switches your TimerObservable off
@@ -101,7 +112,7 @@ export class BusquedaContratoComponent implements OnInit {
 
 	cargaContratos(){
 		this.contratoService.getContratos(this.anioActual,this.renglon,this.estado)
-		.subscribe(result => {this.contratos = result; },
+		.subscribe(result => {this.contratos = result; this.contratosSeleccionados = null },
 			error => { var errorMessage = <any>error;
 				console.log(errorMessage);
 			}
