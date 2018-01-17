@@ -1,0 +1,30 @@
+<form>
+	<div>
+		<h4 class="display-6">Edición de datos del titulo</h4>
+		<hr>
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-2 col-form-label text-right" for="titulo"><strong>Titulo</strong>
+		</label>
+		<div class="col-9">
+			<input class="form-control" id="titulo" name="titulo" [(ngModel)]="data.nombreTitulo" disabled>
+		</div>		
+	</div>
+
+	<div class="form-group row">
+		<label class="col-md-2 col-form-label text-right" for="profesion"><strong>Profesion</strong>
+		</label>
+		<div class="col-9">
+			<input class="form-control" id="profesion" name="profesion" [(ngModel)]="data.profesion">	
+			<small class="form-text text-muted">Como se mostrara en el contrato.</small>
+		</div>		
+	</div>
+
+	<div class="form-group row">
+	    	<div class="offset-3 col-2">
+	  			<button type="button" class="btn btn-primary" (click)="editar()">Editar</button>
+	  		</div>
+
+	</div>
+</form>

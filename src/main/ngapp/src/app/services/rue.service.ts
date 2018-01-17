@@ -17,6 +17,7 @@ export class RueService {
   public urlPerfiles:string;
   public urlRenglones:string;
   public urlTitulos:string;
+  public urlTitulosEdit:string;
   public urlUbicacionesFuncionales:string;
   
   public urlCreaContrato:string;
@@ -39,12 +40,23 @@ export class RueService {
       this.urlRenglones 	= config.ENDPOINT+'/bknRRHHGeneral/restresources/general/renglon';
   		this.urlUbicacionesFuncionales 	= config.ENDPOINT+'/bknRRHHActividades/rest/ubicacionfuncional';
   		this.urlTitulos 	= config.ENDPOINT+'/bknRRHHContratos/rest/titulos';
+      this.urlTitulosEdit  = config.ENDPOINT+'/bknRRHHContratos/rest/titulos';
       this.urlCrearAddendum = config.ENDPOINT+'/bknRRHHContratos/rest/addendum';
 	}
 
   editarRue(data:any){      
       let headers = new Headers();
       return this.http.post(this.urlEditaRue,data,{headers:headers})
+                      .map(res => res.json());
+  }
+
+  editarProfesionTitulo(data:any){
+      let params = new URLSearchParams();
+      params.set('titulo', data.titulo);      
+      params.set('profesion', encodeURI(data.profesion));      
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      return this.http.post(this.urlTitulosEdit,params,{headers:headers})
                       .map(res => res.json());
   }
 

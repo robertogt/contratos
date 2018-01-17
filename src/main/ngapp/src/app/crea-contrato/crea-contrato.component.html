@@ -239,7 +239,10 @@
 	<br>
 	<div class="card">
 		
-		<h6 class="card-header">Información profesional   <span class="fa fa-suitcase"></span></h6>
+		<h6 class="card-header">Información profesional   
+				<span class="fa fa-suitcase"></span>
+				<span *ngIf="data.idRue"  class="fa fa-pencil" (click)="openEditaTituloModal(data)"></span>
+		</h6>
 		<div class="card-block">
 	   	    <div class="form-group row">
 			    <label class="col-md-3 col-form-label text-right" for="colegio"><strong>Colegio profesional</strong></label>
@@ -275,6 +278,15 @@
 					</p-autoComplete>
 			  	</div>
 
+		    </div>
+
+		    <div class="form-group row">
+		    	<label class="col-md-3 col-form-label text-right" for="profesion"><strong>Profesion</strong></label>
+				<div class="col-4">
+			  		<input class="form-control" type="text" id="profesion" name="profesion" [(ngModel)]="profesion" (change)="onChangeNumeroColegiado()" 
+			  		disabled>
+			  		<small class="form-text text-muted">Como se mostrara en el contrato.</small>
+			  	</div>
 		    </div>
 
 		    <div class="form-group row">

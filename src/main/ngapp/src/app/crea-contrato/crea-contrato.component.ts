@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EditaPersonaComponent } from '../edita-persona/edita-persona.component'
+import { EditaTituloComponent } from '../edita-titulo/edita-titulo.component'
 import { RueService } from '../services/rue.service';
 import { UtilService } from '../services/util.service';
 import { ContratoService } from '../services/contrato.service';
@@ -21,21 +22,19 @@ export class CreaContratoComponent implements OnInit {
 
   colegios: any[];
   contratista: any;
-  
-  perfiles: any[];
-  personas: any[];	
-  renglones: any[];
-  ubicaciones: any[];	  
-  titulos: any[];
-
-  tiposServicios: any={};
-
   data: any={};
-  infoAcademica: any={};
-  idContrato:any=null;
-  
   fechaDel: any;
   fechaAl: any;
+  idContrato:any=null;
+  infoAcademica: any={};
+  perfiles: any[];
+  personas: any[];
+  profesion: any;
+  renglones: any[];
+  ubicaciones: any[];	  
+  tiposServicios: any={};
+  titulos: any[];
+  
   renglon: any;
   tipoServicios: any;
   ubicacion: any={};
@@ -194,6 +193,7 @@ export class CreaContratoComponent implements OnInit {
     this.tipoServicios = null;
     this.titulo.titulo = null;
     (<HTMLInputElement>document.getElementById("titu")).value = null;
+    this.profesion = null;
     this.actividades = [];
   }
 
@@ -237,6 +237,7 @@ export class CreaContratoComponent implements OnInit {
       this.titulo.titulo = data.academico.titulo;
       (<HTMLInputElement>document.getElementById("titu")).value =data.academico.nombreTitulo;
       this.numeroColegiado = data.academico.numeroColegiado;
+      this.profesion = data.academico.profesion;
     }else
     {
       this.titulo=null;
@@ -333,6 +334,27 @@ export class CreaContratoComponent implements OnInit {
     }, (reason) => {
                     console.log('reason',reason);
                     console.log(this.data.dpi);
+                    
+                    if(this.contratista == null)
+                      this.inicializaContrato();
+                    else
+                      this.seleccionaContratista();  
+
+    });
+  }
+
+  openEditaTituloModal(data){    
+      this.showModalEdicionTitulo(data);
+  }
+
+  showModalEdicionTitulo(data){
+    let options: NgbModalOptions = {  size: 'lg' };
+    const modalRef = this.modalService.open(EditaTituloComponent,options);
+    modalRef.componentInstance.data = data.academico;
+    modalRef.result.then((result) =>{
+
+    }, (reason) => {
+                    console.log('reason',reason);
                     
                     if(this.contratista == null)
                       this.inicializaContrato();
