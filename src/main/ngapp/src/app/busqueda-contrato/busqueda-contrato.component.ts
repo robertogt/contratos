@@ -77,7 +77,6 @@ export class BusquedaContratoComponent implements OnInit {
 	}
 
 	descargaMasiva(){
-		console.log(this.contratosSeleccionados);
 
 		for(let c of this.contratosSeleccionados){
 			console.log(c.idContrato);

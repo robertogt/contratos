@@ -7,8 +7,8 @@ export class AppConfig {
 }
 
 export const APP_DI_CONFIG: AppConfig = {  
-  //ENDPOINT: ''
-  ENDPOINT: 'http://10.10.97.31:7001'
+  ENDPOINT: ''
+  //ENDPOINT: 'http://10.10.97.31:7001'
   
 };
 

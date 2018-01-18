@@ -45,10 +45,15 @@
 			</div>
 		</p-header>
 		<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+		<p-column header="Index">
+		    <template let-i="rowIndex" pTemplate="body">
+		        {{i+1}}
+		    </template>
+		</p-column>
 		<p-column field="nombreCompleto" header="Nombre" [style]="{'width':'20%'}"></p-column>
 		<p-column field="numeroContrato" header="Identificador" [style]="{'width':'12%'}"></p-column>
 		<p-column field="nombreRenglon" header="Renglon" [filter]="true" [style]="{'text-align':'center'}"></p-column>
-		<p-column field="honorario" header="Honorarios" [style]="{'text-align':'right'}">
+		<p-column field="honorario" header="Honorarios" [style]="{'text-align':'right','width':'9%'}">
 			<ng-template let-col let-contrato="rowData" pTemplate="body">
 				<span >{{contrato.honorario | currency:'GTQ'}}</span>
 			</ng-template>
@@ -61,7 +66,7 @@
 			</ng-template>
 		</p-column>
  
-		<p-column styleClass="col-button" header="Fianza">
+		<p-column styleClass="col-button" header="Fianza" [style]="{'width':'9%'}">
 			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 				<div class="align-items-center justify-content-center" (click)="showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado)">
 					{{contrato.numeroFianza}} 
@@ -69,14 +74,14 @@
 				</div>
 			</ng-template>
 		</p-column>
-		<p-column styleClass="col-button" header="Editar">
+		<p-column styleClass="col-button" header="Editar" [style]="{'width':'4%'}">
 			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 				<div *ngIf="puedeDescargar(contrato)" class="row align-items-center justify-content-center">
 					<a routerLink="/contrato/{{contrato.idContrato}}"><span class="fa fa-edit" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Editar"></span></a>
 				</div>
 			</ng-template>
 		</p-column>
-		<p-column styleClass="col-button" header="Descargar">
+		<p-column styleClass="col-button" header="Descargar" [style]="{'width':'5%'}">
 			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 				<div class="row align-items-center justify-content-center">
 					<a><span class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar" (click)="downloadContrato(contrato)" ></span></a>
@@ -105,7 +110,7 @@
 			</ng-template>
 		</p-column>
 		<p-column styleClass="col-button" header="Anular">
-			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body" >
 				<div *ngIf="contrato.estado=='I'" class="row align-items-center justify-content-center">
 					<a><span class="fa fa-trash" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Anular" (click)="showAnular(contrato)" ></span></a>
 				</div>
