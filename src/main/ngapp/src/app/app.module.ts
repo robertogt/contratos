@@ -19,7 +19,8 @@ import { HistorialEstadosComponent } from './historial-estados/historial-estados
 import { DetalleMotivoComponent } from './detalle-motivo/detalle-motivo.component';
 import { SpinnerComponentModule } from 'ng2-component-spinner';
 import { EditaPersonaComponent } from './edita-persona/edita-persona.component';
-import { EditaTituloComponent } from './edita-titulo/edita-titulo.component'
+import { EditaTituloComponent } from './edita-titulo/edita-titulo.component';
+import { SolicitudGastoComponent } from './solicitud-gasto/solicitud-gasto.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { EditaTituloComponent } from './edita-titulo/edita-titulo.component'
     HistorialEstadosComponent,
     DetalleMotivoComponent,
     EditaPersonaComponent,
-    EditaTituloComponent
+    EditaTituloComponent,
+    SolicitudGastoComponent
   ],
   imports: [
     BrowserAnimationsModule,

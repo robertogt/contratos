@@ -10,11 +10,12 @@ export class ContratoService {
   public urlActividades:string;
   public urlAnularContrato:string;
   public urlContrato:string;
-  public urlContratosPendientesActivos:string;
+  public urlContratosPendientesActivos:string;  
   public urlDescargarDocumento:string;
   public urlDescargarDocumentoFisico:string;
   public urlEstadosHistorial:string;
   public urlRegistrarNumeroFianza:string;
+  public urlRegistraSolicitud:string;
   public urlRescindirContrato:string;
   public urlUpdateContrato:string;
   public urlMotivosRechazo:string;
@@ -35,13 +36,16 @@ export class ContratoService {
       this.urlUpdateContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/editar';
       this.urlMotivosRechazo = config.ENDPOINT+'/bknRRHHContratos/rest/asesor/historial/motivos';
       this.urlEstados = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/estados';
+      this.urlRegistraSolicitud = config.ENDPOINT+'/bknRRHHContratos/rest/solicitud';
+       //idContrato, fechaSolicitud
   	}
 
-    anularContrato(idContrato:number, observacion:string){
-      console.log('anulando',idContrato, observacion);
+    anularContrato(idContrato:number, observacion:string, estado:string){
+      console.log('anulando',idContrato, observacion, estado);
       let params = new URLSearchParams();
       params.set('contrato', ""+idContrato);
       params.set('observacion', observacion);
+      params.set('estado', estado);
       let headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       return this.http.post(this.urlAnularContrato,params,{headers:headers})
@@ -107,6 +111,16 @@ export class ContratoService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       return this.http.post(this.urlRegistrarNumeroFianza,params,{headers:headers})
+                      .map(res => res.json());
+    }
+
+    registrarSolicitudDeGasto(idContrato:number, fechaSolicitud:string){      
+      let params = new URLSearchParams();
+      params.set('idContrato', ""+idContrato);
+      params.set('fechaSolicitud', fechaSolicitud);
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      return this.http.post(this.urlRegistraSolicitud,params,{headers:headers})
                       .map(res => res.json());
     }
 

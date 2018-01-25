@@ -219,8 +219,8 @@ var AppConfig = (function () {
 }());
 
 var APP_DI_CONFIG = {
-    ENDPOINT: ''
-    //ENDPOINT: 'http://10.10.97.31:7001'
+    //ENDPOINT: ''
+    ENDPOINT: 'http://10.10.97.31:7001'
 };
 var AppConfigModule = (function () {
     function AppConfigModule() {
@@ -248,6 +248,7 @@ AppConfigModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__crea_contrato_crea_contrato_component__ = __webpack_require__("../../../../../src/app/crea-contrato/crea-contrato.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__busqueda_contrato_busqueda_contrato_component__ = __webpack_require__("../../../../../src/app/busqueda-contrato/busqueda-contrato.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__solicitud_gasto_solicitud_gasto_component__ = __webpack_require__("../../../../../src/app/solicitud-gasto/solicitud-gasto.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -259,11 +260,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var routes = [
     { path: '', redirectTo: '/contrato', pathMatch: 'full' },
     { path: 'contrato', component: __WEBPACK_IMPORTED_MODULE_2__crea_contrato_crea_contrato_component__["a" /* CreaContratoComponent */] },
     { path: 'contrato/:idContrato', component: __WEBPACK_IMPORTED_MODULE_2__crea_contrato_crea_contrato_component__["a" /* CreaContratoComponent */] },
-    { path: 'consulta', component: __WEBPACK_IMPORTED_MODULE_3__busqueda_contrato_busqueda_contrato_component__["a" /* BusquedaContratoComponent */] }
+    { path: 'consulta', component: __WEBPACK_IMPORTED_MODULE_3__busqueda_contrato_busqueda_contrato_component__["a" /* BusquedaContratoComponent */] },
+    { path: 'solicitud', component: __WEBPACK_IMPORTED_MODULE_4__solicitud_gasto_solicitud_gasto_component__["a" /* SolicitudGastoComponent */] }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
@@ -375,6 +378,7 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_component_spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ng2_component_spinner__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__edita_persona_edita_persona_component__ = __webpack_require__("../../../../../src/app/edita-persona/edita-persona.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__edita_titulo_edita_titulo_component__ = __webpack_require__("../../../../../src/app/edita-titulo/edita-titulo.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__solicitud_gasto_solicitud_gasto_component__ = __webpack_require__("../../../../../src/app/solicitud-gasto/solicitud-gasto.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -382,6 +386,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -420,7 +425,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_17__historial_estados_historial_estados_component__["a" /* HistorialEstadosComponent */],
             __WEBPACK_IMPORTED_MODULE_18__detalle_motivo_detalle_motivo_component__["a" /* DetalleMotivoComponent */],
             __WEBPACK_IMPORTED_MODULE_20__edita_persona_edita_persona_component__["a" /* EditaPersonaComponent */],
-            __WEBPACK_IMPORTED_MODULE_21__edita_titulo_edita_titulo_component__["a" /* EditaTituloComponent */]
+            __WEBPACK_IMPORTED_MODULE_21__edita_titulo_edita_titulo_component__["a" /* EditaTituloComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__solicitud_gasto_solicitud_gasto_component__["a" /* SolicitudGastoComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_8__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
@@ -474,7 +480,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/busqueda-contrato/busqueda-contrato.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n\t<div style=\"text-align:center\">\r\n\t\t<h1 class=\"display-6\">Búsqueda General</h1>\r\n\t\t<legend></legend>\r\n\t\t<hr>\r\n\t</div>\r\n\t<div>\r\n\t\t<p-growl [(value)]=\"msgs\" life=\"3000\" [immutable]=\"false\"></p-growl>\r\n\t\t<p-dataTable #dt [value]=\"contratos\" selectionMode=\"single\" \r\n\t\t(onRowSelect)=\"onRowSelect($event)\" \r\n\t\t[rows]=\"20\" \r\n\t\t[emptyMessage]=\"'No se encontraron registros.'\" \r\n\t\t[paginator]=\"true\" \r\n\t\t[globalFilter]=\"gb\" \r\n\t\t[pageLinks]=\"3\" \r\n\t\t[rowsPerPageOptions]=\"[5,10,20]\"\r\n\t\texportFilename=\"Contratos\"\r\n\t\t[(selection)]=\"contratosSeleccionados\"\r\n\t\tdataKey=\"idContrato\"\r\n\t\t[headerCheckboxToggleAllPages]=\"true\"\r\n\t\t>\r\n\t\t<p-header>\r\n\t\t\t<div>\r\n\t\t\t\t<form class=\"form-inline\">\r\n\t\t\t\t\t<label class=\"mr-sm-4\">Año:</label>\r\n\t\t\t\t\t<select [(ngModel)]=\"anioActual\" name=\"anio\" class=\"form-control\" (change)=\"cambioAnio()\">\r\n\t\t\t\t\t\t<option *ngFor=\"let anio of anios\" [value]=\"anio.value\">{{anio.text}}</option>\r\n\t\t\t\t\t</select>\r\n\t\t\t\t\t<label class=\"mr-sm-4\" style=\"padding-left:3%\">Renglon:</label>\r\n\t\t\t\t\t<select [(ngModel)]=\"renglon\" name=\"renglonPresupuesto\" class=\"form-control\"  (change)=\"cambioRenglon()\">\r\n\t\t\t\t\t\t<option  [value]=\"null\">Seleccionar</option>\r\n\t\t\t\t\t\t<option *ngFor=\"let renglon of renglones\" [value]=\"renglon.renglon\">{{renglon.nombre}}</option>\r\n\t\t\t\t\t</select>\r\n\t\t\t\t\t<label class=\"mr-sm-4\" style=\"padding-left:3%\">Estado:</label>\r\n\t\t\t\t\t<select [(ngModel)]=\"estado\" name=\"renglonPresupuesto\" class=\"form-control\" (change)=\"cambioEstado()\">\r\n\t\t\t\t\t\t<option  [value]=\"null\">Seleccionar</option>\r\n\t\t\t\t\t\t<option *ngFor=\"let estado of estados\" [value]=\"estado.idCatalogoEstado\">{{estado.nombre}}</option>\r\n\t\t\t\t\t</select>\r\n\t\t\t\t</form>\r\n\t\t\t</div>\r\n\t\t\t<br>\r\n\t\t\t<div class=\"ui-widget-header\" style=\"padding:4px 10px;border-bottom: 0 none\">\r\n\t\t\t\t<i class=\"fa fa-search\" style=\"margin:4px 4px 0 0\"></i>\r\n\t\t\t\t<input #gb type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\">\r\n\t\t\t</div>\r\n\t\t</p-header>\r\n\t\t<p-column [style]=\"{'width':'38px'}\" selectionMode=\"multiple\"></p-column>\r\n\t\t<p-column header=\"No.\">\r\n\t\t    <template let-i=\"rowIndex\" pTemplate=\"body\">\r\n\t\t        {{i+1}}\r\n\t\t    </template>\r\n\t\t</p-column>\r\n\t\t<p-column field=\"nombreCompleto\" header=\"Nombre\" [style]=\"{'width':'20%'}\"></p-column>\r\n\t\t<p-column field=\"numeroContrato\" header=\"Identificador\" [style]=\"{'width':'12%'}\"></p-column>\r\n\t\t<p-column field=\"nombreRenglon\" header=\"Renglon\" [filter]=\"true\" [style]=\"{'text-align':'center'}\"></p-column>\r\n\t\t<p-column field=\"honorario\" header=\"Honorarios\" [style]=\"{'text-align':'right','width':'9%'}\">\r\n\t\t\t<ng-template let-col let-contrato=\"rowData\" pTemplate=\"body\">\r\n\t\t\t\t<span >{{contrato.honorario | currency:'GTQ'}}</span>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\r\n\t\t<p-column field=\"idCatalogoEstado\" header=\"Estado\" filterMatchMode=\"equals\" [style]=\"{'text-align':'center'}\">\r\n\t\t\t<ng-template let-col let-contrato=\"rowData\" pTemplate=\"body\">\r\n\t\t\t\t<span [ngClass]=\"getClass(contrato.idCatalogoEstado)\">{{getNombreEstado(contrato.idCatalogoEstado)}}\r\n\t\t\t\t</span>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n \r\n\t\t<p-column styleClass=\"col-button\" header=\"Fianza\" [style]=\"{'width':'9%'}\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div class=\"align-items-center justify-content-center\" (click)=\"showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado)\">\r\n\t\t\t\t\t{{contrato.numeroFianza}} \r\n\t\t\t\t\t<a><span [ngClass]=\"contrato.numeroFianza==null?'fa fa-handshake-o':''\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Fianza\" ></span></a>\t\t\t\t\t\t\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Editar\" [style]=\"{'width':'4%'}\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div *ngIf=\"puedeDescargar(contrato)\" class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a routerLink=\"/contrato/{{contrato.idContrato}}\"><span class=\"fa fa-edit\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Editar\"></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Descargar\" [style]=\"{'width':'5%'}\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a><span class=\"fa fa-cloud-download\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Descargar\" (click)=\"downloadContrato(contrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Addendum\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a *ngIf=\"contrato.idCatalogoEstado==5\"><span class=\"fa fa-archive\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Addendar\" (click)=\"openAddendumModal(contrato.idContrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Detalles\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a><span class=\"fa fa-search\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Detalles\" (click)=\"openDetalleModal(contrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Rescindir\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div *ngIf=\"contrato.estado=='A'\" class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a><span class=\"fa fa-thumbs-down\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Rescindir\" (click)=\"showRescindir(contrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Anular\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\" >\r\n\t\t\t\t<div *ngIf=\"contrato.estado=='I'\" class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a><span class=\"fa fa-trash\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Anular\" (click)=\"showAnular(contrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\r\n\t\t<p-footer>\r\n        <ul>\r\n            <button *ngIf=\"contratosSeleccionados\" type=\"button\" class=\"btn btn-info\" (click)=\"descargaMasiva()\">Descargar Contratos</button>\r\n        </ul>\r\n    </p-footer>\r\n\t</p-dataTable>\r\n</div>\r\n</div>\r\n\r\n<!--Modal Fianza  -->\r\n<p-dialog header=\"Registro de fianza para el contrato: {{numeroContrato}}\" [(visible)]=\"display\" modal=\"modal\" width=\"700\" [responsive]=\"true\">\r\n\t<input class=\"form-control\" type=\"text\" name=\"numeroFianza\" [(ngModel)]=\"numeroFianza\" >\r\n\t<p-footer>\r\n\t\t<button type=\"button\" class=\"btn btn-success\" (click)=\"registrarFianza()\">Registrar fianza</button>\r\n\t\t<button type=\"button\" class=\"btn btn-default\" (click)=\"display=false\">Cancelar</button>\r\n\t</p-footer>\r\n</p-dialog>\r\n\r\n<!--Modal Rescindir contrato -->\r\n<p-dialog [contentStyle]=\"{'overflow':'visible'}\" header=\"Rescindir el contrato: {{numeroContrato}}\" [(visible)]=\"displayRescindir\" modal=\"modal\" width=\"700\" [responsive]=\"true\">    \r\n\t<div class=\"form-group row\">\r\n\t\t<label class=\"col-md-3 col-form-label text-right\" for=\"fechaFin\"><strong>Fecha Finalización:</strong></label>\r\n\t\t<div>\r\n\t\t\t<input class=\"form-control\" placeholder=\"dd/mm/yyyy\" \r\n\t\t\tid =\"fechaFin\" name=\"fechaFin\" \r\n\t\t\t[(ngModel)]=\"fechaFin\"\r\n\t\t\t#fFin=\"ngModel\"\r\n\t\t\tngbDatepicker \r\n\t\t\t#df=\"ngbDatepicker\"\r\n\t\t\t(click)=\"df.toggle()\"\t\t\t\t\t\t        \t\t\t \r\n\t\t\trequired\t\t\t\t\t\t\t\r\n\t\t\t>\r\n\t\t</div>\r\n\t</div>\r\n\t<textarea class=\"form-control\" [(ngModel)]=\"observacion\" ></textarea>\r\n\t<p-footer>\r\n\t\t<button type=\"button\" class=\"btn btn-danger\" (click)=\"rescindir(fechaFin,observacion)\">Rescindir Contrato</button>\r\n\t\t<button type=\"button\" class=\"btn btn-default\" (click)=\"displayRescindir=false\">Cancelar</button>\r\n\t</p-footer>\r\n</p-dialog>\r\n\r\n<!--Modal Anular contrato -->\r\n<p-dialog [contentStyle]=\"{'overflow':'visible'}\" header=\"Anular el contrato: {{numeroContrato}}\" [(visible)]=\"displayAnular\" modal=\"modal\" width=\"700\" [responsive]=\"true\">        \r\n\t<textarea class=\"form-control\" [(ngModel)]=\"observacion\" ></textarea>\r\n\t<p-footer>\r\n\t\t<button type=\"button\" class=\"btn btn-danger\" (click)=\"anular(observacion)\">Anular Contrato</button>\r\n\t\t<button type=\"button\" class=\"btn btn-default\" (click)=\"displayAnular=false\">Cancelar</button>\r\n\t</p-footer>\r\n</p-dialog>\r\n\r\n<spinner-component [spinnerShow]=\"showLoader\"> <div class=\"sk-circle\"> <div class=\"sk-circle1 sk-child\"></div> <div class=\"sk-circle2 sk-child\"></div> <div class=\"sk-circle3 sk-child\"></div> <div class=\"sk-circle4 sk-child\"></div> <div class=\"sk-circle5 sk-child\"></div> <div class=\"sk-circle6 sk-child\"></div> <div class=\"sk-circle7 sk-child\"></div> <div class=\"sk-circle8 sk-child\"></div> <div class=\"sk-circle9 sk-child\"></div> <div class=\"sk-circle10 sk-child\"></div> <div class=\"sk-circle11 sk-child\"></div> <div class=\"sk-circle12 sk-child\"></div> </div> </spinner-component> "
+module.exports = "<div class=\"container-fluid\">\r\n\t<div style=\"text-align:center\">\r\n\t\t<h1 class=\"display-6\">Búsqueda General</h1>\r\n\t\t<legend></legend>\r\n\t\t<hr>\r\n\t</div>\r\n\t<div>\r\n\t\t<p-growl [(value)]=\"msgs\" life=\"3000\" [immutable]=\"false\"></p-growl>\r\n\t\t<p-dataTable #dt [value]=\"contratos\" \r\n\t\t[rows]=\"20\" \r\n\t\t[emptyMessage]=\"'No se encontraron registros.'\" \r\n\t\t[paginator]=\"true\" \r\n\t\t[globalFilter]=\"gb\" \r\n\t\t[pageLinks]=\"3\" \r\n\t\t[rowsPerPageOptions]=\"[5,10,20]\"\r\n\t\texportFilename=\"Contratos\"\r\n\t\t[(selection)]=\"contratosSeleccionados\"\r\n\t\tdataKey=\"idContrato\"\r\n\t\t[headerCheckboxToggleAllPages]=\"true\"\r\n\t\t>\r\n\t\t<p-header>\r\n\t\t\t<div>\r\n\t\t\t\t<form class=\"form-inline\">\r\n\t\t\t\t\t<label class=\"mr-sm-4\">Año:</label>\r\n\t\t\t\t\t<select [(ngModel)]=\"anioActual\" name=\"anio\" class=\"form-control\" (change)=\"cambioAnio()\">\r\n\t\t\t\t\t\t<option *ngFor=\"let anio of anios\" [value]=\"anio.value\">{{anio.text}}</option>\r\n\t\t\t\t\t</select>\r\n\t\t\t\t\t<label class=\"mr-sm-4\" style=\"padding-left:3%\">Renglon:</label>\r\n\t\t\t\t\t<select [(ngModel)]=\"renglon\" name=\"renglonPresupuesto\" class=\"form-control\"  (change)=\"cambioRenglon()\">\r\n\t\t\t\t\t\t<option  [value]=\"null\">Seleccionar</option>\r\n\t\t\t\t\t\t<option *ngFor=\"let renglon of renglones\" [value]=\"renglon.renglon\">{{renglon.nombre}}</option>\r\n\t\t\t\t\t</select>\r\n\t\t\t\t\t<label class=\"mr-sm-4\" style=\"padding-left:3%\">Estado:</label>\r\n\t\t\t\t\t<select [(ngModel)]=\"estado\" name=\"renglonPresupuesto\" class=\"form-control\" (change)=\"cambioEstado()\">\r\n\t\t\t\t\t\t<option  [value]=\"null\">Seleccionar</option>\r\n\t\t\t\t\t\t<option *ngFor=\"let estado of estados\" [value]=\"estado.idCatalogoEstado\">{{estado.nombre}}</option>\r\n\t\t\t\t\t</select>\r\n\t\t\t\t</form>\r\n\t\t\t</div>\r\n\t\t\t<br>\r\n\t\t\t<div class=\"ui-widget-header\" style=\"padding:4px 10px;border-bottom: 0 none\">\r\n\t\t\t\t<i class=\"fa fa-search\" style=\"margin:4px 4px 0 0\"></i>\r\n\t\t\t\t<input #gb type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\">\r\n\t\t\t</div>\r\n\t\t</p-header>\r\n\t\t<p-column [style]=\"{'width':'38px'}\" selectionMode=\"multiple\"></p-column>\r\n\t\t<p-column header=\"No.\">\r\n\t\t    <template let-i=\"rowIndex\" pTemplate=\"body\">\r\n\t\t        {{i+1}}\r\n\t\t    </template>\r\n\t\t</p-column>\r\n\t\t<p-column field=\"nombreCompleto\" header=\"Nombre\" [style]=\"{'width':'20%'}\"></p-column>\r\n\t\t<p-column field=\"numeroContrato\" header=\"Identificador\" [style]=\"{'width':'12%'}\"></p-column>\r\n\t\t<p-column field=\"nombreRenglon\" header=\"Renglon\" [filter]=\"true\" [style]=\"{'text-align':'center'}\"></p-column>\r\n\t\t<p-column field=\"honorario\" header=\"Honorarios\" [style]=\"{'text-align':'right','width':'9%'}\">\r\n\t\t\t<ng-template let-col let-contrato=\"rowData\" pTemplate=\"body\">\r\n\t\t\t\t<span >{{contrato.honorario | currency:'GTQ'}}</span>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\r\n\t\t<p-column field=\"idCatalogoEstado\" header=\"Estado\" filterMatchMode=\"equals\" [style]=\"{'text-align':'center'}\">\r\n\t\t\t<ng-template let-col let-contrato=\"rowData\" pTemplate=\"body\">\r\n\t\t\t\t<span [ngClass]=\"getClass(contrato.idCatalogoEstado)\">{{getNombreEstado(contrato.idCatalogoEstado)}}\r\n\t\t\t\t</span>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n \r\n\t\t<p-column styleClass=\"col-button\" header=\"Fianza\" [style]=\"{'width':'9%'}\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div class=\"align-items-center justify-content-center\" (click)=\"showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado)\">\r\n\t\t\t\t\t{{contrato.numeroFianza}} \r\n\t\t\t\t\t<a><span [ngClass]=\"contrato.numeroFianza==null?'fa fa-handshake-o':''\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Fianza\" ></span></a>\t\t\t\t\t\t\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Editar\" [style]=\"{'width':'4%'}\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div *ngIf=\"puedeDescargar(contrato)\" class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a routerLink=\"/contrato/{{contrato.idContrato}}\"><span class=\"fa fa-edit\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Editar\"></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Descargar\" [style]=\"{'width':'5%'}\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a><span class=\"fa fa-cloud-download\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Descargar\" (click)=\"downloadContrato(contrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Addendum\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a *ngIf=\"contrato.idCatalogoEstado==5\"><span class=\"fa fa-archive\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Addendar\" (click)=\"openAddendumModal(contrato.idContrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Detalles\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a><span class=\"fa fa-search\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Detalles\" (click)=\"openDetalleModal(contrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Rescindir\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\r\n\t\t\t\t<div *ngIf=\"contrato.estado=='A'\" class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a><span class=\"fa fa-thumbs-down\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Rescindir\" (click)=\"showRescindir(contrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\t\t<p-column styleClass=\"col-button\" header=\"Anular\">\r\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\" >\r\n\t\t\t\t<div *ngIf=\"contrato.estado=='I'\" class=\"row align-items-center justify-content-center\">\r\n\t\t\t\t\t<a><span class=\"fa fa-trash\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Anular\" (click)=\"showAnular(contrato)\" ></span></a>\r\n\t\t\t\t</div>\r\n\t\t\t</ng-template>\r\n\t\t</p-column>\r\n\r\n\t\t<p-footer>\r\n\t\t\t<form class=\"form-inline\">\r\n\t\t\t<div>\r\n\t\t        <ul>\r\n\t\t            <button *ngIf=\"contratosSeleccionados\" type=\"button\" class=\"btn btn-info\" (click)=\"descargaMasiva()\">Descargar Contratos</button>\r\n\t\t        </ul>\r\n\t        </div>\r\n\t        <div class=\"offset-9\">\r\n\t\t        <ul>\r\n\t\t            <button *ngIf=\"contratosSeleccionados\" type=\"button\" class=\"btn btn-danger\" (click)=\"desecharShow()\">Desechar Contratos\r\n\t\t\t\t\t\t<span class=\"fa fa-trash\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Eliminar\"></span>\r\n\t\t            </button>\r\n\t\t        </ul>\r\n\t        </div>\r\n\t    \t</form>\r\n    \t</p-footer>\r\n\t</p-dataTable>\r\n</div>\r\n</div>\r\n<!--Modal Fianza  -->\r\n<p-dialog header=\"Registro de fianza para el contrato: {{numeroContrato}}\" [(visible)]=\"display\" modal=\"modal\" width=\"700\" [responsive]=\"true\">\r\n\t<input class=\"form-control\" type=\"text\" name=\"numeroFianza\" [(ngModel)]=\"numeroFianza\" >\r\n\t<p-footer>\r\n\t\t<button type=\"button\" class=\"btn btn-success\" (click)=\"registrarFianza()\">Registrar fianza</button>\r\n\t\t<button type=\"button\" class=\"btn btn-default\" (click)=\"display=false\">Cancelar</button>\r\n\t</p-footer>\r\n</p-dialog>\r\n\r\n<!--Modal Rescindir contrato -->\r\n<p-dialog [contentStyle]=\"{'overflow':'visible'}\" header=\"Rescindir el contrato: {{numeroContrato}}\" [(visible)]=\"displayRescindir\" modal=\"modal\" width=\"700\" [responsive]=\"true\">    \r\n\t<div class=\"form-group row\">\r\n\t\t<label class=\"col-md-3 col-form-label text-right\" for=\"fechaFin\"><strong>Fecha Finalización:</strong></label>\r\n\t\t<div>\r\n\t\t\t<input class=\"form-control\" placeholder=\"dd/mm/yyyy\" \r\n\t\t\tid =\"fechaFin\" name=\"fechaFin\" \r\n\t\t\t[(ngModel)]=\"fechaFin\"\r\n\t\t\t#fFin=\"ngModel\"\r\n\t\t\tngbDatepicker \r\n\t\t\t#df=\"ngbDatepicker\"\r\n\t\t\t(click)=\"df.toggle()\"\t\t\t\t\t\t        \t\t\t \r\n\t\t\trequired\t\t\t\t\t\t\t\r\n\t\t\t>\r\n\t\t</div>\r\n\t</div>\r\n\t<textarea class=\"form-control\" [(ngModel)]=\"observacion\" ></textarea>\r\n\t<p-footer>\r\n\t\t<button type=\"button\" class=\"btn btn-danger\" (click)=\"rescindir(fechaFin,observacion)\">Rescindir Contrato</button>\r\n\t\t<button type=\"button\" class=\"btn btn-default\" (click)=\"displayRescindir=false\">Cancelar</button>\r\n\r\n\r\n\t</p-footer>\r\n</p-dialog>\r\n\r\n<!--Modal Anular contrato -->\r\n<p-dialog [contentStyle]=\"{'overflow':'visible'}\" header=\"Anular el contrato: {{numeroContrato}}\" [(visible)]=\"displayAnular\" modal=\"modal\" width=\"700\" [responsive]=\"true\">        \r\n\t<textarea class=\"form-control\" [(ngModel)]=\"observacion\" ></textarea>\r\n\t<p-footer>\r\n\t\t<button type=\"button\" class=\"btn btn-danger\" (click)=\"anular(observacion)\">Anular Contrato</button>\r\n\t\t<button type=\"button\" class=\"btn btn-default\" (click)=\"displayAnular=false\">Cancelar</button>\r\n\t</p-footer>\r\n</p-dialog>\r\n\r\n<!--Modal Desechar contrato -->\r\n<p-dialog [contentStyle]=\"{'overflow':'visible'}\" header=\"Eliminación permanentemente de contratos\" [(visible)]=\"displayDesechar\" modal=\"modal\" width=\"700\" [responsive]=\"true\">        \r\n\t<textarea class=\"form-control\" [(ngModel)]=\"observacion\" ></textarea>\r\n\t<p>\r\n\t\tContratos a eliminar permanentemente:\r\n\t</p>\t\r\n\t\t<ul>\r\n            <li *ngFor=\"let c of contratosSeleccionados\" style=\"text-align: left\">\r\n            \t{{c.numeroContrato}}\r\n            </li>\r\n        </ul>\r\n\t\r\n\t<p-footer>\r\n\t\t<button type=\"button\" class=\"btn btn-danger\" (click)=\"desecharContrato(observacion)\">Eliminar Contrato</button>\r\n\t\t<button type=\"button\" class=\"btn btn-default\" (click)=\"displayDesechar=false\">Cancelar</button>\r\n\t</p-footer>\r\n</p-dialog>\r\n\r\n<spinner-component [spinnerShow]=\"showLoader\"> <div class=\"sk-circle\"> <div class=\"sk-circle1 sk-child\"></div> <div class=\"sk-circle2 sk-child\"></div> <div class=\"sk-circle3 sk-child\"></div> <div class=\"sk-circle4 sk-child\"></div> <div class=\"sk-circle5 sk-child\"></div> <div class=\"sk-circle6 sk-child\"></div> <div class=\"sk-circle7 sk-child\"></div> <div class=\"sk-circle8 sk-child\"></div> <div class=\"sk-circle9 sk-child\"></div> <div class=\"sk-circle10 sk-child\"></div> <div class=\"sk-circle11 sk-child\"></div> <div class=\"sk-circle12 sk-child\"></div> </div> </spinner-component> "
 
 /***/ }),
 
@@ -528,6 +534,7 @@ var BusquedaContratoComponent = (function () {
         this.contratoService = contratoService;
         this.display = false;
         this.displayAnular = false;
+        this.displayDesechar = false;
         this.displayRescindir = false;
         this.msgs = [];
         this.anios = new Array();
@@ -547,10 +554,38 @@ var BusquedaContratoComponent = (function () {
         this.refrescarTablaContratos();
         this.showLoader = false;
     };
-    BusquedaContratoComponent.prototype.test = function (event, col, dt) {
-        console.log(event);
-        console.log(col);
-        console.log(dt);
+    BusquedaContratoComponent.prototype.anular = function (observacion) {
+        var _this = this;
+        this.contratoService.anularContrato(this.idContrato, observacion, 'X').subscribe(function (response) {
+            if (response.code == 200) {
+                _this.limpiarModels();
+                _this.muestraMensaje('success', response.message);
+                _this.cargaContratos();
+            }
+            else
+                _this.muestraMensaje('error', response.message);
+        }, function (error) {
+            _this.muestraMensaje('error', error);
+        });
+    };
+    BusquedaContratoComponent.prototype.desecharShow = function () {
+        this.displayDesechar = true;
+    };
+    BusquedaContratoComponent.prototype.desecharContrato = function (observacion) {
+        var _this = this;
+        for (var _i = 0, _a = this.contratosSeleccionados; _i < _a.length; _i++) {
+            var c = _a[_i];
+            console.log(c.idContrato);
+            this.contratoService.anularContrato(c.idContrato, observacion, 'D').subscribe(function (response) {
+                if (response.code == 200)
+                    _this.cargaContratos();
+                else
+                    _this.muestraMensaje('error', response.message);
+            }, function (error) {
+                _this.muestraMensaje('error', error);
+            });
+        }
+        this.limpiarModels();
     };
     BusquedaContratoComponent.prototype.descargaMasiva = function () {
         for (var _i = 0, _a = this.contratosSeleccionados; _i < _a.length; _i++) {
@@ -636,8 +671,6 @@ var BusquedaContratoComponent = (function () {
             default: false;
         }
     };
-    BusquedaContratoComponent.prototype.onRowSelect = function (row) {
-    };
     BusquedaContratoComponent.prototype.openAddendumModal = function (idContrato) {
         var options = { size: 'lg' };
         var modalRef = this.modalService.open(__WEBPACK_IMPORTED_MODULE_5__addendum_addendum_component__["a" /* AddendumComponent */], options);
@@ -688,20 +721,6 @@ var BusquedaContratoComponent = (function () {
                 _this.muestraMensaje('error', response.message);
         }, function (error) { _this.muestraMensaje('error', error); });
     };
-    BusquedaContratoComponent.prototype.anular = function (observacion) {
-        var _this = this;
-        this.contratoService.anularContrato(this.idContrato, observacion).subscribe(function (response) {
-            if (response.code == 200) {
-                _this.limpiarModels();
-                _this.muestraMensaje('success', response.message);
-                _this.cargaContratos();
-            }
-            else
-                _this.muestraMensaje('error', response.message);
-        }, function (error) {
-            _this.muestraMensaje('error', error);
-        });
-    };
     BusquedaContratoComponent.prototype.rescindir = function (fechaFin, observacion) {
         var _this = this;
         var fecha = fechaFin.day + '/' + fechaFin.month + '/' + fechaFin.year;
@@ -719,6 +738,7 @@ var BusquedaContratoComponent = (function () {
     };
     BusquedaContratoComponent.prototype.limpiarModels = function () {
         this.displayAnular = false;
+        this.displayDesechar = false;
         this.display = false;
         this.displayRescindir = false;
         this.idContrato = null;
@@ -1705,12 +1725,15 @@ var ContratoService = (function () {
         this.urlUpdateContrato = config.ENDPOINT + '/bknRRHHContratos/rest/contrato/editar';
         this.urlMotivosRechazo = config.ENDPOINT + '/bknRRHHContratos/rest/asesor/historial/motivos';
         this.urlEstados = config.ENDPOINT + '/bknRRHHContratos/rest/contrato/consulta/estados';
+        this.urlRegistraSolicitud = config.ENDPOINT + '/bknRRHHContratos/rest/solicitud';
+        //idContrato, fechaSolicitud
     }
-    ContratoService.prototype.anularContrato = function (idContrato, observacion) {
-        console.log('anulando', idContrato, observacion);
+    ContratoService.prototype.anularContrato = function (idContrato, observacion, estado) {
+        console.log('anulando', idContrato, observacion, estado);
         var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* URLSearchParams */]();
         params.set('contrato', "" + idContrato);
         params.set('observacion', observacion);
+        params.set('estado', estado);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post(this.urlAnularContrato, params, { headers: headers })
@@ -1770,6 +1793,15 @@ var ContratoService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post(this.urlRegistrarNumeroFianza, params, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    ContratoService.prototype.registrarSolicitudDeGasto = function (idContrato, fechaSolicitud) {
+        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* URLSearchParams */]();
+        params.set('idContrato', "" + idContrato);
+        params.set('fechaSolicitud', fechaSolicitud);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        return this.http.post(this.urlRegistraSolicitud, params, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     ContratoService.prototype.rescindirContrato = function (idContrato, fechaFin, observacion) {
@@ -1993,6 +2025,183 @@ UtilService = __decorate([
 ], UtilService);
 
 //# sourceMappingURL=util.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/solicitud-gasto/solicitud-gasto.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/solicitud-gasto/solicitud-gasto.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container-fluid\">\n\t<div style=\"text-align:center\">\n\t\t<h1 class=\"display-6\">Solicitud de gasto</h1>\n\t\t<legend></legend>\n\t\t<hr>\n\t</div>\n\t<div>\n\t\t<p-growl [(value)]=\"msgs\" life=\"3000\" [immutable]=\"false\"></p-growl>\n\t\t<p-dataTable #dt [value]=\"contratos\" \n\t\t[rows]=\"20\" \n\t\t[emptyMessage]=\"'No se encontraron registros.'\" \n\t\t[paginator]=\"true\" \n\t\t[globalFilter]=\"gb\" \n\t\t[pageLinks]=\"3\" \n\t\t[rowsPerPageOptions]=\"[5,10,20]\"\n\t\texportFilename=\"Contratos\"\n\t\t[(selection)]=\"contratosSeleccionados\"\n\t\tdataKey=\"idContrato\"\n\t\t[headerCheckboxToggleAllPages]=\"true\"\n\t\t>\n\t\t<p-header>\n\t\t\t<div>\n\t\t\t\t<form class=\"form-inline\">\n\t\t\t\t\t<label class=\"mr-sm-4\">Año:</label>\n\t\t\t\t\t<select [(ngModel)]=\"anioActual\" name=\"anio\" class=\"form-control\" (change)=\"cambioAnio()\">\n\t\t\t\t\t\t<option *ngFor=\"let anio of anios\" [value]=\"anio.value\">{{anio.text}}</option>\n\t\t\t\t\t</select>\n\t\t\t\t\t<label class=\"mr-sm-4\" style=\"padding-left:3%\">Renglon:</label>\n\t\t\t\t\t<select [(ngModel)]=\"renglon\" name=\"renglonPresupuesto\" class=\"form-control\"  (change)=\"cambioRenglon()\">\n\t\t\t\t\t\t<option  [value]=\"null\">Seleccionar</option>\n\t\t\t\t\t\t<option *ngFor=\"let renglon of renglones\" [value]=\"renglon.renglon\">{{renglon.nombre}}</option>\n\t\t\t\t\t</select>\n\t\t\t\t\t<label class=\"mr-sm-4\" style=\"padding-left:3%\">Estado:</label>\n\t\t\t\t\t<select [(ngModel)]=\"estado\" name=\"estado\" class=\"form-control\" (change)=\"cambioEstado()\">\n\t\t\t\t\t\t<option *ngFor=\"let estado of estados\" [value]=\"estado.idCatalogoEstado\">{{estado.nombre}}</option>\n\t\t\t\t\t</select>\n\t\t\t\t\t<label class=\"mr-sm-6\" style=\"padding-left:3%\">Fecha Formulario:</label>\n\t\t\t\t\t<div class=\"col-2\">\n\t\t\t\t\t<input class=\"form-control\" placeholder=\"dd/mm/yyyy\" \n\t\t\t\t\t\t\tid =\"fechaSolicitud\" name=\"fechaSolicitud\" \n\t\t\t\t\t\t\t[(ngModel)]=\"fechaSolicitud\"\n\t\t\t\t\t\t\t#fechaS=\"ngModel\"\n\t\t\t\t\t\t\tngbDatepicker \n\t\t\t\t\t\t\t#di=\"ngbDatepicker\"\n\t\t\t\t\t\t\t(click)=\"di.toggle()\"\t\t\t\t\t\t        \t\t\t \n\t\t\t\t\t\t\trequired\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<br>\n\t\t\t<div class=\"ui-widget-header\" style=\"padding:4px 10px;border-bottom: 0 none\">\n\t\t\t\t<i class=\"fa fa-search\" style=\"margin:4px 4px 0 0\"></i>\n\t\t\t\t<input #gb type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\">\n\t\t\t</div>\n\t\t</p-header>\n\t\t<p-column [style]=\"{'width':'38px'}\" selectionMode=\"multiple\"></p-column>\n\t\t<p-column header=\"No.\" [style]=\"{'width':'4%'}\">\n\t\t    <template let-i=\"rowIndex\" pTemplate=\"body\">\n\t\t        {{i+1}}\n\t\t    </template>\n\t\t</p-column>\n\t\t<p-column field=\"nit\" header=\"NIT\" [style]=\"{'width':'7%'}\"></p-column>\n\t\t<p-column field=\"nombreCompleto\" header=\"Nombre\" ></p-column>\n\t\t<p-column field=\"numeroContrato\" header=\"Identificador\" ></p-column>\n\t\t<p-column field=\"nombreRenglon\" header=\"Renglon\" [filter]=\"true\" [style]=\"{'text-align':'center'}\"></p-column>\n\t\t<p-column field=\"honorario\" header=\"Honorarios\" [style]=\"{'text-align':'right','width':'9%'}\">\n\t\t\t<ng-template let-col let-contrato=\"rowData\" pTemplate=\"body\">\n\t\t\t\t<span >{{contrato.honorario | currency:'GTQ'}}</span>\n\t\t\t</ng-template>\n\t\t</p-column>\n\n\t\t<p-column field=\"idCatalogoEstado\" header=\"Estado\" filterMatchMode=\"equals\" [style]=\"{'text-align':'center'}\">\n\t\t\t<ng-template let-col let-contrato=\"rowData\" pTemplate=\"body\">\n\t\t\t\t<span [ngClass]=\"getClass(contrato.idCatalogoEstado)\">{{getNombreEstado(contrato.idCatalogoEstado)}}\n\t\t\t\t</span>\n\t\t\t</ng-template>\n\t\t</p-column>\n \n\t\t<p-column styleClass=\"col-button\" header=\"Descargar\">\n\t\t\t<ng-template let-contrato=\"rowData\" let-index=\"rowIndex\" pTemplate=\"body\">\n\t\t\t\t<div class=\"row align-items-center justify-content-center\">\n\t\t\t\t\t<a><span class=\"fa fa-cloud-download\" aria-hidden=\"true\" aria-hidden=\"true\"  placement=\"top\" ngbTooltip=\"Descargar\" (click)=\"downloadSolicitud(contrato)\" ></span></a>\n\t\t\t\t</div>\n\t\t\t</ng-template>\n\t\t</p-column>\n\n\t\t<p-footer>\n\t\t\t<form>\n\t\t\t<div>\n\t\t        <ul>\n\t\t            <button *ngIf=\"contratosSeleccionados\" type=\"button\" class=\"btn btn-info\" (click)=\"descargaMasiva()\">Descargar Solicitudes de gasto</button>\n\t\t        </ul>\n\t        </div>\n\t    \t</form>\n    \t</p-footer>\n\t</p-dataTable>\n</div>\n</div>\n\n\n<spinner-component [spinnerShow]=\"showLoader\"> <div class=\"sk-circle\"> <div class=\"sk-circle1 sk-child\"></div> <div class=\"sk-circle2 sk-child\"></div> <div class=\"sk-circle3 sk-child\"></div> <div class=\"sk-circle4 sk-child\"></div> <div class=\"sk-circle5 sk-child\"></div> <div class=\"sk-circle6 sk-child\"></div> <div class=\"sk-circle7 sk-child\"></div> <div class=\"sk-circle8 sk-child\"></div> <div class=\"sk-circle9 sk-child\"></div> <div class=\"sk-circle10 sk-child\"></div> <div class=\"sk-circle11 sk-child\"></div> <div class=\"sk-circle12 sk-child\"></div> </div> </spinner-component> "
+
+/***/ }),
+
+/***/ "../../../../../src/app/solicitud-gasto/solicitud-gasto.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_config_module__ = __webpack_require__("../../../../../src/app/app-config.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_contrato_service__ = __webpack_require__("../../../../../src/app/services/contrato.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_rue_service__ = __webpack_require__("../../../../../src/app/services/rue.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_util_service__ = __webpack_require__("../../../../../src/app/services/util.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_observable_TimerObservable__ = __webpack_require__("../../../../rxjs/observable/TimerObservable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_observable_TimerObservable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_observable_TimerObservable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_takeWhile__ = __webpack_require__("../../../../rxjs/add/operator/takeWhile.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_takeWhile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_takeWhile__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SolicitudGastoComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+
+
+
+
+var SolicitudGastoComponent = (function () {
+    function SolicitudGastoComponent(rueService, utilService, config, contratoService) {
+        this.rueService = rueService;
+        this.utilService = utilService;
+        this.config = config;
+        this.contratoService = contratoService;
+        this.msgs = [];
+        this.anios = new Array();
+        this.fechaHoy = new Date();
+        this.fechaSolicitud = { day: this.fechaHoy.getDate(),
+            month: this.fechaHoy.getMonth() + 1,
+            year: this.fechaHoy.getUTCFullYear() };
+        this.anioActual = this.fechaHoy.getFullYear();
+        this.alive = true;
+        this.interval = 60000;
+        this.estado = 5;
+        this.renglon = null;
+    }
+    SolicitudGastoComponent.prototype.ngOnInit = function () {
+        this.cargarRenglones();
+        this.inicializaAnios();
+        this.cargarEstados();
+        this.refrescarTablaContratos();
+        this.cargaContratos();
+        this.showLoader = false;
+    };
+    SolicitudGastoComponent.prototype.cambioAnio = function () {
+        this.cargaContratos();
+    };
+    SolicitudGastoComponent.prototype.cambioEstado = function () {
+        this.cargaContratos();
+    };
+    SolicitudGastoComponent.prototype.cambioRenglon = function () {
+        this.cargaContratos();
+    };
+    SolicitudGastoComponent.prototype.cargaContratos = function () {
+        var _this = this;
+        this.contratoService.getContratos(this.anioActual, this.renglon, this.estado)
+            .subscribe(function (result) {
+            _this.contratos = result;
+            _this.contratosSeleccionados = null;
+        }, function (error) {
+            var errorMessage = error;
+            console.log(errorMessage);
+        });
+    };
+    SolicitudGastoComponent.prototype.cargarRenglones = function () {
+        this.renglones = [{ "nombre": "184", "renglon": "4" },
+            { "nombre": "186", "renglon": "5" },
+            { "nombre": "188", "renglon": "6" },
+            { "nombre": "189", "renglon": "9" },
+            { "nombre": "183", "renglon": "3" }];
+    };
+    SolicitudGastoComponent.prototype.cargarEstados = function () {
+        this.estados = [{ "idCatalogoEstado": 5, "nombre": "Aprobado" },
+            { "idCatalogoEstado": 7, "nombre": "Solicitud De Gasto" }];
+    };
+    SolicitudGastoComponent.prototype.downloadSolicitud = function (contrato) {
+        var _this = this;
+        this.showLoader = false;
+        var fechaFormulario = this.fechaSolicitud.day + "/" + this.fechaSolicitud.month + "/" + this.fechaSolicitud.year;
+        this.contratoService.registrarSolicitudDeGasto(contrato.idContrato, fechaFormulario).subscribe(function (response) {
+            window.open("http://cgcbi.contraloria.gob.gt:9704/xmlpserver/%2FRRHH%2FSOLICITUD_DEL_GASTO%2FRPT_SOLICITUD_DE_GASTO.xdo?id=consulta&passwd=cgc20130bi&_xpf=&_xpt=1&_xt=Default&_xf=pdf&P_ID_CONTRATO=" + contrato.idContrato, "_blank");
+            _this.showLoader = false;
+            _this.cargaContratos();
+        }, function (error) {
+            _this.muestraMensaje('error', error);
+            _this.showLoader = false;
+        });
+    };
+    SolicitudGastoComponent.prototype.descargaMasiva = function () {
+        for (var _i = 0, _a = this.contratosSeleccionados; _i < _a.length; _i++) {
+            var c = _a[_i];
+            this.downloadSolicitud(c);
+        }
+    };
+    SolicitudGastoComponent.prototype.getClass = function (estado) {
+        switch (estado) {
+            case 5: return "bg-primary text-white";
+            case 7: return "bg-success text-white";
+        }
+    };
+    SolicitudGastoComponent.prototype.getNombreEstado = function (estado) {
+        switch (estado) {
+            case 5: return "Aprobado";
+            case 7: return "Solicitud";
+        }
+    };
+    SolicitudGastoComponent.prototype.inicializaAnios = function () {
+        this.anios = this.utilService.getAnios((this.anioActual - 3), (this.anioActual));
+    };
+    SolicitudGastoComponent.prototype.muestraMensaje = function (tipoMensaje, message) {
+        this.msgs.push({ severity: tipoMensaje, summary: '', detail: message });
+    };
+    SolicitudGastoComponent.prototype.refrescarTablaContratos = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_5_rxjs_observable_TimerObservable__["TimerObservable"].create(0, this.interval)
+            .takeWhile(function () { return _this.alive; })
+            .subscribe(function () {
+            _this.cargaContratos();
+        });
+    };
+    return SolicitudGastoComponent;
+}());
+SolicitudGastoComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
+        selector: 'app-solicitud-gasto',
+        template: __webpack_require__("../../../../../src/app/solicitud-gasto/solicitud-gasto.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/solicitud-gasto/solicitud-gasto.component.css")]
+    }),
+    __param(2, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_0__app_config_module__["b" /* APP_CONFIG */])),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__services_rue_service__["a" /* RueService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_rue_service__["a" /* RueService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__services_util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_util_service__["a" /* UtilService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__app_config_module__["c" /* AppConfig */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__app_config_module__["c" /* AppConfig */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_contrato_service__["a" /* ContratoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_contrato_service__["a" /* ContratoService */]) === "function" && _d || Object])
+], SolicitudGastoComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=solicitud-gasto.component.js.map
 
 /***/ }),
 

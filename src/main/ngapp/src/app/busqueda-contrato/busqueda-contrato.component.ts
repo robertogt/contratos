@@ -31,6 +31,7 @@ export class BusquedaContratoComponent implements OnInit {
 	
 	display: boolean = false;
 	displayAnular:boolean = false;
+	displayDesechar: boolean = false;
 	displayRescindir:boolean = false;
 	idContrato: number;
 	fecha_hoy:Date;
@@ -69,11 +70,48 @@ export class BusquedaContratoComponent implements OnInit {
 		this.showLoader = false;				
 	}
 
-	test(event, col, dt){
-		console.log(event);
-		console.log(col);
-		console.log(dt);
+	anular(observacion:string){
+		this.contratoService.anularContrato(this.idContrato, observacion,'X').subscribe( 
+			response => {                                                      				
+				if(response.code==200){
+					this.limpiarModels();
+					this.muestraMensaje('success',response.message);
+					this.cargaContratos();
+				}
+				else
+					this.muestraMensaje('error',response.message);   	
+			},
+			error => {this.muestraMensaje('error',error);
+		}
+		);
+	}
 
+	desecharShow(){
+		this.displayDesechar =true;
+
+	}
+
+	desecharContrato(observacion:string){
+
+		for(let c of this.contratosSeleccionados){
+			console.log(c.idContrato);
+
+			this.contratoService.anularContrato(c.idContrato, observacion,'D').subscribe( 
+				response => {                                                      				
+							if(response.code==200)										
+								this.cargaContratos();
+							else
+								this.muestraMensaje('error',response.message);
+
+				},
+				error => {
+							this.muestraMensaje('error',error);
+					}
+			);		
+		}
+
+		this.limpiarModels();
+		
 	}
 
 	descargaMasiva(){
@@ -176,9 +214,6 @@ export class BusquedaContratoComponent implements OnInit {
 		}
 	}
 
-	onRowSelect(row){
-	}
-
 	openAddendumModal(idContrato:number){		
 		let options: NgbModalOptions = {	size: 'lg' };
 
@@ -245,21 +280,7 @@ export class BusquedaContratoComponent implements OnInit {
 			);
 	}
 
-	anular(observacion:string){
-		this.contratoService.anularContrato(this.idContrato, observacion).subscribe( 
-			response => {                                                      				
-				if(response.code==200){
-					this.limpiarModels();
-					this.muestraMensaje('success',response.message);
-					this.cargaContratos();
-				}
-				else
-					this.muestraMensaje('error',response.message);   	
-			},
-			error => {this.muestraMensaje('error',error);
-		}
-		);
-	}
+	
 
 	rescindir(fechaFin,observacion){
 
@@ -283,6 +304,7 @@ export class BusquedaContratoComponent implements OnInit {
 	limpiarModels(){
 
 		this.displayAnular=false;
+		this.displayDesechar = false;
 		this.display=false;		
 		this.displayRescindir = false;
 		this.idContrato=null;

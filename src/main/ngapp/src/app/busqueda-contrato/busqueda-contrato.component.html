@@ -6,8 +6,7 @@
 	</div>
 	<div>
 		<p-growl [(value)]="msgs" life="3000" [immutable]="false"></p-growl>
-		<p-dataTable #dt [value]="contratos" selectionMode="single" 
-		(onRowSelect)="onRowSelect($event)" 
+		<p-dataTable #dt [value]="contratos" 
 		[rows]="20" 
 		[emptyMessage]="'No se encontraron registros.'" 
 		[paginator]="true" 
@@ -118,14 +117,24 @@
 		</p-column>
 
 		<p-footer>
-        <ul>
-            <button *ngIf="contratosSeleccionados" type="button" class="btn btn-info" (click)="descargaMasiva()">Descargar Contratos</button>
-        </ul>
-    </p-footer>
+			<form class="form-inline">
+			<div>
+		        <ul>
+		            <button *ngIf="contratosSeleccionados" type="button" class="btn btn-info" (click)="descargaMasiva()">Descargar Contratos</button>
+		        </ul>
+	        </div>
+	        <div class="offset-9">
+		        <ul>
+		            <button *ngIf="contratosSeleccionados" type="button" class="btn btn-danger" (click)="desecharShow()">Desechar Contratos
+						<span class="fa fa-trash" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Eliminar"></span>
+		            </button>
+		        </ul>
+	        </div>
+	    	</form>
+    	</p-footer>
 	</p-dataTable>
 </div>
 </div>
-
 <!--Modal Fianza  -->
 <p-dialog header="Registro de fianza para el contrato: {{numeroContrato}}" [(visible)]="display" modal="modal" width="700" [responsive]="true">
 	<input class="form-control" type="text" name="numeroFianza" [(ngModel)]="numeroFianza" >
@@ -155,6 +164,8 @@
 	<p-footer>
 		<button type="button" class="btn btn-danger" (click)="rescindir(fechaFin,observacion)">Rescindir Contrato</button>
 		<button type="button" class="btn btn-default" (click)="displayRescindir=false">Cancelar</button>
+
+
 	</p-footer>
 </p-dialog>
 
@@ -164,6 +175,24 @@
 	<p-footer>
 		<button type="button" class="btn btn-danger" (click)="anular(observacion)">Anular Contrato</button>
 		<button type="button" class="btn btn-default" (click)="displayAnular=false">Cancelar</button>
+	</p-footer>
+</p-dialog>
+
+<!--Modal Desechar contrato -->
+<p-dialog [contentStyle]="{'overflow':'visible'}" header="Eliminación permanentemente de contratos" [(visible)]="displayDesechar" modal="modal" width="700" [responsive]="true">        
+	<textarea class="form-control" [(ngModel)]="observacion" ></textarea>
+	<p>
+		Contratos a eliminar permanentemente:
+	</p>	
+		<ul>
+            <li *ngFor="let c of contratosSeleccionados" style="text-align: left">
+            	{{c.numeroContrato}}
+            </li>
+        </ul>
+	
+	<p-footer>
+		<button type="button" class="btn btn-danger" (click)="desecharContrato(observacion)">Eliminar Contrato</button>
+		<button type="button" class="btn btn-default" (click)="displayDesechar=false">Cancelar</button>
 	</p-footer>
 </p-dialog>
 

@@ -1,0 +1,102 @@
+<div class="container-fluid">
+	<div style="text-align:center">
+		<h1 class="display-6">Solicitud de gasto</h1>
+		<legend></legend>
+		<hr>
+	</div>
+	<div>
+		<p-growl [(value)]="msgs" life="3000" [immutable]="false"></p-growl>
+		<p-dataTable #dt [value]="contratos" 
+		[rows]="20" 
+		[emptyMessage]="'No se encontraron registros.'" 
+		[paginator]="true" 
+		[globalFilter]="gb" 
+		[pageLinks]="3" 
+		[rowsPerPageOptions]="[5,10,20]"
+		exportFilename="Contratos"
+		[(selection)]="contratosSeleccionados"
+		dataKey="idContrato"
+		[headerCheckboxToggleAllPages]="true"
+		>
+		<p-header>
+			<div>
+				<form class="form-inline">
+					<label class="mr-sm-4">Año:</label>
+					<select [(ngModel)]="anioActual" name="anio" class="form-control" (change)="cambioAnio()">
+						<option *ngFor="let anio of anios" [value]="anio.value">{{anio.text}}</option>
+					</select>
+					<label class="mr-sm-4" style="padding-left:3%">Renglon:</label>
+					<select [(ngModel)]="renglon" name="renglonPresupuesto" class="form-control"  (change)="cambioRenglon()">
+						<option  [value]="null">Seleccionar</option>
+						<option *ngFor="let renglon of renglones" [value]="renglon.renglon">{{renglon.nombre}}</option>
+					</select>
+					<label class="mr-sm-4" style="padding-left:3%">Estado:</label>
+					<select [(ngModel)]="estado" name="estado" class="form-control" (change)="cambioEstado()">
+						<option *ngFor="let estado of estados" [value]="estado.idCatalogoEstado">{{estado.nombre}}</option>
+					</select>
+					<label class="mr-sm-6" style="padding-left:3%">Fecha Formulario:</label>
+					<div class="col-2">
+					<input class="form-control" placeholder="dd/mm/yyyy" 
+							id ="fechaSolicitud" name="fechaSolicitud" 
+							[(ngModel)]="fechaSolicitud"
+							#fechaS="ngModel"
+							ngbDatepicker 
+							#di="ngbDatepicker"
+							(click)="di.toggle()"						        			 
+							required														
+					>
+					</div>
+				</form>
+			</div>
+			<br>
+			<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+				<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+				<input #gb type="text" pInputText size="50" placeholder="Global Filter">
+			</div>
+		</p-header>
+		<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+		<p-column header="No." [style]="{'width':'4%'}">
+		    <template let-i="rowIndex" pTemplate="body">
+		        {{i+1}}
+		    </template>
+		</p-column>
+		<p-column field="nit" header="NIT" [style]="{'width':'7%'}"></p-column>
+		<p-column field="nombreCompleto" header="Nombre" ></p-column>
+		<p-column field="numeroContrato" header="Identificador" ></p-column>
+		<p-column field="nombreRenglon" header="Renglon" [filter]="true" [style]="{'text-align':'center'}"></p-column>
+		<p-column field="honorario" header="Honorarios" [style]="{'text-align':'right','width':'9%'}">
+			<ng-template let-col let-contrato="rowData" pTemplate="body">
+				<span >{{contrato.honorario | currency:'GTQ'}}</span>
+			</ng-template>
+		</p-column>
+
+		<p-column field="idCatalogoEstado" header="Estado" filterMatchMode="equals" [style]="{'text-align':'center'}">
+			<ng-template let-col let-contrato="rowData" pTemplate="body">
+				<span [ngClass]="getClass(contrato.idCatalogoEstado)">{{getNombreEstado(contrato.idCatalogoEstado)}}
+				</span>
+			</ng-template>
+		</p-column>
+ 
+		<p-column styleClass="col-button" header="Descargar">
+			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
+				<div class="row align-items-center justify-content-center">
+					<a><span class="fa fa-cloud-download" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Descargar" (click)="downloadSolicitud(contrato)" ></span></a>
+				</div>
+			</ng-template>
+		</p-column>
+
+		<p-footer>
+			<form>
+			<div>
+		        <ul>
+		            <button *ngIf="contratosSeleccionados" type="button" class="btn btn-info" (click)="descargaMasiva()">Descargar Solicitudes de gasto</button>
+		        </ul>
+	        </div>
+	    	</form>
+    	</p-footer>
+	</p-dataTable>
+</div>
+</div>
+
+
+<spinner-component [spinnerShow]="showLoader"> <div class="sk-circle"> <div class="sk-circle1 sk-child"></div> <div class="sk-circle2 sk-child"></div> <div class="sk-circle3 sk-child"></div> <div class="sk-circle4 sk-child"></div> <div class="sk-circle5 sk-child"></div> <div class="sk-circle6 sk-child"></div> <div class="sk-circle7 sk-child"></div> <div class="sk-circle8 sk-child"></div> <div class="sk-circle9 sk-child"></div> <div class="sk-circle10 sk-child"></div> <div class="sk-circle11 sk-child"></div> <div class="sk-circle12 sk-child"></div> </div> </spinner-component> 
