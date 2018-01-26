@@ -53,6 +53,13 @@
 				<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
 				<input #gb type="text" pInputText size="50" placeholder="Global Filter">
 			</div>
+			<form>
+			<div>
+		        <ul>
+		            <button *ngIf="contratosSeleccionados" type="button" class="btn btn-info" (click)="descargaMasiva()">Descargar Solicitudes de gasto</button>
+		        </ul>
+	        </div>
+	    	</form>
 		</p-header>
 		<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
 		<p-column header="No." [style]="{'width':'4%'}">
@@ -64,6 +71,14 @@
 		<p-column field="nombreCompleto" header="Nombre" ></p-column>
 		<p-column field="numeroContrato" header="Identificador" ></p-column>
 		<p-column field="nombreRenglon" header="Renglon" [filter]="true" [style]="{'text-align':'center'}"></p-column>
+		<p-column field="tipoServicios" header="Servicio" [filter]="true" filterMatchMode="equals">
+			<ng-template let-col let-contrato="rowData" let-ri="rowIndex" pTemplate="body">
+        		<span>{{contrato.tipoServicios=='P'?'Profesionales':'Tecnicos'}}</span>
+    		</ng-template>
+			<ng-template pTemplate="filter" let-col>
+            	<p-dropdown [options]="tiposServicio" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+        	</ng-template>
+		</p-column>
 		<p-column field="honorario" header="Honorarios" [style]="{'text-align':'right','width':'9%'}">
 			<ng-template let-col let-contrato="rowData" pTemplate="body">
 				<span >{{contrato.honorario | currency:'GTQ'}}</span>

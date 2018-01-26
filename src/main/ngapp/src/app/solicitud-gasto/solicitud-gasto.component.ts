@@ -27,6 +27,7 @@ export class SolicitudGastoComponent implements OnInit {
 	observacion:string;	
 	renglon:any;	
 	renglones: any;
+	tiposServicio:any;
 	showLoader:boolean;
 	private alive: boolean;
 	private interval: number;
@@ -48,6 +49,7 @@ export class SolicitudGastoComponent implements OnInit {
 
 	ngOnInit() {
 		
+		this.cargaTiposServicios();
 		this.cargarRenglones();
 		this.inicializaAnios();
 		this.cargarEstados();
@@ -76,6 +78,7 @@ export class SolicitudGastoComponent implements OnInit {
 			);
 	}
 
+
 	cargarRenglones(){
 
 		this.renglones = [{"nombre":"184","renglon":"4"},
@@ -83,6 +86,13 @@ export class SolicitudGastoComponent implements OnInit {
 						  {"nombre":"188","renglon":"6"},
 						  {"nombre":"189","renglon":"9"},
 						  {"nombre":"183","renglon":"3"}];		
+	}
+
+	cargaTiposServicios(){
+		this.tiposServicio = [	{"label":"Todos","value":null},
+								{"label":"Profesional","value":"P"},
+							  	{"label":"Tecnico","value":"T"}
+							 ];
 	}
 
 	cargarEstados(){
