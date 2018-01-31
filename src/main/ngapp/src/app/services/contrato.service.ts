@@ -104,10 +104,11 @@ export class ContratoService {
           .map(res => res.json());
     }
 
-    registrarNumeroFianza(idContrato:number, numeroFianza:string){      
+    registrarNumeroFianza(idContrato:number, numeroFianza:string, fechaFianza:string){      
       let params = new URLSearchParams();
       params.set('contrato', ""+idContrato);
       params.set('fianza', numeroFianza);
+      params.set('fechaFianza', fechaFianza);
       let headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       return this.http.post(this.urlRegistrarNumeroFianza,params,{headers:headers})

@@ -34,7 +34,9 @@ export class BusquedaContratoComponent implements OnInit {
 	displayDesechar: boolean = false;
 	displayRescindir:boolean = false;
 	idContrato: number;
+	fechaFianza: string;
 	fecha_hoy:Date;
+
 	renglon:any;	
 	numeroContrato:string;
 	numeroFianza:string;
@@ -264,7 +266,9 @@ export class BusquedaContratoComponent implements OnInit {
 	}
 
 	registrarFianza(){
-		this.contratoService.registrarNumeroFianza(this.idContrato, this.numeroFianza)
+
+		
+		this.contratoService.registrarNumeroFianza(this.idContrato, this.numeroFianza, this.fechaFianza)
 		.subscribe( 
 			response => {
 
@@ -322,13 +326,14 @@ export class BusquedaContratoComponent implements OnInit {
 	}
 
 	showIngresoFianza(idContrato:number, numeroContrato:string, numeroFianza:string, 
-		idCatalogoEstado:number) {
+		idCatalogoEstado:number, fechaFianza:string) {
 		
 		if(idCatalogoEstado==1||idCatalogoEstado==2||idCatalogoEstado==3){
 			this.numeroContrato = numeroContrato;
 			this.idContrato = idContrato;
 			this.numeroFianza = numeroFianza;
 			this.display = true;
+			this.fechaFianza = fechaFianza;
 		}
 	}
 

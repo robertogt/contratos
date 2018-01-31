@@ -67,7 +67,8 @@
  
 		<p-column styleClass="col-button" header="Fianza" [style]="{'width':'9%'}">
 			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
-				<div class="align-items-center justify-content-center" (click)="showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado)">
+				<div class="align-items-center justify-content-center" 
+					(click)="showIngresoFianza(contrato.idContrato, contrato.numeroContrato, contrato.numeroFianza, contrato.idCatalogoEstado, contrato.fechaFianza)">
 					{{contrato.numeroFianza}} 
 					<a><span [ngClass]="contrato.numeroFianza==null?'fa fa-handshake-o':''" aria-hidden="true" aria-hidden="true"  placement="top" ngbTooltip="Fianza" ></span></a>						
 				</div>
@@ -137,7 +138,18 @@
 </div>
 <!--Modal Fianza  -->
 <p-dialog header="Registro de fianza para el contrato: {{numeroContrato}}" [(visible)]="display" modal="modal" width="700" [responsive]="true">
-	<input class="form-control" type="text" name="numeroFianza" [(ngModel)]="numeroFianza" >
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="numeroFianza"><strong>Numero Fianza</strong></label>
+		<div class="col-7">
+			<input class="form-control" type="text" name="numeroFianza" [(ngModel)]="numeroFianza" >
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-md-3 col-form-label text-right" for="fechaFianza"><strong>Fecha Fianza</strong></label>
+		<div class="col-7">
+			<p-inputMask mask="99/99/9999" [(ngModel)]="fechaFianza" placeholder="dd/mm/aaaa" slotChar="dd/mm/aaaa"></p-inputMask>
+		</div>
+	</div>
 	<p-footer>
 		<button type="button" class="btn btn-success" (click)="registrarFianza()">Registrar fianza</button>
 		<button type="button" class="btn btn-default" (click)="display=false">Cancelar</button>
