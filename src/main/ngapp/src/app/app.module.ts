@@ -7,7 +7,9 @@ import { HttpModule} from '@angular/http';
 import { AppRoutingModule }         from './app-routing.module';
 import { AppConfigModule } from './app-config.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AutoCompleteModule, DataListModule, DialogModule, InputMaskModule, DropdownModule,GrowlModule,TooltipModule, DataTableModule, SharedModule ,ListboxModule} from 'primeng/primeng';
+import { AutoCompleteModule,ConfirmDialogModule,ConfirmationService, DataListModule, DialogModule, InputMaskModule, DropdownModule,GrowlModule,TooltipModule, DataTableModule, SharedModule ,ListboxModule} from 'primeng/primeng';
+//import { ConfirmDialogModule} from 'primeng/confirmdialog';
+//import { ConfirmationService} from 'primeng/api';
 import { CreaContratoComponent } from './crea-contrato/crea-contrato.component';
 import { AddendumComponent } from './addendum/addendum.component'; 
 import { ContratoService }         from './services/contrato.service';
@@ -38,6 +40,7 @@ import { SolicitudGastoComponent } from './solicitud-gasto/solicitud-gasto.compo
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    ConfirmDialogModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,

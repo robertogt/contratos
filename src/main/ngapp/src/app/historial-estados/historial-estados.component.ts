@@ -2,10 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ContratoService } from '../services/contrato.service';
 import { NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { DetalleMotivoComponent } from '../detalle-motivo/detalle-motivo.component';
+import { ConfirmationService,ConfirmDialogModule } from 'primeng/primeng';
+
 @Component({
   selector: 'app-historial-estados',
   templateUrl: './historial-estados.component.html',
-  styleUrls: ['./historial-estados.component.css']
+  styleUrls: ['./historial-estados.component.css'],
+  providers: [ConfirmationService, ConfirmDialogModule]
 })
 export class HistorialEstadosComponent implements OnInit {
 
@@ -15,7 +18,8 @@ export class HistorialEstadosComponent implements OnInit {
   display:boolean;
   constructor(private activeModal:NgbActiveModal
     ,private contratoService: ContratoService
-    ,private _modalService:NgbModal) 
+    ,private _modalService:NgbModal
+    ,private confirmationService: ConfirmationService) 
   { }
 
   ngOnInit() {
@@ -76,7 +80,27 @@ export class HistorialEstadosComponent implements OnInit {
       }
       );
     
+  }
 
+  showConfirmar(idContrato){
+    this.confirmationService.confirm({
+            message: 'Esta seguro de devolver el contrato?',
+            accept: () => {
+                this.cambiarEstadoContrato(idContrato);              
+            }
+        });
+  }
+
+  cambiarEstadoContrato(idContrato){
+
+    this.contratoService.actualizaEstados(idContrato).subscribe( 
+      response => {
+                  console.log(response);
+                  this.activeModal.dismiss('devuelto');
+      },
+      error => {console.log(error);
+              }
+      );
   }
 
   downloadContratoRechazado(){

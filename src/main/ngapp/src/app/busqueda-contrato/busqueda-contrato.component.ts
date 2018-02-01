@@ -49,8 +49,9 @@ export class BusquedaContratoComponent implements OnInit {
 	private alive: boolean;
 	private interval: number;
 
-	constructor(private rueService:RueService, private utilService: UtilService,private modalService: NgbModal,
-		@Inject(APP_CONFIG) private config: AppConfig, private contratoService: ContratoService ) {
+	constructor(private rueService:RueService, private utilService: UtilService,
+				private modalService: NgbModal,
+				@Inject(APP_CONFIG) private config: AppConfig, private contratoService: ContratoService ) {
 		this.anios = new Array();
 		this.fecha_hoy = new Date();
 		this.anioActual =  this.fecha_hoy.getFullYear();
@@ -193,6 +194,7 @@ export class BusquedaContratoComponent implements OnInit {
 			case 4:return "bg-warning text-white";
 			case 5:return "bg-success text-white";
 			case 6:return "bg-success text-white";
+			case 7:return "bg-success text-white";
 		}
 	}
 
@@ -204,6 +206,7 @@ export class BusquedaContratoComponent implements OnInit {
 			case 4:return "Aceptado";
 			case 5:return "Aprobado";
 			case 6:return "Addendum";
+			case 7:return "Solicitud";
 		}
 	}
 
@@ -255,9 +258,12 @@ export class BusquedaContratoComponent implements OnInit {
 		const modalRef = this.modalService.open(HistorialEstadosComponent,options);
 		modalRef.componentInstance.idContrato = idContrato;
 		modalRef.result.then((result) =>{
-
+				console.log(result);
 		}, (reason) => {
 			console.log(reason);
+			if(reason == 'devuelto'){
+					this.cargaContratos();					
+			}
 		});
 	}
 
@@ -314,6 +320,8 @@ export class BusquedaContratoComponent implements OnInit {
 		this.idContrato=null;
 		this.numeroContrato=null;
 		this.observacion = null;
+		this.fechaFianza = null;
+		this.numeroFianza = null;
 	}
 
 	muestraMensaje(tipoMensaje, message){

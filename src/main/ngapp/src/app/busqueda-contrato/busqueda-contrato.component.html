@@ -91,7 +91,7 @@
 		<p-column styleClass="col-button" header="Addendum">
 			<ng-template let-contrato="rowData" let-index="rowIndex" pTemplate="body">
 				<div class="row align-items-center justify-content-center">
-					<a *ngIf="contrato.idCatalogoEstado==5"><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(contrato.idContrato)" ></span></a>
+					<a *ngIf="contrato.idCatalogoEstado==5 || contrato.idCatalogoEstado==7 "><span class="fa fa-archive" aria-hidden="true"  placement="top" ngbTooltip="Addendar" (click)="openAddendumModal(contrato.idContrato)" ></span></a>
 				</div>
 			</ng-template>
 		</p-column>

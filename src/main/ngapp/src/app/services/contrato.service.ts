@@ -8,6 +8,7 @@ import { APP_CONFIG, AppConfig } from '../app-config.module';
 export class ContratoService {
 
   public urlActividades:string;
+  public urlActualizaEstados:string;
   public urlAnularContrato:string;
   public urlContrato:string;
   public urlContratosPendientesActivos:string;  
@@ -25,6 +26,7 @@ export class ContratoService {
   	constructor(private http:Http, @Inject(APP_CONFIG) private config: AppConfig) { 
 
       this.urlActividades = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/actividades';
+      this.urlActualizaEstados = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/editar/estados';
       this.urlAnularContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/anular';
       this.urlContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/edit';
       this.urlContratosPendientesActivos = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta';
@@ -36,12 +38,11 @@ export class ContratoService {
       this.urlUpdateContrato = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/editar';
       this.urlMotivosRechazo = config.ENDPOINT+'/bknRRHHContratos/rest/asesor/historial/motivos';
       this.urlEstados = config.ENDPOINT+'/bknRRHHContratos/rest/contrato/consulta/estados';
-      this.urlRegistraSolicitud = config.ENDPOINT+'/bknRRHHContratos/rest/solicitud';
-       //idContrato, fechaSolicitud
+      this.urlRegistraSolicitud = config.ENDPOINT+'/bknRRHHContratos/rest/solicitud';      
   	}
 
     anularContrato(idContrato:number, observacion:string, estado:string){
-      console.log('anulando',idContrato, observacion, estado);
+      
       let params = new URLSearchParams();
       params.set('contrato', ""+idContrato);
       params.set('observacion', observacion);
@@ -50,6 +51,16 @@ export class ContratoService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       return this.http.post(this.urlAnularContrato,params,{headers:headers})
                       .map(res => res.json());
+    }
+
+    actualizaEstados(idContrato:number){
+
+      let params = new URLSearchParams();
+      params.set('idContrato', ""+idContrato);      
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      return this.http.post(this.urlActualizaEstados,params,{headers:headers})
+                      .map(res => res.json()); 
     }
 
     descargarDocumento(idContrato:number){      

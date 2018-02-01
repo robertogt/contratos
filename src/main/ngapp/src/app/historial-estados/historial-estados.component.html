@@ -8,9 +8,10 @@
 				<th>Observaciones de parte de subcontraloria</th>
 				<th>Descargar Archivo</th>
 				<th>Motivos</th>
+				<th>Devolver a Subcontraloria</th>
 			</thead>
 			<tbody>
-				<tr *ngFor="let estado of estados" >					
+				<tr *ngFor="let estado of estados; let i = index" [attr.data-index]="i" >
 					<td>
 						<div class="{{estado.idCatalogoEstado==3?'bg-danger':'bg-success'}}  text-white">
 							<label class="col-form-label">{{getNombreEstado(estado.idCatalogoEstado)}}</label>
@@ -20,6 +21,7 @@
 						<div>							
 							<label class="col-form-label text-right">{{estado.fechaInsert | date:'dd/MM/yyyy'}}</label>
 							<label class="col-form-label text-right">{{estado.fechaInsert | date:'hh:mm:ss a'}}</label>
+							<label class="col-form-label text-right">{{estado.usuarioInsert }}</label>
 						</div>
 					</td>
 					<td>
@@ -33,9 +35,13 @@
 						</div>
 					</td>
 					<td>
-
 						<div class="align-items-center justify-content-center">
 							<a><span *ngIf="estado.nombreEstado == 'Rechazado'" class="fa fa-search" aria-hidden="true" aria-hidden="true"  placement="top" (click)="showDialog(estado.idContratoEstado)"></span></a>
+						</div>
+					</td>
+					<td>
+						<div class="align-items-center justify-content-center">
+							<a><span *ngIf="estado.nombreEstado == 'Rechazado' && i==0" class="fa fa-arrow-right" aria-hidden="true" aria-hidden="true"  placement="top" (click)="showConfirmar(estado.idContrato)"></span></a>
 						</div>
 					</td>
 				</tr>
@@ -48,8 +54,8 @@
 <p-dialog header="Motivos" positionLeft="500"  positionTop="149" [(visible)]="display" modal="modal" width="300" [responsive]="true">
 	<ul class="list-group">
 		<li class="list-group-item" *ngFor="let motivo of motivos">{{motivo.nombre}}</li>
-		
 	</ul>
 </p-dialog>
 
+<p-confirmDialog header="Confirmar" icon="fa fa-question-circle" width="425"></p-confirmDialog>
 
